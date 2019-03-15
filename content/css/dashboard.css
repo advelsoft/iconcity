@@ -1,0 +1,248 @@
+.ticket-message { 
+	margin-top:35px; 
+}
+.ticket-message.first { 
+	margin-top:0px !important; 
+}
+.ticket-message.last .profile-image { 
+	margin-bottom:15px !important; 
+}
+.ticket-message .text {
+	display:inline-block;
+	width:70%;
+	text-align:left;
+}
+.ticket-message .text .message {
+	padding:10px 15px;
+	border-radius:8px;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	font-family:inherit;
+	font-size:inherit;
+	letter-spacing:-0.03em;
+	color:#555;
+}
+.ticket-message .text .message .files-holder,
+.ticket .tb-content .files-holder {
+	margin:5px -3px;
+}
+.ticket-message .text .message .file,
+.ticket .tb-content .file {
+	padding:12px 15px;
+	background-color:#FFF;
+	border:1px solid #d5d5d5;
+	display:table;
+	transition:all ease 0.4s;
+	-webkit-transition:all ease 0.4s;
+	-moz-transition:all ease 0.4s;
+	-o-transition:all l 0.4s;
+	margin:3px 3px;
+	float:left;
+	color:#555;
+	text-decoration:none;
+}
+.ticket-message .text .message .file:hover,
+.ticket .tb-content .file:hover {
+	background-color:#f8f8f8;
+	border-color:#c5c5c5;
+	cursor:pointer;
+}
+.ticket-message .text .message .file i.fa-file-o,
+.ticket .tb-content .file i.fa-file-o {
+	display:table-cell;
+	vertical-align:middle;
+	font-size:inherit;
+	color:#aaa;
+}
+.ticket-message .text .message .file .fileinfo,
+.ticket .tb-content .file .fileinfo{
+	padding-left:10px;
+	display:table-cell;
+	vertical-align:middle;
+}
+.ticket-message .text .message .file .fileinfo span.filename,
+.ticket .tb-content .file .fileinfo span.filename{
+	display:block;
+	word-wrap:break-word;
+	word-break:break-all;
+	font-size:inherit;
+	font-weight:600;
+	line-height:1em;
+}
+.ticket-message .text .message .file .fileinfo span.filesize,
+.ticket .tb-content .file .fileinfo span.filesize{
+	font-size:inherit;
+	display:block;
+	padding-top:0px;
+	color:#aaa;
+	float:left;
+}
+.ticket-message .text .message img {
+	max-width:90%;
+	max-height:300px;
+	margin:10px auto 10px 0px;
+	display:block;
+}
+.ticket-message .text .message::before {
+	content:" ";
+	display:block;
+	width:0px;
+	height:0px;
+	border-top:12px solid transparent;
+	border-bottom:12px solid transparent;
+	position:relative;
+	top:-2px;
+}
+.ticket-message .text .frwd {
+	float: left;
+	margin:-20px 0;
+	font-weight: bold;
+}
+.ticket-message .text .date {
+	float:right;
+	margin:3px 5px auto auto;
+	font-family:inherit;
+	font-weight:500;
+	font-size:inherit;
+	letter-spacing:-0.03em;
+	line-height:1.2em;
+	color:#999;
+}
+.ticket-message .text:hover .date {
+	-webkit-animation:ticketmessagedate_in 0.5s;
+	-o-animation:ticketmessagedate_in 0.5s;
+	-moz-animation:ticketmessagedate_in 0.5s;
+	animation:ticketmessagedate_in 0.5s;
+	-webkit-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+@-webkit-keyframes ticketmessagedate_in { from { opacity:0; } to { opacity:1; } }
+@-webkit-keyframes ticketmessagedate_out { from { opacity:1; } to { opacity:0; } }
+@-o-keyframes ticketmessagedate_in { from { opacity:0; } to { opacity:1; } }
+@-o-keyframes ticketmessagedate_out { from { opacity:1; } to { opacity:0; } }
+@-moz-keyframes ticketmessagedate_in { from { opacity:0; } to { opacity:1; } }
+@-moz-keyframes ticketmessagedate_out { from { opacity:1; } to { opacity:0; } }
+@keyframes ticketmessagedate_in { from { opacity:0; } to { opacity:1; } }
+@keyframes ticketmessagedate_out { from { opacity:1; } to { opacity:0; } }
+
+.ticket-message .profile-image {
+	display:inline-block;
+	width:68px;
+	vertical-align:top;
+	text-align:left;
+	margin-right:0px;
+	padding-right:0px;
+	font-family:inherit;
+	font-weight:600;
+	font-size:inherit;
+	letter-spacing:-0.03em;
+	line-height:1.2em;
+	color:#555;
+	margin-bottom:-30px;
+	word-wrap:break-word;
+}
+.ticket-message .profile-image img { margin-bottom:4px; }
+
+
+
+.ticket-message.message-right {
+	text-align:right;
+	padding:0 10px 0 0;
+}
+.ticket-message.message-left {
+	text-align:left;
+	padding:0 0 0 10px;
+}
+
+
+.ticket-message.message-right .text .message{
+	background-color:#dff0d8;
+	margin-right:20px;
+	text-align:right;
+}
+.ticket-message.message-left .text .message{ 
+	background-color:#fcf8e3;
+	margin-left:20px; 
+}
+
+
+.ticket-message.message-right .text .message::before {
+	border-left:18px solid #dff0d8;
+	float:right;
+	right:-31px;
+	margin-left:-33px;
+}
+.ticket-message.message-left .text .message::before {
+	border-right:18px solid #fcf8e3;
+	float:left;
+	left:-31px;
+	margin-right:-32px;
+}
+
+.ticket-message.message-right .text .message img,
+.ticket-message.message-right .text .message .file  {
+	float:none;
+	display:inline-block;
+}
+
+.tb-content .tb-text span.envato-verified {
+	font-weight:700;
+	color:#0072ff !important;
+}
+.tb-content .tb-text span.envato-unverified,
+.ticket-message .message span.envato-unverified {
+	font-weight:700;
+}
+.tb-content .tb-text span.envato-verified:hover {
+	cursor:pointer;
+	color:#025ecf !important;
+}
+.ticket-message .message span.envato-verified {
+	font-weight:700;
+	color:#0072ff;
+}
+.ticket-message .message span.envato-verified:hover {
+	cursor:pointer;
+	color:#025ecf;
+}
+
+/* Responsive CSS */
+
+/* Mobile phones */
+@media (max-width: 480px){
+	.ticket-message .text {
+		width:100%;
+	}
+	.ticket-message .text .frwd,
+	.ticket-message .text .date {
+		font-size: 9px;
+	}
+	.ticket-message.message-right .text .message{
+		margin-right: 0;
+	}
+}
+
+/* Tablets */
+@media (max-width: 767px){
+	.ticket-message .text {
+		width:100%;
+	}
+	.ticket-message .text .frwd{
+		font-size: 11px;
+		margin: -15px 0;
+	}
+	.ticket-message .text .date {
+		font-size: 11px;
+	}
+	.ticket-message.message-right .text .message{
+		margin-right: 0;
+	}
+}
+
+/* Desktop */
+
+@media (max-width: 991px){
+   
+}

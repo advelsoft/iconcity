@@ -1,0 +1,1772 @@
+{
+  "ReportVersion": "2018.3.3",
+  "ReportGuid": "fbb7ef9a8d7ca016123be124c525e2f2",
+  "ReportName": "Report",
+  "ReportAlias": "Report",
+  "ReportFile": "Report.mrt",
+  "ReportCreated": "/Date(1542487892000+0800)/",
+  "ReportChanged": "/Date(1542487892000+0800)/",
+  "EngineVersion": "EngineV2",
+  "CalculationMode": "Interpretation",
+  "ReportUnit": "Centimeters",
+  "Dictionary": {
+    "Variables": {
+      "0": {
+        "Name": "Status",
+        "DialogInfo": {
+          "DateTimeType": "DateAndTime",
+          "ItemsInitializationType": "Columns",
+          "KeysColumn": "Feedback.Status",
+          "ValuesColumn": "Feedback.Status"
+        },
+        "Alias": "Status",
+        "Type": "System.String",
+        "RequestFromUser": true
+      },
+      "1": {
+        "Value": "true",
+        "Name": "All",
+        "DialogInfo": {
+          "DateTimeType": "DateAndTime"
+        },
+        "Alias": "All",
+        "Type": "System.Boolean",
+        "RequestFromUser": true
+      },
+      "2": {
+        "Name": "DateFrom",
+        "Alias": "Date From",
+        "Type": "System.DateTime",
+        "RequestFromUser": true
+      },
+      "3": {
+        "Name": "DateTo",
+        "Alias": "Date To",
+        "Type": "System.DateTime",
+        "RequestFromUser": true
+      }
+    },
+    "DataSources": {
+      "0": {
+        "Ident": "StiSqlSource",
+        "Name": "Feedback",
+        "Alias": "Feedback ",
+        "Columns": {
+          "0": {
+            "Name": "Attachment1",
+            "Index": -1,
+            "NameInSource": "Attachment1",
+            "Alias": "Attachment1",
+            "Type": "System.String"
+          },
+          "1": {
+            "Name": "Attachment2",
+            "Index": -1,
+            "NameInSource": "Attachment2",
+            "Alias": "Attachment2",
+            "Type": "System.String"
+          },
+          "2": {
+            "Name": "Attachment3",
+            "Index": -1,
+            "NameInSource": "Attachment3",
+            "Alias": "Attachment3",
+            "Type": "System.String"
+          },
+          "3": {
+            "Name": "Attachment4",
+            "Index": -1,
+            "NameInSource": "Attachment4",
+            "Alias": "Attachment4",
+            "Type": "System.String"
+          },
+          "4": {
+            "Name": "CStatusID",
+            "Index": -1,
+            "NameInSource": "CStatusID",
+            "Alias": "CStatusID",
+            "Type": "System.String"
+          },
+          "5": {
+            "Name": "Category_id",
+            "Index": -1,
+            "NameInSource": "Category_id",
+            "Alias": "Category_id",
+            "Type": "System.Decimal"
+          },
+          "6": {
+            "Name": "ComplaintIDParent",
+            "Index": -1,
+            "NameInSource": "ComplaintIDParent",
+            "Alias": "ComplaintIDParent",
+            "Type": "System.Decimal"
+          },
+          "7": {
+            "Name": "ComplaintTypeID",
+            "Index": -1,
+            "NameInSource": "ComplaintTypeID",
+            "Alias": "ComplaintTypeID",
+            "Type": "System.Decimal"
+          },
+          "8": {
+            "Name": "CompletedBy",
+            "Index": -1,
+            "NameInSource": "CompletedBy",
+            "Alias": "CompletedBy",
+            "Type": "System.String"
+          },
+          "9": {
+            "Name": "CompletedDate",
+            "Index": -1,
+            "NameInSource": "CompletedDate",
+            "Alias": "CompletedDate",
+            "Type": "System.String"
+          },
+          "10": {
+            "Name": "CondoSeq",
+            "Index": -1,
+            "NameInSource": "CondoSeq",
+            "Alias": "CondoSeq",
+            "Type": "System.Decimal"
+          },
+          "11": {
+            "Name": "CreatedBy",
+            "Index": -1,
+            "NameInSource": "CreatedBy",
+            "Alias": "CreatedBy",
+            "Type": "System.Decimal"
+          },
+          "12": {
+            "Name": "CreatedDate",
+            "Index": -1,
+            "NameInSource": "CreatedDate",
+            "Alias": "CreatedDate",
+            "Type": "System.DateTime"
+          },
+          "13": {
+            "Name": "Description",
+            "Index": -1,
+            "NameInSource": "Description",
+            "Alias": "Description",
+            "Type": "System.String"
+          },
+          "14": {
+            "Name": "FeedbackID",
+            "Index": -1,
+            "NameInSource": "FeedbackID",
+            "Alias": "FeedbackID",
+            "Type": "System.Decimal"
+          },
+          "15": {
+            "Name": "ForwardDate",
+            "Index": -1,
+            "NameInSource": "ForwardDate",
+            "Alias": "ForwardDate",
+            "Type": "System.String"
+          },
+          "16": {
+            "Name": "ForwardTo",
+            "Index": -1,
+            "NameInSource": "ForwardTo",
+            "Alias": "ForwardTo",
+            "Type": "System.String"
+          },
+          "17": {
+            "Name": "IncidentType",
+            "Index": -1,
+            "NameInSource": "IncidentType",
+            "Alias": "IncidentType",
+            "Type": "System.String"
+          },
+          "18": {
+            "Name": "ManagementRemarks",
+            "Index": -1,
+            "NameInSource": "ManagementRemarks",
+            "Alias": "ManagementRemarks",
+            "Type": "System.String"
+          },
+          "19": {
+            "Name": "ModifiedBy",
+            "Index": -1,
+            "NameInSource": "ModifiedBy",
+            "Alias": "ModifiedBy",
+            "Type": "System.Decimal"
+          },
+          "20": {
+            "Name": "ModifiedDate",
+            "Index": -1,
+            "NameInSource": "ModifiedDate",
+            "Alias": "ModifiedDate",
+            "Type": "System.String"
+          },
+          "21": {
+            "Name": "Priority",
+            "Index": -1,
+            "NameInSource": "Priority",
+            "Alias": "Priority",
+            "Type": "System.String"
+          },
+          "22": {
+            "Name": "ResponseBy",
+            "Index": -1,
+            "NameInSource": "ResponseBy",
+            "Alias": "ResponseBy",
+            "Type": "System.String"
+          },
+          "23": {
+            "Name": "ResponseDate",
+            "Index": -1,
+            "NameInSource": "ResponseDate",
+            "Alias": "ResponseDate",
+            "Type": "System.String"
+          },
+          "24": {
+            "Name": "Role",
+            "Index": -1,
+            "NameInSource": "Role",
+            "Alias": "Role",
+            "Type": "System.String"
+          },
+          "25": {
+            "Name": "Status",
+            "Index": -1,
+            "NameInSource": "Status",
+            "Alias": "Status",
+            "Type": "System.String"
+          },
+          "26": {
+            "Name": "Subject",
+            "Index": -1,
+            "NameInSource": "Subject",
+            "Alias": "Subject",
+            "Type": "System.String"
+          },
+          "27": {
+            "Name": "SyncID",
+            "Index": -1,
+            "NameInSource": "SyncID",
+            "Alias": "SyncID",
+            "Type": "System.Decimal"
+          },
+          "28": {
+            "Name": "UserID",
+            "Index": -1,
+            "NameInSource": "UserID",
+            "Alias": "UserID",
+            "Type": "System.Decimal"
+          }
+        },
+        "NameInSource": "AllPmrsLive",
+        "SqlCommand": "Select * From Feedback WHERE  CondoSeq='50035'"
+      },
+      "1": {
+        "Ident": "StiSqlSource",
+        "Name": "Condo",
+        "Alias": "Condo",
+        "Columns": {
+          "0": {
+            "Name": "ADVELCHARGEGLACCNO",
+            "Index": -1,
+            "NameInSource": "ADVELCHARGEGLACCNO",
+            "Alias": "ADVELCHARGEGLACCNO",
+            "Type": "System.String"
+          },
+          "1": {
+            "Name": "AppsFolder",
+            "Index": -1,
+            "NameInSource": "AppsFolder",
+            "Alias": "AppsFolder",
+            "Type": "System.String"
+          },
+          "2": {
+            "Name": "AppsImg",
+            "Index": -1,
+            "NameInSource": "AppsImg",
+            "Alias": "AppsImg",
+            "Type": "System.String"
+          },
+          "3": {
+            "Name": "BANKNUM",
+            "Index": -1,
+            "NameInSource": "BANKNUM",
+            "Alias": "BANKNUM",
+            "Type": "System.String"
+          },
+          "4": {
+            "Name": "BANK_CODE",
+            "Index": -1,
+            "NameInSource": "BANK_CODE",
+            "Alias": "BANK_CODE",
+            "Type": "System.String"
+          },
+          "5": {
+            "Name": "BENEFICIARYACCTNO",
+            "Index": -1,
+            "NameInSource": "BENEFICIARYACCTNO",
+            "Alias": "BENEFICIARYACCTNO",
+            "Type": "System.String"
+          },
+          "6": {
+            "Name": "BENEFICIARYIDNO",
+            "Index": -1,
+            "NameInSource": "BENEFICIARYIDNO",
+            "Alias": "BENEFICIARYIDNO",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "BILLDATE",
+            "Index": -1,
+            "NameInSource": "BILLDATE",
+            "Alias": "BILLDATE",
+            "Type": "System.String"
+          },
+          "8": {
+            "Name": "BILLPAID",
+            "Index": -1,
+            "NameInSource": "BILLPAID",
+            "Alias": "BILLPAID",
+            "Type": "System.String"
+          },
+          "9": {
+            "Name": "BILLPAYDATE",
+            "Index": -1,
+            "NameInSource": "BILLPAYDATE",
+            "Alias": "BILLPAYDATE",
+            "Type": "System.String"
+          },
+          "10": {
+            "Name": "BillerCode",
+            "Index": -1,
+            "NameInSource": "BillerCode",
+            "Alias": "BillerCode",
+            "Type": "System.Decimal"
+          },
+          "11": {
+            "Name": "COMPANYPATH",
+            "Index": -1,
+            "NameInSource": "COMPANYPATH",
+            "Alias": "COMPANYPATH",
+            "Type": "System.String"
+          },
+          "12": {
+            "Name": "COMPNO",
+            "Index": -1,
+            "NameInSource": "COMPNO",
+            "Alias": "COMPNO",
+            "Type": "System.String"
+          },
+          "13": {
+            "Name": "CONDOADDRESS",
+            "Index": -1,
+            "NameInSource": "CONDOADDRESS",
+            "Alias": "CONDOADDRESS",
+            "Type": "System.String"
+          },
+          "14": {
+            "Name": "CONDOCODE",
+            "Index": -1,
+            "NameInSource": "CONDOCODE",
+            "Alias": "CONDOCODE",
+            "Type": "System.String"
+          },
+          "15": {
+            "Name": "CONDOCOUNTRYCODE",
+            "Index": -1,
+            "NameInSource": "CONDOCOUNTRYCODE",
+            "Alias": "CONDOCOUNTRYCODE",
+            "Type": "System.String"
+          },
+          "16": {
+            "Name": "CONDOGPSLATITUDE",
+            "Index": -1,
+            "NameInSource": "CONDOGPSLATITUDE",
+            "Alias": "CONDOGPSLATITUDE",
+            "Type": "System.Decimal"
+          },
+          "17": {
+            "Name": "CONDOGPSLONGITUDE",
+            "Index": -1,
+            "NameInSource": "CONDOGPSLONGITUDE",
+            "Alias": "CONDOGPSLONGITUDE",
+            "Type": "System.Decimal"
+          },
+          "18": {
+            "Name": "CONDOPOSTCODE",
+            "Index": -1,
+            "NameInSource": "CONDOPOSTCODE",
+            "Alias": "CONDOPOSTCODE",
+            "Type": "System.String"
+          },
+          "19": {
+            "Name": "CONDOSEQ",
+            "Index": -1,
+            "NameInSource": "CONDOSEQ",
+            "Alias": "CONDOSEQ",
+            "Type": "System.Decimal"
+          },
+          "20": {
+            "Name": "CONDOSERVERIP",
+            "Index": -1,
+            "NameInSource": "CONDOSERVERIP",
+            "Alias": "CONDOSERVERIP",
+            "Type": "System.String"
+          },
+          "21": {
+            "Name": "CONTRACTDATE",
+            "Index": -1,
+            "NameInSource": "CONTRACTDATE",
+            "Alias": "CONTRACTDATE",
+            "Type": "System.String"
+          },
+          "22": {
+            "Name": "CONTRACTPAID",
+            "Index": -1,
+            "NameInSource": "CONTRACTPAID",
+            "Alias": "CONTRACTPAID",
+            "Type": "System.String"
+          },
+          "23": {
+            "Name": "CONTRACTPAYDATE",
+            "Index": -1,
+            "NameInSource": "CONTRACTPAYDATE",
+            "Alias": "CONTRACTPAYDATE",
+            "Type": "System.String"
+          },
+          "24": {
+            "Name": "CWBANKCODE",
+            "Index": -1,
+            "NameInSource": "CWBANKCODE",
+            "Alias": "CWBANKCODE",
+            "Type": "System.String"
+          },
+          "25": {
+            "Name": "CondoImg",
+            "Index": -1,
+            "NameInSource": "CondoImg",
+            "Alias": "CondoImg",
+            "Type": "System.String"
+          },
+          "26": {
+            "Name": "CondoLink",
+            "Index": -1,
+            "NameInSource": "CondoLink",
+            "Alias": "CondoLink",
+            "Type": "System.String"
+          },
+          "27": {
+            "Name": "CondoLocation",
+            "Index": -1,
+            "NameInSource": "CondoLocation",
+            "Alias": "CondoLocation",
+            "Type": "System.String"
+          },
+          "28": {
+            "Name": "CondoName",
+            "Index": -1,
+            "NameInSource": "CondoName",
+            "Alias": "CondoName",
+            "Type": "System.String"
+          },
+          "29": {
+            "Name": "CondoUnit",
+            "Index": -1,
+            "NameInSource": "CondoUnit",
+            "Alias": "CondoUnit",
+            "Type": "System.Decimal"
+          },
+          "30": {
+            "Name": "CportalSqlOwner",
+            "Index": -1,
+            "NameInSource": "CportalSqlOwner",
+            "Alias": "CportalSqlOwner",
+            "Type": "System.String"
+          },
+          "31": {
+            "Name": "DATAPATH",
+            "Index": -1,
+            "NameInSource": "DATAPATH",
+            "Alias": "DATAPATH",
+            "Type": "System.String"
+          },
+          "32": {
+            "Name": "DATAUSED",
+            "Index": -1,
+            "NameInSource": "DATAUSED",
+            "Alias": "DATAUSED",
+            "Type": "System.Decimal"
+          },
+          "33": {
+            "Name": "DCDATE",
+            "Index": -1,
+            "NameInSource": "DCDATE",
+            "Alias": "DCDATE",
+            "Type": "System.String"
+          },
+          "34": {
+            "Name": "DCPAYDATE",
+            "Index": -1,
+            "NameInSource": "DCPAYDATE",
+            "Alias": "DCPAYDATE",
+            "Type": "System.String"
+          },
+          "35": {
+            "Name": "DC_PAID",
+            "Index": -1,
+            "NameInSource": "DC_PAID",
+            "Alias": "DC_PAID",
+            "Type": "System.String"
+          },
+          "36": {
+            "Name": "DESCRIPTION",
+            "Index": -1,
+            "NameInSource": "DESCRIPTION",
+            "Alias": "DESCRIPTION",
+            "Type": "System.String"
+          },
+          "37": {
+            "Name": "DISCONTINUEDATE",
+            "Index": -1,
+            "NameInSource": "DISCONTINUEDATE",
+            "Alias": "DISCONTINUEDATE",
+            "Type": "System.String"
+          },
+          "38": {
+            "Name": "ENCRYPTLEN1",
+            "Index": -1,
+            "NameInSource": "ENCRYPTLEN1",
+            "Alias": "ENCRYPTLEN1",
+            "Type": "System.Decimal"
+          },
+          "39": {
+            "Name": "ENCRYPTLEN2",
+            "Index": -1,
+            "NameInSource": "ENCRYPTLEN2",
+            "Alias": "ENCRYPTLEN2",
+            "Type": "System.Decimal"
+          },
+          "40": {
+            "Name": "ENCRYPTLEN3",
+            "Index": -1,
+            "NameInSource": "ENCRYPTLEN3",
+            "Alias": "ENCRYPTLEN3",
+            "Type": "System.Decimal"
+          },
+          "41": {
+            "Name": "ENCRYPTLEN4",
+            "Index": -1,
+            "NameInSource": "ENCRYPTLEN4",
+            "Alias": "ENCRYPTLEN4",
+            "Type": "System.Decimal"
+          },
+          "42": {
+            "Name": "ENCRYPTLEN5",
+            "Index": -1,
+            "NameInSource": "ENCRYPTLEN5",
+            "Alias": "ENCRYPTLEN5",
+            "Type": "System.Decimal"
+          },
+          "43": {
+            "Name": "EmailRecPayment",
+            "Index": -1,
+            "NameInSource": "EmailRecPayment",
+            "Alias": "EmailRecPayment",
+            "Type": "System.Decimal"
+          },
+          "44": {
+            "Name": "EnableFacilities",
+            "Index": -1,
+            "NameInSource": "EnableFacilities",
+            "Alias": "EnableFacilities",
+            "Type": "System.Decimal"
+          },
+          "45": {
+            "Name": "EnableFifo",
+            "Index": -1,
+            "NameInSource": "EnableFifo",
+            "Alias": "EnableFifo",
+            "Type": "System.String"
+          },
+          "46": {
+            "Name": "EnableNotices",
+            "Index": -1,
+            "NameInSource": "EnableNotices",
+            "Alias": "EnableNotices",
+            "Type": "System.Decimal"
+          },
+          "47": {
+            "Name": "EnableOrders",
+            "Index": -1,
+            "NameInSource": "EnableOrders",
+            "Alias": "EnableOrders",
+            "Type": "System.Decimal"
+          },
+          "48": {
+            "Name": "EnablePayments",
+            "Index": -1,
+            "NameInSource": "EnablePayments",
+            "Alias": "EnablePayments",
+            "Type": "System.Decimal"
+          },
+          "49": {
+            "Name": "EnableRequests",
+            "Index": -1,
+            "NameInSource": "EnableRequests",
+            "Alias": "EnableRequests",
+            "Type": "System.Decimal"
+          },
+          "50": {
+            "Name": "EnableRevpay",
+            "Index": -1,
+            "NameInSource": "EnableRevpay",
+            "Alias": "EnableRevpay",
+            "Type": "System.String"
+          },
+          "51": {
+            "Name": "EnableServices",
+            "Index": -1,
+            "NameInSource": "EnableServices",
+            "Alias": "EnableServices",
+            "Type": "System.String"
+          },
+          "52": {
+            "Name": "EnableStatements",
+            "Index": -1,
+            "NameInSource": "EnableStatements",
+            "Alias": "EnableStatements",
+            "Type": "System.Decimal"
+          },
+          "53": {
+            "Name": "EnableTransactions",
+            "Index": -1,
+            "NameInSource": "EnableTransactions",
+            "Alias": "EnableTransactions",
+            "Type": "System.Decimal"
+          },
+          "54": {
+            "Name": "EnableVisitors",
+            "Index": -1,
+            "NameInSource": "EnableVisitors",
+            "Alias": "EnableVisitors",
+            "Type": "System.Decimal"
+          },
+          "55": {
+            "Name": "HpGuard",
+            "Index": -1,
+            "NameInSource": "HpGuard",
+            "Alias": "HpGuard",
+            "Type": "System.String"
+          },
+          "56": {
+            "Name": "HpManagement",
+            "Index": -1,
+            "NameInSource": "HpManagement",
+            "Alias": "HpManagement",
+            "Type": "System.String"
+          },
+          "57": {
+            "Name": "IDTYPE",
+            "Index": -1,
+            "NameInSource": "IDTYPE",
+            "Alias": "IDTYPE",
+            "Type": "System.String"
+          },
+          "58": {
+            "Name": "INVEMAILNOTIFY",
+            "Index": -1,
+            "NameInSource": "INVEMAILNOTIFY",
+            "Alias": "INVEMAILNOTIFY",
+            "Type": "System.String"
+          },
+          "59": {
+            "Name": "INVNOTIFYEMAIL",
+            "Index": -1,
+            "NameInSource": "INVNOTIFYEMAIL",
+            "Alias": "INVNOTIFYEMAIL",
+            "Type": "System.String"
+          },
+          "60": {
+            "Name": "JOINTDATE",
+            "Index": -1,
+            "NameInSource": "JOINTDATE",
+            "Alias": "JOINTDATE",
+            "Type": "System.DateTime"
+          },
+          "61": {
+            "Name": "MONTHLYBILLDAY",
+            "Index": -1,
+            "NameInSource": "MONTHLYBILLDAY",
+            "Alias": "MONTHLYBILLDAY",
+            "Type": "System.Decimal"
+          },
+          "62": {
+            "Name": "MONTHLYCHARGE",
+            "Index": -1,
+            "NameInSource": "MONTHLYCHARGE",
+            "Alias": "MONTHLYCHARGE",
+            "Type": "System.Decimal"
+          },
+          "63": {
+            "Name": "MONTHLYCHARGEDESC",
+            "Index": -1,
+            "NameInSource": "MONTHLYCHARGEDESC",
+            "Alias": "MONTHLYCHARGEDESC",
+            "Type": "System.String"
+          },
+          "64": {
+            "Name": "MONTLYBILLMETHOD",
+            "Index": -1,
+            "NameInSource": "MONTLYBILLMETHOD",
+            "Alias": "MONTLYBILLMETHOD",
+            "Type": "System.Decimal"
+          },
+          "65": {
+            "Name": "NEXTMONTHBILLDATE",
+            "Index": -1,
+            "NameInSource": "NEXTMONTHBILLDATE",
+            "Alias": "NEXTMONTHBILLDATE",
+            "Type": "System.DateTime"
+          },
+          "66": {
+            "Name": "NEXTQUARTERBILLDATE",
+            "Index": -1,
+            "NameInSource": "NEXTQUARTERBILLDATE",
+            "Alias": "NEXTQUARTERBILLDATE",
+            "Type": "System.DateTime"
+          },
+          "67": {
+            "Name": "NEXTYEARBILLDATE",
+            "Index": -1,
+            "NameInSource": "NEXTYEARBILLDATE",
+            "Alias": "NEXTYEARBILLDATE",
+            "Type": "System.DateTime"
+          },
+          "68": {
+            "Name": "PAYEENAME",
+            "Index": -1,
+            "NameInSource": "PAYEENAME",
+            "Alias": "PAYEENAME",
+            "Type": "System.String"
+          },
+          "69": {
+            "Name": "PAYERBANKID",
+            "Index": -1,
+            "NameInSource": "PAYERBANKID",
+            "Alias": "PAYERBANKID",
+            "Type": "System.String"
+          },
+          "70": {
+            "Name": "PAYMODE",
+            "Index": -1,
+            "NameInSource": "PAYMODE",
+            "Alias": "PAYMODE",
+            "Type": "System.String"
+          },
+          "71": {
+            "Name": "PERTRANSACTIONCHARGE",
+            "Index": -1,
+            "NameInSource": "PERTRANSACTIONCHARGE",
+            "Alias": "PERTRANSACTIONCHARGE",
+            "Type": "System.Decimal"
+          },
+          "72": {
+            "Name": "QUARTERLYBILLDAY",
+            "Index": -1,
+            "NameInSource": "QUARTERLYBILLDAY",
+            "Alias": "QUARTERLYBILLDAY",
+            "Type": "System.Decimal"
+          },
+          "73": {
+            "Name": "QUARTERLYCHARGE",
+            "Index": -1,
+            "NameInSource": "QUARTERLYCHARGE",
+            "Alias": "QUARTERLYCHARGE",
+            "Type": "System.Decimal"
+          },
+          "74": {
+            "Name": "QUARTERLYCHARGEDESC",
+            "Index": -1,
+            "NameInSource": "QUARTERLYCHARGEDESC",
+            "Alias": "QUARTERLYCHARGEDESC",
+            "Type": "System.String"
+          },
+          "75": {
+            "Name": "SAVED_CPORTALSQLOWNER",
+            "Index": -1,
+            "NameInSource": "SAVED_CPORTALSQLOWNER",
+            "Alias": "SAVED_CPORTALSQLOWNER",
+            "Type": "System.String"
+          },
+          "76": {
+            "Name": "SAVED_DSRUN",
+            "Index": -1,
+            "NameInSource": "SAVED_DSRUN",
+            "Alias": "SAVED_DSRUN",
+            "Type": "System.String"
+          },
+          "77": {
+            "Name": "SAVED_SPORTALSQLOWNER",
+            "Index": -1,
+            "NameInSource": "SAVED_SPORTALSQLOWNER",
+            "Alias": "SAVED_SPORTALSQLOWNER",
+            "Type": "System.String"
+          },
+          "78": {
+            "Name": "SAVED_SQLOWNER",
+            "Index": -1,
+            "NameInSource": "SAVED_SQLOWNER",
+            "Alias": "SAVED_SQLOWNER",
+            "Type": "System.String"
+          },
+          "79": {
+            "Name": "SERVICEPORT",
+            "Index": -1,
+            "NameInSource": "SERVICEPORT",
+            "Alias": "SERVICEPORT",
+            "Type": "System.String"
+          },
+          "80": {
+            "Name": "SERVICESERVER",
+            "Index": -1,
+            "NameInSource": "SERVICESERVER",
+            "Alias": "SERVICESERVER",
+            "Type": "System.String"
+          },
+          "81": {
+            "Name": "SUSPENDDATE",
+            "Index": -1,
+            "NameInSource": "SUSPENDDATE",
+            "Alias": "SUSPENDDATE",
+            "Type": "System.String"
+          },
+          "82": {
+            "Name": "USABLEID",
+            "Index": -1,
+            "NameInSource": "USABLEID",
+            "Alias": "USABLEID",
+            "Type": "System.Decimal"
+          },
+          "83": {
+            "Name": "USEJOMPAY",
+            "Index": -1,
+            "NameInSource": "USEJOMPAY",
+            "Alias": "USEJOMPAY",
+            "Type": "System.Decimal"
+          },
+          "84": {
+            "Name": "USEWEBPORTAL",
+            "Index": -1,
+            "NameInSource": "USEWEBPORTAL",
+            "Alias": "USEWEBPORTAL",
+            "Type": "System.Decimal"
+          },
+          "85": {
+            "Name": "UseProduct",
+            "Index": -1,
+            "NameInSource": "UseProduct",
+            "Alias": "UseProduct",
+            "Type": "System.Decimal"
+          },
+          "86": {
+            "Name": "WebFolder",
+            "Index": -1,
+            "NameInSource": "WebFolder",
+            "Alias": "WebFolder",
+            "Type": "System.String"
+          },
+          "87": {
+            "Name": "YEARLYBILLDAY",
+            "Index": -1,
+            "NameInSource": "YEARLYBILLDAY",
+            "Alias": "YEARLYBILLDAY",
+            "Type": "System.Decimal"
+          },
+          "88": {
+            "Name": "YEARLYCHARGE",
+            "Index": -1,
+            "NameInSource": "YEARLYCHARGE",
+            "Alias": "YEARLYCHARGE",
+            "Type": "System.Decimal"
+          },
+          "89": {
+            "Name": "YEARLYCHARGEDESC",
+            "Index": -1,
+            "NameInSource": "YEARLYCHARGEDESC",
+            "Alias": "YEARLYCHARGEDESC",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "AllPmrsLive",
+        "SqlCommand": "Select * From Condo"
+      },
+      "2": {
+        "Ident": "StiSqlSource",
+        "Name": "User",
+        "Alias": "User",
+        "Columns": {
+          "0": {
+            "Name": "CODEDESCRIPTION",
+            "Index": -1,
+            "NameInSource": "CODEDESCRIPTION",
+            "Alias": "CODEDESCRIPTION",
+            "Type": "System.String"
+          },
+          "1": {
+            "Name": "CONDOSEQ",
+            "Index": -1,
+            "NameInSource": "CONDOSEQ",
+            "Alias": "CONDOSEQ",
+            "Type": "System.Decimal"
+          },
+          "2": {
+            "Name": "CREATEDBY",
+            "Index": -1,
+            "NameInSource": "CREATEDBY",
+            "Alias": "CREATEDBY",
+            "Type": "System.Decimal"
+          },
+          "3": {
+            "Name": "CREATEDDATE",
+            "Index": -1,
+            "NameInSource": "CREATEDDATE",
+            "Alias": "CREATEDDATE",
+            "Type": "System.DateTime"
+          },
+          "4": {
+            "Name": "Code",
+            "Index": -1,
+            "NameInSource": "Code",
+            "Alias": "Code",
+            "Type": "System.String"
+          },
+          "5": {
+            "Name": "EMAIL",
+            "Index": -1,
+            "NameInSource": "EMAIL",
+            "Alias": "EMAIL",
+            "Type": "System.String"
+          },
+          "6": {
+            "Name": "EXPIRYDATE",
+            "Index": -1,
+            "NameInSource": "EXPIRYDATE",
+            "Alias": "EXPIRYDATE",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "GROUPID",
+            "Index": -1,
+            "NameInSource": "GROUPID",
+            "Alias": "GROUPID",
+            "Type": "System.Decimal"
+          },
+          "8": {
+            "Name": "LASTLOGINDATE",
+            "Index": -1,
+            "NameInSource": "LASTLOGINDATE",
+            "Alias": "LASTLOGINDATE",
+            "Type": "System.DateTime"
+          },
+          "9": {
+            "Name": "LOGINID",
+            "Index": -1,
+            "NameInSource": "LOGINID",
+            "Alias": "LOGINID",
+            "Type": "System.String"
+          },
+          "10": {
+            "Name": "LOGINPASSWORD",
+            "Index": -1,
+            "NameInSource": "LOGINPASSWORD",
+            "Alias": "LOGINPASSWORD",
+            "Type": "System.String"
+          },
+          "11": {
+            "Name": "MOBILE",
+            "Index": -1,
+            "NameInSource": "MOBILE",
+            "Alias": "MOBILE",
+            "Type": "System.String"
+          },
+          "12": {
+            "Name": "MODIFIEDBY",
+            "Index": -1,
+            "NameInSource": "MODIFIEDBY",
+            "Alias": "MODIFIEDBY",
+            "Type": "System.Decimal"
+          },
+          "13": {
+            "Name": "MODIFIEDDATE",
+            "Index": -1,
+            "NameInSource": "MODIFIEDDATE",
+            "Alias": "MODIFIEDDATE",
+            "Type": "System.String"
+          },
+          "14": {
+            "Name": "NEWREGISTER",
+            "Index": -1,
+            "NameInSource": "NEWREGISTER",
+            "Alias": "NEWREGISTER",
+            "Type": "System.Decimal"
+          },
+          "15": {
+            "Name": "NEWUSER",
+            "Index": -1,
+            "NameInSource": "NEWUSER",
+            "Alias": "NEWUSER",
+            "Type": "System.Decimal"
+          },
+          "16": {
+            "Name": "OWNERNAME",
+            "Index": -1,
+            "NameInSource": "OWNERNAME",
+            "Alias": "OWNERNAME",
+            "Type": "System.String"
+          },
+          "17": {
+            "Name": "PROPERTYNO",
+            "Index": -1,
+            "NameInSource": "PROPERTYNO",
+            "Alias": "PROPERTYNO",
+            "Type": "System.String"
+          },
+          "18": {
+            "Name": "RESIDENT",
+            "Index": -1,
+            "NameInSource": "RESIDENT",
+            "Alias": "RESIDENT",
+            "Type": "System.Decimal"
+          },
+          "19": {
+            "Name": "ROLE",
+            "Index": -1,
+            "NameInSource": "ROLE",
+            "Alias": "ROLE",
+            "Type": "System.String"
+          },
+          "20": {
+            "Name": "STATUSID",
+            "Index": -1,
+            "NameInSource": "STATUSID",
+            "Alias": "STATUSID",
+            "Type": "System.Decimal"
+          },
+          "21": {
+            "Name": "UNITSEQ",
+            "Index": -1,
+            "NameInSource": "UNITSEQ",
+            "Alias": "UNITSEQ",
+            "Type": "System.Decimal"
+          },
+          "22": {
+            "Name": "USABLEID",
+            "Index": -1,
+            "NameInSource": "USABLEID",
+            "Alias": "USABLEID",
+            "Type": "System.Decimal"
+          },
+          "23": {
+            "Name": "USERID",
+            "Index": -1,
+            "NameInSource": "USERID",
+            "Alias": "USERID",
+            "Type": "System.Decimal"
+          }
+        },
+        "NameInSource": "USJOne",
+        "SqlCommand": "Select * From Users"
+      }
+    },
+    "Databases": {
+      "0": {
+        "Ident": "StiSqlDatabase",
+        "Name": "AllPmrsLive",
+        "Alias": "AllPmrsLive",
+        "ConnectionStringEncrypted": "4HCzj8kJe8jpX7n4Tggio9/6gYxYWUvtawah7E4NohvROvfrTUpLncsZ9Rz1+OFugVr3iU1L8/BhFaXs4D2ld8TI9ShWaKOZ8xW5herEYjv5eNnk5QNDxUMIJb3KAPVn82DZyeZLu/XgXe2AwxW1D/VAzetISjGk4FuoCGVsqruBME9ITXFylMJr1RhqyPY7kHCb600D06z5G+2legT2E8NUU2DFAw=="
+      },
+      "1": {
+        "Ident": "StiSqlDatabase",
+        "Name": "USJOne",
+        "Alias": "USJOne",
+        "ConnectionStringEncrypted": "4HD5z8kJ0/XpR7mYygh3o9/69YrZTDH1bwahgE7IaTf/cPXr71taGWIZ7Rz1jPZu+VbVKE1LMfBpBv30d1yiZ9nI0UjFAzHNQkwpjfHEZDvDxLPkRkpznUMZjMljJagX3NRPy8ZdSYHsW+iA5BXje5Dy0QlbT9OFQGyoyWEQpG6LcPerRgrzvMNOzWxpdGJjwsiZz2dSMR1Ga6GZ6dgi59k="
+      }
+    },
+    "Relations": {
+      "0": {
+        "Name": "CondoSeq",
+        "ChildColumns": {
+          "0": "CondoSeq"
+        },
+        "ParentColumns": {
+          "0": "CONDOSEQ"
+        },
+        "NameInSource": "CondoSeq",
+        "Alias": "CondoSeq",
+        "IsCloud": null,
+        "ParentSource": "Condo",
+        "ChildSource": "Feedback"
+      },
+      "1": {
+        "Name": "UserID",
+        "ChildColumns": {
+          "0": "CreatedBy"
+        },
+        "ParentColumns": {
+          "0": "USERID"
+        },
+        "NameInSource": "UserID",
+        "Alias": "UserID",
+        "IsCloud": null,
+        "ParentSource": "User",
+        "ChildSource": "Feedback"
+      }
+    }
+  },
+  "Pages": {
+    "0": {
+      "Ident": "StiPage",
+      "Name": "Page1",
+      "Guid": "c630b44be2f7f4608c9b4c218845d447",
+      "Interaction": {
+        "Ident": "StiInteraction"
+      },
+      "Border": ";;2;;;;;solid:Black",
+      "Brush": "solid:Transparent",
+      "Components": {
+        "0": {
+          "Ident": "StiReportTitleBand",
+          "Name": "ReportTitleBand1",
+          "ClientRectangle": "0,0.4,27.7,2",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:Transparent",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text1",
+              "ClientRectangle": "0,0,10.2,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "FEEDBACK SUMMARY"
+              },
+              "Font": ";14;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text2",
+              "ClientRectangle": "0,0.8,15,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Condo : {Feedback.CondoSeq.CONDOSEQ} - {Feedback.CondoSeq.DESCRIPTION}"
+              },
+              "Font": ";12;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text26",
+              "ClientRectangle": "22.6,0.8,5,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Page Number :{PageNumber} of {TotalPageCount}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:0,255,255,255",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            }
+          }
+        },
+        "1": {
+          "Ident": "StiGroupHeaderBand",
+          "Name": "GroupHeaderBand1",
+          "ClientRectangle": "0,3.2,27.7,0.8",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:Transparent",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text3",
+              "ClientRectangle": "0,0,11.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{MonthName(Feedback.CreatedDate)} : Total Case - {Count(DataBand1)} Unit"
+              },
+              "Font": ";;Bold;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            }
+          },
+          "Condition": {
+            "Value": "{MonthName(Feedback.CreatedDate)}"
+          }
+        },
+        "2": {
+          "Ident": "StiHeaderBand",
+          "Name": "HeaderBand1",
+          "ClientRectangle": "0,4.8,27.7,0.8",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:Transparent",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text27",
+              "ClientRectangle": "17.6,0,5.6,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Total Outstanding Cases : {CountIf(DataBand1,Feedback.CompletedDate == \"\")}"
+              },
+              "Font": ";;Bold;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text28",
+              "ClientRectangle": "23.2,0,4.4,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Total Case Resolved : {CountIf(DataBand1, Feedback.CompletedDate)}"
+              },
+              "Font": ";;Bold;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text29",
+              "Guid": "f7a9456607cad50b31125baeae504342",
+              "ClientRectangle": "13.6,0,4,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Total Cases : {Count(DataBand1)}"
+              },
+              "Font": ";;Bold;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            }
+          }
+        },
+        "3": {
+          "Ident": "StiHeaderBand",
+          "Name": "HeaderBand2",
+          "ClientRectangle": "0,6.4,27.7,1",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:Transparent",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text4",
+              "ClientRectangle": "0,0,0.6,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "No"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Left, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "solid:217,226,243",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text5",
+              "ClientRectangle": "0.6,0,2.2,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Feedback ID"
+              },
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "solid:217,226,243",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text6",
+              "ClientRectangle": "2.4,0,2.2,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Date Received"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "solid:217,226,243",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text7",
+              "ClientRectangle": "4.6,0,2.2,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Unit No"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "solid:217,226,243",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "Text8",
+              "ClientRectangle": "10.2,0,8.4,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Complaint"
+              },
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "solid:217,226,243",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "Text9",
+              "ClientRectangle": "18.6,0,1.4,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Status"
+              },
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "solid:217,226,243",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text11",
+              "ClientRectangle": "20,0,1.8,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "< 14 Days"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "solid:217,226,243",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "Text12",
+              "ClientRectangle": "21.8,0,1.8,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "14 Days >"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "solid:217,226,243",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "8": {
+              "Ident": "StiText",
+              "Name": "Text13",
+              "ClientRectangle": "23.6,0,2.4,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Completed Date"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "solid:217,226,243",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "9": {
+              "Ident": "StiText",
+              "Name": "Text14",
+              "ClientRectangle": "25.9,0,1.6,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Duration"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Right, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "solid:217,226,243",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "10": {
+              "Ident": "StiText",
+              "Name": "Text10",
+              "ClientRectangle": "6.8,0,3.4,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Subject"
+              },
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "solid:217,226,243",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            }
+          }
+        },
+        "4": {
+          "Ident": "StiDataBand",
+          "Name": "DataBand1",
+          "ClientRectangle": "0,8.2,27.7,0.6",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "empty",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text15",
+              "ClientRectangle": "0,0,0.6,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Line}"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Border": "Top, Left, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "empty",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text16",
+              "ClientRectangle": "0.6,0,1.8,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Feedback.FeedbackID}"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "empty",
+              "TextBrush": "solid:0,0,0",
+              "Type": "DataColumn"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text17",
+              "ClientRectangle": "2.4,0,2.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Feedback.CreatedDate}"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "empty",
+              "TextBrush": "solid:0,0,0",
+              "TextFormat": {
+                "Ident": "StiDateFormatService",
+                "StringFormat": "dd/MM/yyyy"
+              },
+              "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text18",
+              "ClientRectangle": "4.6,0,2.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Feedback.UserID.PROPERTYNO}"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "empty",
+              "TextBrush": "solid:0,0,0",
+              "Type": "DataColumn"
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "Text19",
+              "ClientRectangle": "10.2,0,8.4,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Feedback.Description}"
+              },
+              "VertAlignment": "Center",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "empty",
+              "TextBrush": "solid:0,0,0",
+              "Type": "DataColumn"
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "Text20",
+              "ClientRectangle": "18.6,0,1.4,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Feedback.Status}"
+              },
+              "VertAlignment": "Center",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "empty",
+              "TextBrush": "solid:0,0,0",
+              "Type": "DataColumn"
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text22",
+              "ClientRectangle": "20,0,1.8,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{IIF(DateDiff(Feedback.CompletedDate,Feedback.CreatedDate).Days <14,\"1\",\" \")}"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "empty",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "Text23",
+              "ClientRectangle": "21.8,0,1.8,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{IIF(DateDiff(Feedback.CompletedDate,Feedback.CreatedDate).Days >14,\"1\",\" \")}"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "empty",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "8": {
+              "Ident": "StiText",
+              "Name": "Text24",
+              "ClientRectangle": "23.6,0,2.4,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Feedback.CompletedDate}"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "empty",
+              "TextBrush": "solid:0,0,0",
+              "TextFormat": {
+                "Ident": "StiDateFormatService",
+                "StringFormat": "dd/MM/yyyy"
+              },
+              "Type": "DataColumn"
+            },
+            "9": {
+              "Ident": "StiText",
+              "Name": "Text25",
+              "ClientRectangle": "25.9,0,1.6,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{DateDiff(Feedback.CompletedDate,Feedback.CreatedDate).Days}"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Border": "Top, Right, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "empty",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "10": {
+              "Ident": "StiText",
+              "Name": "Text21",
+              "Guid": "2f7e442a87c24f4eeb951c1d06557858",
+              "ClientRectangle": "6.8,0,3.4,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Feedback.Subject}"
+              },
+              "VertAlignment": "Center",
+              "Border": "Top, Bottom;;;;;;;solid:0,0,0",
+              "Brush": "empty",
+              "TextBrush": "solid:0,0,0",
+              "Type": "DataColumn"
+            }
+          },
+          "DataSourceName": "Feedback",
+          "Sort": {
+            "0": "ASC",
+            "1": "FeedbackID"
+          },
+          "Filters": {
+            "0": {
+              "Ident": "StiFilter",
+              "Condition": "IsNull",
+              "DataType": "Expression",
+              "Column": "ComplaintIDParent"
+            },
+            "1": {
+              "Ident": "StiFilter",
+              "Item": "Expression",
+              "Expression": {
+                "Value": "{Feedback.Status == Status || All}"
+              }
+            },
+            "2": {
+              "Ident": "StiFilter",
+              "Condition": "Between",
+              "DataType": "Expression",
+              "Column": "CreatedDate",
+              "Value1": "DateFrom",
+              "Value2": "DateTo"
+            }
+          }
+        },
+        "5": {
+          "Ident": "StiFooterBand",
+          "Name": "FooterBand1",
+          "ClientRectangle": "0,9.6,27.7,0.6",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:Transparent"
+        },
+        "6": {
+          "Ident": "StiFooterBand",
+          "Name": "FooterBand2",
+          "ClientRectangle": "0,11,27.7,0.6",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:Transparent"
+        },
+        "7": {
+          "Ident": "StiGroupFooterBand",
+          "Name": "GroupFooterBand1",
+          "ClientRectangle": "0,12.4,27.7,0.6",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:Transparent"
+        }
+      },
+      "Orientation": "Landscape",
+      "PageWidth": 29.7,
+      "PageHeight": 18,
+      "Watermark": {
+        "TextBrush": "solid:50,0,0,0"
+      },
+      "Margins": {
+        "Left": 1,
+        "Right": 1,
+        "Top": 1,
+        "Bottom": 1
+      }
+    }
+  }
+}
