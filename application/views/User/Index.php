@@ -77,7 +77,7 @@
 			<div class="menu-brand"><p align="center"><?php echo $_SESSION['fullname']; ?></p></div>
 			<ul class="nav" id="side-menu">
 				<li><a href="<?php echo base_url()."index.php/User/Home/Index";?>"><i class="glyphicon glyphicon-dashboard"></i>&nbsp;&nbsp;Dashboard&nbsp;</a></li>
-				<?php if($_SESSION['ResidentAccountSummary']){ ?>
+				<?php if(isset($_SESSION['ResidentAccountSummary']) && $_SESSION['ResidentAccountSummary']){ ?>
 					<li>
 						<a href="#"><i class="glyphicon glyphicon-inbox"></i>&nbsp;&nbsp;Account Summary&nbsp;<span class="glyphicon arrow"></span></a>
 						<ul class="nav nav-second-level">
@@ -87,7 +87,7 @@
 						</ul>
 					</li>
 				<?php } ?>
-				<?php if($_SESSION['ResidentFeedbackRequest']){ ?>
+				<?php if(isset($_SESSION['ResidentFeedbackRequest']) && $_SESSION['ResidentFeedbackRequest']){ ?>
 					<li>
 						<a href="#"><i class="glyphicon glyphicon-comment"></i>&nbsp;&nbsp;Feedbacks/Requests&nbsp;<span class="glyphicon arrow"></span></a>
 						<ul class="nav nav-second-level">
@@ -96,7 +96,7 @@
 						</ul>
 					</li>
 				<?php } ?>
-				<?php if($_SESSION['ResidentFacilityBooking']){ ?>
+				<?php if(isset($_SESSION['ResidentFacilityBooking']) && $_SESSION['ResidentFacilityBooking']){ ?>
 					<li>
 						<a href="#"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;Facility Booking&nbsp;<span class="glyphicon arrow"></span></a>
 						<ul class="nav nav-second-level">
@@ -105,7 +105,7 @@
 						</ul>
 					</li>
 				<?php } ?>
-				<?php if($_SESSION['ResidentSponsor']){ ?>
+				<?php if(isset($_SESSION['ResidentSponsor']) && $_SESSION['ResidentSponsor']){ ?>
 					<li><a href="<?php echo base_url()."index.php/Common/Promotion/Index/".GLOBAL_CONDOSEQ;?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;Sponsor&nbsp;</a></li>
 				<?php } ?>
 				<li><a href="<?php echo base_url()."index.php/Login/Logout";?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;&nbsp;Logout</a></li>
@@ -115,7 +115,7 @@
 	<div id="page-wrapper">
 		<div class="row"></div>
 		<div class="row row-header">
-			<?php if($_SESSION['ResidentAccountSummary']){ ?>
+			<?php if(isset($_SESSION['ResidentAccountSummary']) && $_SESSION['ResidentAccountSummary']){ ?>
 				<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
 					<a href="<?php echo base_url()."index.php/Common/Outstanding/Index";?>">
 						<div class="panel panel-yellow">
@@ -152,7 +152,7 @@
 					</div>
 				</div>
 			<?php } ?>
-			<?php if($_SESSION['ResidentFacilityBooking']){ ?>
+			<?php if(isset($_SESSION['ResidentFacilityBooking']) && $_SESSION['ResidentFacilityBooking']){ ?>
 				<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
 					<a href="<?php echo base_url()."index.php/Common/FacilityBooking/Lists";?>">
 						<div class="panel panel-blue">
@@ -189,7 +189,7 @@
 					</div>
 				</div>
 			<?php } ?>
-			<?php if($_SESSION['ResidentFeedbackRequest']){ ?>
+			<?php if(isset($_SESSION['ResidentFeedbackRequest']) && $_SESSION['ResidentFeedbackRequest']){ ?>
 				<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
 					<a href="<?php echo base_url()."index.php/Common/OpenFeedbacks/Index";?>">
 						<div class="panel panel-green">
@@ -226,7 +226,7 @@
 					</div>
 				</div>
 			<?php } ?>
-			<?php if($_SESSION['ResidentNewsfeed']){ ?>
+			<?php if(isset($_SESSION['ResidentNewsfeed']) && $_SESSION['ResidentNewsfeed']){ ?>
 				<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
 					<a href="<?php echo base_url()."index.php/Common/News/Index";?>">
 						<div class="panel panel-red">
@@ -270,37 +270,37 @@
 					<div class="panel-body">
 						<ul class="nav nav-tabs">
 							<li class="active"><a href="#whatsnew" data-toggle="tab">What's New</a></li>
-							<?php if($_SESSION['ResidentAccountSummary']){ ?>
+							<?php if(isset($_SESSION['ResidentAccountSummary']) && $_SESSION['ResidentAccountSummary']){ ?>
 								<li><a href="#os" data-toggle="tab">Account Summary</a></li>
 							<?php } ?>
-							<?php if($_SESSION['ResidentFacilityBooking']){ ?>
+							<?php if(isset($_SESSION['ResidentFacilityBooking']) && $_SESSION['ResidentFacilityBooking']){ ?>
 								<li><a href="#booking" data-toggle="tab">Facilites Booking</a></li>
 							<?php } ?>
-							<?php if($_SESSION['ResidentFeedbackRequest']){ ?>
+							<?php if(isset($_SESSION['ResidentFeedbackRequest']) && $_SESSION['ResidentFeedbackRequest']){ ?>
 								<li><a href="#feedback" data-toggle="tab">Feedbacks/Requests</a></li>
 							<?php } ?>
-							<?php if($_SESSION['ResidentNewsfeed']){ ?>
+							<?php if(isset($_SESSION['ResidentNewsfeed']) && $_SESSION['ResidentNewsfeed']){ ?>
 								<li><a href="#news" data-toggle="tab">Newsfeed</a></li>
 							<?php } ?>
-							<?php if($_SESSION['ResidentSponsor']){ ?>
+							<?php if(isset($_SESSION['ResidentSponsor']) && $_SESSION['ResidentSponsor']){ ?>
 								<li><a href="#promo" data-toggle="tab">Promotion</a></li>
 							<?php } ?>
 						</ul>
 						<div class="tab-content">
 							<?php echo $tab1; ?>
-							<?php if($_SESSION['ResidentAccountSummary']){ ?>
+							<?php if(isset($_SESSION['ResidentAccountSummary']) && $_SESSION['ResidentAccountSummary']){ ?>
 								<?php echo $tab2; ?>
 							<?php } ?>
-							<?php if($_SESSION['ResidentFacilityBooking']){ ?>
+							<?php if(isset($_SESSION['ResidentFacilityBooking']) && $_SESSION['ResidentFacilityBooking']){ ?>
 								<?php echo $tab3; ?>
 							<?php } ?>
-							<?php if($_SESSION['ResidentFeedbackRequest']){ ?>
+							<?php if(isset($_SESSION['ResidentFeedbackRequest']) && $_SESSION['ResidentFeedbackRequest']){ ?>
 								<?php echo $tab4; ?>
 							<?php } ?>
-							<?php if($_SESSION['ResidentNewsfeed']){ ?>
+							<?php if(isset($_SESSION['ResidentNewsfeed']) && $_SESSION['ResidentNewsfeed']){ ?>
 								<?php echo $tab5; ?>
 							<?php } ?>
-							<?php if($_SESSION['ResidentSponsor']){ ?>
+							<?php if(isset($_SESSION['ResidentSponsor']) && $_SESSION['ResidentSponsor']){ ?>
 								<?php echo $tab6; ?>
 							<?php } ?>
 						</div>
