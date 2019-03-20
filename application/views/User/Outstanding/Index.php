@@ -30,9 +30,9 @@
 									<?php foreach($osList as $item) { ?>
 										<tr>
 											<td id="docNo"><?php echo $item['docNo']; ?></td>
-											<td><?php echo $item['trxnDate']; ?></td>
+											<td><?php echo date("d-m-Y",strtotime($item['trxnDate'])); ?></td>
 											<td style="text-align:left;"><?php echo $item['desc']; ?></td>
-											<td><?php echo $item['dueDate']; ?></td>
+											<td><?php echo date("d-m-Y",strtotime($item['dueDate'])); ?></td>
 											<td id="amt"><?php echo number_format(floatval($item['amt']), 2, '.', ''); ?></td>
 											<td><?php echo $item['floatAmt']; ?></td>
 											<td id="ref1"><?php echo $item['ref1']; ?></td>

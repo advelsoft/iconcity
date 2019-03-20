@@ -68,7 +68,7 @@
 						<?php $attributes = array("id" => "Loginform", "name" => "Loginform");
 						echo form_open("", $attributes);?>
 						<fieldset>
-							<div class="form-custom">Login ID
+							<div class="form-custom">Login Id
 								<input type="text" class="form-control" id="username" name="username" placeholder="Your username">
 							</div>
 							<div class="form-custom">Password

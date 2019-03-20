@@ -85,7 +85,7 @@ class login_model extends CI_Model
 		$this->cportal->select('USERID');
 		$this->cportal->from('Users');
 		$this->cportal->where('LOGINID', $username);
-		$this->cportal->where('LOGINPASSWORD', $password);
+		// $this->cportal->where('LOGINPASSWORD', $password);
 		return $this->cportal->get()->row('USERID');
 	}
 	

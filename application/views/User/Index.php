@@ -42,7 +42,7 @@
                         <i class="glyphicon glyphicon-user gi-1x"></i> <i class="glyphicon glyphicon-triangle-bottom"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                    	<?php if($_SESSION['ResidentProfile']){ ?>
+                    	<?php if(isset($_SESSION['ResidentProfile']) && $_SESSION['ResidentProfile']){ ?>
                         	<li><a href="<?php echo base_url()."index.php/Common/ProfileSet/Index";?>"><i class="glyphicon glyphicon-lock"></i>&nbsp;&nbsp;Profile Setting</a></li>
                         <?php } ?>
 						<li class="divider"></li>
