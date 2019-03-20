@@ -17,6 +17,7 @@ class Home extends CI_Controller
 		//load the model
 		$this->load->model('index_model'); 
 		$this->load->model('forms_model');
+		$this->load->model('user_model');
 		
 		//check if login
 		if (!$this->session->userdata('loginuser'))
@@ -47,6 +48,31 @@ class Home extends CI_Controller
 		$data['infoList'] = $this->forms_model->get_info_list();
 		$data['subinfoList'] = $this->forms_model->get_subinfo_list();
 		$data['subsubinfoList'] = $this->forms_model->get_subsubinfo_list();
+		//Get User Access Control
+		$UAC = $this->user_model->get_user_access_control($_SESSION['condoseq'], 'Mgmt');
+
+		if($UAC != NULL){
+			$sessiondata = array(
+							 'MgmtProfile'=>$UAC->MgmtProfile,
+							 'MgmtFeedbackRequest'=>$UAC->MgmtFeedbackRequest,
+							 'MgmtFacilityBooking'=>$UAC->MgmtFacilityBooking,
+							 'MgmtNewsfeed'=>$UAC->MgmtNewsfeed,
+							 'MgmtSponsor'=>$UAC->MgmtSponsor,
+							 'MgmtSetupForm'=>$UAC->MgmtSetupForm,
+							 'MgmtSetupCondoIntro'=>$UAC->MgmtSetupCondoIntro,
+							 'MgmtSetupContact'=>$UAC->MgmtSetupContact);
+		} else{
+			$sessiondata = array(
+							 'MgmtProfile'=>NULL,
+							 'MgmtFeedbackRequest'=>NULL,
+							 'MgmtFacilityBooking'=>NULL,
+							 'MgmtNewsfeed'=>NULL,
+							 'MgmtSponsor'=>NULL,
+							 'MgmtSetupForm'=>NULL,
+							 'MgmtSetupCondoIntro'=>NULL,
+							 'MgmtSetupContact'=>NULL);
+		}
+		$this->session->set_userdata($sessiondata);
 		
 		//load the view
 		$data_view = array(

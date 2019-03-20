@@ -11,11 +11,14 @@ class profileSet extends CI_Controller {
 		// load form helper and validation library
 		$this->load->helper('form');
 		$this->load->library('form_validation');
+		$this->load->library('Curl');
+		$this->load->library('PHPRequests');
 		
 		//load the model
 		$this->load->model('profileset_model');
 		$this->load->model('header_model');
 		$this->cportal = $this->load->database('cportal',TRUE);
+		$this->jompay = $this->load->database('jompay',TRUE);
 		
 		//check if login
 		if (!$this->session->userdata('loginuser'))
@@ -56,11 +59,12 @@ class profileSet extends CI_Controller {
 		//call the model
 		$data['company'] = $this->header_model->get_Company();
         $data['profileSet'] = $this->profileset_model->get_change_list();
+		$data['changePassword'] = $this->profileset_model->get_changepassword_service();
 
 		//set validation rules
 		$this->form_validation->set_rules('OldUser', 'Old Username', 'trim');
         $this->form_validation->set_rules('NewUser', 'New Username', 'trim');
-        $this->form_validation->set_rules('OldPw', 'Old Password', 'trim');
+        $this->form_validation->set_rules('OldPw', 'Old Password', 'trim|required');
         $this->form_validation->set_rules('NewPw', 'New Password', 'trim|required');
         $this->form_validation->set_rules('ConfirmPw', 'Confirm New Password', 'trim|required|matches[NewPw]');
 
@@ -88,13 +92,14 @@ class profileSet extends CI_Controller {
 		}
 		else
         {
+			
 			//validation succeed
 			if($_SESSION['role'] == 'Mgmt' || $_SESSION['role'] == 'Tech'){
 				$log = array(
 					'OldLoginID' => $this->input->post('OldUser'),
 					'NewLoginID' => $this->input->post('NewUser'),
-					'OldPassword' => $this->input->post('OldPw'),
-					'NewPassword' => $this->input->post('NewPw'),
+					//'OldPassword' => $this->input->post('OldPw'),
+					//'NewPassword' => $this->input->post('NewPw'),
 					'CreatedDate' => date('Y-m-d H:i:s'),
 				);
 
@@ -102,29 +107,28 @@ class profileSet extends CI_Controller {
 				$this->db->insert('ChangeProfileLog', $log);
 
 				if($this->input->post('NewUser') != ''){
-					$users = array('LOGINID' => $this->input->post('NewUser'),
-								   'LOGINPASSWORD' => $this->input->post('NewPw'));
+					$users = array('LOGINID' => $this->input->post('NewUser'));
 								   
 					//update record
 					$this->db->where('LOGINID', $this->input->post('OldUser'));
-					$this->db->where('LOGINPASSWORD', $this->input->post('OldPw'));
+					//$this->db->where('LOGINPASSWORD', $this->input->post('OldPw'));
 					$this->db->update('Users', $users);
 				}
-				else{
-					$users = array('LOGINPASSWORD' => $this->input->post('NewPw'));
+				// else{
+					// $users = array('LOGINPASSWORD' => $this->input->post('NewPw'));
 					
-					//update record
-					$this->db->where('LOGINID', $this->input->post('OldUser'));
-					$this->db->where('LOGINPASSWORD', $this->input->post('OldPw'));
-					$this->db->update('Users', $users);
-				}
+					// //update record
+					// $this->db->where('LOGINID', $this->input->post('OldUser'));
+					// $this->db->where('LOGINPASSWORD', $this->input->post('OldPw'));
+					// $this->db->update('Users', $users);
+				// }
 			}
 			else{
 				$log = array(
 					'OldLoginID' => $this->input->post('OldUser'),
 					'NewLoginID' => $this->input->post('NewUser'),
-					'OldPassword' => $this->input->post('OldPw'),
-					'NewPassword' => $this->input->post('NewPw'),
+					//'OldPassword' => $this->input->post('OldPw'),
+					//'NewPassword' => $this->input->post('NewPw'),
 					'CreatedDate' => date('Y-m-d H:i:s'),
 				);
 
@@ -132,22 +136,21 @@ class profileSet extends CI_Controller {
 				$this->cportal->insert('ChangeProfileLog', $log);
 
 				if($this->input->post('NewUser') != ''){
-					$users = array('LOGINID' => $this->input->post('NewUser'),
-								   'LOGINPASSWORD' => $this->input->post('NewPw'));
+					$users = array('LOGINID' => $this->input->post('NewUser'));
 								   
 					//update record
 					$this->cportal->where('LOGINID', $this->input->post('OldUser'));
-					$this->cportal->where('LOGINPASSWORD', $this->input->post('OldPw'));
+					//$this->cportal->where('LOGINPASSWORD', $this->input->post('OldPw'));
 					$this->cportal->update('Users', $users);
 				}
-				else{
-					$users = array('LOGINPASSWORD' => $this->input->post('NewPw'));
+				// else{
+					// $users = array('LOGINPASSWORD' => $this->input->post('NewPw'));
 					
-					//update record
-					$this->cportal->where('LOGINID', $this->input->post('OldUser'));
-					$this->cportal->where('LOGINPASSWORD', $this->input->post('OldPw'));
-					$this->cportal->update('Users', $users);
-				}
+					// //update record
+					// $this->cportal->where('LOGINID', $this->input->post('OldUser'));
+					// $this->cportal->where('LOGINPASSWORD', $this->input->post('OldPw'));
+					// $this->cportal->update('Users', $users);
+				// }
 			}
 
 			//display success message

@@ -18,7 +18,7 @@
                         <i class="glyphicon glyphicon-user gi-1x"></i> <i class="glyphicon glyphicon-triangle-bottom"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <?php if($_SESSION['ResidentProfile']){ ?>
+                        <?php if(isset($_SESSION['ResidentProfile']) && $_SESSION['ResidentProfile']){ ?>
                         	<li><a href="<?php echo base_url()."index.php/Common/ProfileSet/Index";?>"><i class="glyphicon glyphicon-lock"></i>&nbsp;&nbsp;Profile Setting</a></li>
                         <?php } ?>
 						<li class="divider"></li>
@@ -34,7 +34,7 @@
 			<div class="menu-brand"><p align="center"><?php echo $_SESSION['fullname']; ?></p></div>
 			<ul class="nav" id="side-menu">
 				<li><a href="<?php echo base_url()."index.php/User/Home/Index";?>"><i class="glyphicon glyphicon-dashboard"></i>&nbsp;&nbsp;Dashboard&nbsp;</a></li>
-				<?php if($_SESSION['ResidentAccountSummary']){ ?>
+				<?php if(isset($_SESSION['ResidentAccountSummary']) && $_SESSION['ResidentAccountSummary']){ ?>
 					<li>
 						<a href="#"><i class="glyphicon glyphicon-inbox"></i>&nbsp;&nbsp;Account Summary&nbsp;<span class="glyphicon arrow"></span></a>
 						<ul class="nav nav-second-level">
@@ -44,7 +44,7 @@
 						</ul>
 					</li>
 				<?php } ?>
-				<?php if($_SESSION['ResidentFeedbackRequest']){ ?>
+				<?php if(isset($_SESSION['ResidentFeedbackRequest']) && $_SESSION['ResidentFeedbackRequest']){ ?>
 					<li>
 						<a href="#"><i class="glyphicon glyphicon-comment"></i>&nbsp;&nbsp;Feedbacks/Requests&nbsp;<span class="glyphicon arrow"></span></a>
 						<ul class="nav nav-second-level">
@@ -53,7 +53,7 @@
 						</ul>
 					</li>
 				<?php } ?>
-				<?php if($_SESSION['ResidentFacilityBooking']){ ?>
+				<?php if(isset($_SESSION['ResidentFacilityBooking']) && $_SESSION['ResidentFacilityBooking']){ ?>
 					<li>
 						<a href="#"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;Facility Booking&nbsp;<span class="glyphicon arrow"></span></a>
 						<ul class="nav nav-second-level">
@@ -62,7 +62,7 @@
 						</ul>
 					</li>
 				<?php } ?>
-				<?php if($_SESSION['ResidentSponsor']){ ?>
+				<?php if(isset($_SESSION['ResidentSponsor']) && $_SESSION['ResidentSponsor']){ ?>
 					<li><a href="<?php echo base_url()."index.php/Common/Promotion/Index/".GLOBAL_CONDOSEQ;?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;Sponsor&nbsp;</a></li>
 				<?php } ?>
 				<li><a href="<?php echo base_url()."index.php/Login/Logout";?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;&nbsp;Logout</a></li>

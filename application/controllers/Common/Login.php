@@ -19,31 +19,6 @@ class login extends CI_Controller
 		$this->jompay = $this->load->database('jompay',TRUE);
 	}
 
-	public function Deploy()
-    {
-		$commands = array(
-			'echo $PWD',
-			'whoami',
-			'git reset --hard HEAD',
-			'git pull',
-			'git status',
-			'git submodule sync',
-			'git submodule update',
-			'git submodule status',
-		);
-		// Run the commands for output
-		$output = '';
-		foreach($commands AS $command){
-			// Run it
-			$tmp = shell_exec($command);
-			// Output
-			$output .= "<span style=\"color: #6BE234;\">\$</span> <span style=\"color: #729FCF;\">{$command}\n</span>";
-			$output .= htmlentities(trim($tmp)) . "\n";
-		}
-		// Make it pretty for manual user access (and why not?)
-		echo $output;
-    }
-
 	public function Login()
 	{
 		//call the model function to get the data
@@ -149,49 +124,6 @@ class login extends CI_Controller
 					
 					redirect('index.php/Mgmt/Home/Index');			
 				}
-				// else if($_SESSION['role'] == 'Tech'){
-				// 	//update Users record
-				// 	$this->db->where('LOGINID', $username);
-				// 	$this->db->where('LOGINPASSWORD', $password);
-				// 	$this->db->update('Users', $users);
-					
-				// 	//insert UsersLog record
-				// 	$this->cportal->insert('UsersLog', $userlog);
-					
-				// 	$previous_page = $this->session->userdata('previous_page');
-				// 	if(isset($previous_page) && $previous_page != ''){
-				// 		$temp = explode('/', $previous_page);
-				// 		$feedbackid = $temp[3];
-						
-				// 		$this->db->from('FeedbackResponse');
-				// 		$this->db->where('ComplaintIDParent', $feedbackid);
-				// 		$this->db->where('ForwardTo IS NOT NULL', NULL);
-				// 		$query = $this->db->get();
-				// 		$result = $query->result();
-						
-				// 		$this->db->from('Feedback');
-				// 		$this->db->where('FeedbackID', $feedbackid);
-				// 		$query = $this->db->get();
-				// 		$status = $query->result();
-						
-				// 		$tech = $result[0]->ForwardTo;
-
-				// 		if(trim($tech) == $user->Name){
-				// 			if($status[0]->Status != 'Closed'){//check status of complaint
-				// 				redirect('index.php/'.$previous_page);
-				// 			}
-				// 			else{
-				// 				redirect('index.php/Tech/Home/Index');	
-				// 			}
-				// 		}
-				// 		else{
-				// 			redirect(base_url().'index.php/Common/Login/Login');
-				// 		}
-				// 	}
-				// 	else{
-				// 		redirect('index.php/Tech/Home/Index');	
-				// 	}
-				// }
 				else{
 					// login failed
 					$this->session->set_flashdata('msg', '<script language=javascript>alert("Wrong username or password!");</script>');
@@ -259,7 +191,14 @@ class login extends CI_Controller
 					//insert UsersLog record
 					$this->cportal->insert('UsersLog', $userlog);
 					
-					redirect('index.php/User/Home/Index');
+					if(($user->LOGINPASSWORD) != NULL){
+						//echo  "test"; die();
+						$this->session->set_flashdata('msg', '<script language=javascript>alert("Please change your password.");</script>');
+						redirect('index.php/Common/ProfileSet/Index');
+					}
+					else{
+						redirect('index.php/User/Home/Index');
+					}
 				}
 				else
 				{

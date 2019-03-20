@@ -16,6 +16,7 @@ class Home extends CI_Controller
 		//load the model
 		$this->load->model('index_model');
 		$this->load->model('forms_model');
+		$this->load->model('user_model');
 		
 		//check if login
 		if (!$this->session->userdata('loginuser'))
@@ -47,7 +48,27 @@ class Home extends CI_Controller
 		$data['infoList'] = $this->forms_model->get_info_list();
 		$data['subinfoList'] = $this->forms_model->get_subinfo_list();
 		$data['subsubinfoList'] = $this->forms_model->get_subsubinfo_list();
-		
+		$UAC = $this->user_model->get_user_access_control($_SESSION['condoseq'], 'Resident');
+
+		if($UAC != NULL){
+			$sessiondata = array(
+							 'ResidentProfile'=>$UAC->ResidentProfile,
+							 'ResidentAccountSummary'=>$UAC->ResidentAccountSummary,
+							 'ResidentFeedbackRequest'=>$UAC->ResidentFeedbackRequest,
+							 'ResidentFacilityBooking'=>$UAC->ResidentFacilityBooking,
+							 'ResidentSponsor'=>$UAC->ResidentSponsor,
+							 'ResidentNewsfeed'=>$UAC->ResidentNewsfeed);
+		} else{
+			$sessiondata = array(
+							 'ResidentProfile'=>NULL,
+							 'ResidentAccountSummary'=>NULL,
+							 'ResidentFeedbackRequest'=>NULL,
+							 'ResidentFacilityBooking'=>NULL,
+							 'ResidentSponsor'=>NULL,
+							 'ResidentNewsfeed'=>NULL);
+		}
+		$this->session->set_userdata($sessiondata);
+
 		//load the view
 		$data_view = array(
 			"tab1" => $this->load->view('User/IndexWhatsNew', $data, TRUE),

@@ -18,7 +18,7 @@
                         <i class="glyphicon glyphicon-user gi-1x"></i> <i class="glyphicon glyphicon-triangle-bottom"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <?php if($_SESSION['MgmtProfile']){ ?>
+                        <?php if(isset($_SESSION['MgmtProfile']) && $_SESSION['MgmtProfile']){ ?>
                         	<li><a href="<?php echo base_url()."index.php/Common/ProfileSet/Index";?>"><i class="glyphicon glyphicon-lock"></i>&nbsp;&nbsp;Profile Setting</a></li>
                         <?php } ?>
 						<li class="divider"></li>
@@ -34,7 +34,7 @@
 			<div class="menu-brand"><p align="center"><?php echo $_SESSION['fullname']; ?></p></div>
 			<ul class="nav" id="side-menu">
 				<li><a href="<?php echo base_url()."index.php/Mgmt/Home/Index";?>"><i class="glyphicon glyphicon-dashboard"></i>&nbsp;&nbsp;Dashboard&nbsp;</a></li>
-				<?php if($_SESSION['MgmtFeedbackRequest']){ ?>
+				<?php if(isset($_SESSION['MgmtFeedbackRequest']) && $_SESSION['MgmtFeedbackRequest']){ ?>
 				<li>
 					<a href="#"><i class="glyphicon glyphicon-comment"></i>&nbsp;&nbsp;Feedbacks/Requests&nbsp;<span class="glyphicon arrow"></span></a>
 					<ul class="nav nav-second-level">
@@ -44,7 +44,7 @@
 					</ul>
 				</li>
 				<?php } ?>
-				<?php if($_SESSION['MgmtFacilityBooking']){ ?>
+				<?php if(isset($_SESSION['MgmtFacilityBooking']) && $_SESSION['MgmtFacilityBooking']){ ?>
 				<li><a href="#"><i class="glyphicon glyphicon-tasks"></i>&nbsp;&nbsp;Facility Booking&nbsp;<span class="glyphicon arrow"></span></a>
 					<ul class="nav nav-second-level">
 						<li><a href="<?php echo base_url()."index.php/Common/FacilityBooking/Index";?>"><i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;On Going Facility Booking&nbsp;&nbsp;</a></li>
@@ -53,16 +53,16 @@
 					</ul>
 				</li>
 				<?php } ?>
-				<?php if($_SESSION['MgmtNewsfeed']){ ?>
+				<?php if(isset($_SESSION['MgmtNewsfeed']) && $_SESSION['MgmtNewsfeed']){ ?>
 				<li><a href="<?php echo base_url()."index.php/Common/News/Index";?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;Newsfeed&nbsp;</a></li>
 				<?php } ?>
-				<?php if($_SESSION['MgmtSponsor']){ ?>
+				<?php if(isset($_SESSION['MgmtSponsor']) && $_SESSION['MgmtSponsor']){ ?>
 				<li><a href="<?php echo base_url()."index.php/Common/Promotion/Index/".GLOBAL_CONDOSEQ;?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;Services On-Demand&nbsp;</a></li>
 				<?php } ?>
 				<li>
 					<a href="#"><i class="glyphicon glyphicon-wrench"></i>&nbsp;&nbsp;Setup&nbsp;<span class="glyphicon arrow"></span></a>
 					<ul class="nav nav-second-level">
-						<?php if($_SESSION['MgmtFeedbackRequest']){ ?>
+						<?php if(isset($_SESSION['MgmtFeedbackRequest']) && $_SESSION['MgmtFeedbackRequest']){ ?>
 							<li>
 								<a href="#"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Department Setup&nbsp;<span class="glyphicon arrow"></span></a>
 								<ul class="nav nav-third-level">
@@ -80,7 +80,7 @@
 								</ul>
 							</li>
 						<?php } ?>
-						<?php if($_SESSION['MgmtFacilityBooking']){ ?>
+						<?php if(isset($_SESSION['MgmtFacilityBooking']) && $_SESSION['MgmtFacilityBooking']){ ?>
 							<li>
 								<a href="#"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Facility Setup&nbsp;<span class="glyphicon arrow"></span></a>
 								<ul class="nav nav-third-level">
@@ -91,16 +91,16 @@
 								</ul>
 							</li>
 						<?php } ?>
-						<?php if($_SESSION['MgmtSetupForm']){ ?>
+						<?php if(isset($_SESSION['MgmtSetupForm']) && $_SESSION['MgmtSetupForm']){ ?>
 							<li><a href="<?php echo base_url()."index.php/Common/Forms/Index";?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;Form Setup&nbsp;&nbsp;</a></li>
 						<?php } ?>
-						<?php if($_SESSION['MgmtSetupCondoIntro']){ ?>
+						<?php if(isset($_SESSION['MgmtSetupCondoIntro']) && $_SESSION['MgmtSetupCondoIntro']){ ?>
 							<li><a href="<?php echo base_url()."index.php/Common/Amenities/Index";?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;Condo Intro&nbsp;&nbsp;</a></li>
 						<?php } ?>
-						<?php if($_SESSION['MgmtSetupContact']){ ?>
+						<?php if(isset($_SESSION['MgmtSetupContact']) && $_SESSION['MgmtSetupContact']){ ?>
 							<li><a href="<?php echo base_url()."index.php/Common/Company/Index";?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;Contact&nbsp;&nbsp;</a></li>
 						<?php } ?>
-						<?php if($_SESSION['MgmtNewsfeed']){ ?>
+						<?php if(isset($_SESSION['MgmtNewsfeed']) && $_SESSION['MgmtNewsfeed']){ ?>
 							<li><a href="<?php echo base_url()."index.php/Common/Jmb/Index";?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;JMB Setup&nbsp;&nbsp;</a></li>
 						<?php } ?>
 					</ul>

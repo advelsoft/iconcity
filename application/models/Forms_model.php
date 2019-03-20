@@ -160,58 +160,27 @@ class forms_model extends CI_Model
 			//Owner
 			if($user[0]->GROUPID == '2')
 			{
-				//check if jmb member
-				$this->cportal->from('JMB');
-				$this->cportal->where('PropertyNo', $user[0]->PROPERTYNO);
-				$query = $this->cportal->get();
-				$jmb = $query->result();
+				$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
+						(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
+						ON a.FormID = b.ParentID 
+						WHERE a.Level = 1 AND Owner = 1 AND FormType = 1  
+						ORDER BY a.ParentID, Sequence ASC";
+				$query = $this->cportal->query($sql);
+				$result = $query->result();
 				
-				if(count($jmb) > 0){
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 1 AND Jmb = 1 AND FormType = 1  
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
+				$array = array();
+				if(count($result) > 0){
+					for ($i = 0; $i < count($result); $i++)
+					{
+						$array[$i] = array('formID'=>$result[$i]->FormID,
+										   'name'=>$result[$i]->FormName,
+										   'file'=>$result[$i]->FormFile,
+										   'level'=>$result[$i]->Level,
+										   'parentID'=>$result[$i]->ParentID,
+										   'cnt'=>$result[$i]->Count);
 					}
-					return $array;
 				}
-				else{
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 1 AND Owner = 1 AND FormType = 1  
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
-					}
-					return $array;
-				}
+				return $array;
 			}
 			//Tenant
 			else {
@@ -275,58 +244,27 @@ class forms_model extends CI_Model
 			//Owner
 			if($user[0]->GROUPID == '2')
 			{
-				//check if jmb member
-				$this->cportal->from('JMB');
-				$this->cportal->where('PropertyNo', $user[0]->PROPERTYNO);
-				$query = $this->cportal->get();
-				$jmb = $query->result();
+				$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
+						(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
+						ON a.FormID = b.ParentID 
+						WHERE a.Level = 2 AND Owner = 1 AND FormType = 1 
+						ORDER BY a.ParentID, Sequence ASC";
+				$query = $this->cportal->query($sql);
+				$result = $query->result();
 				
-				if(count($jmb) > 0){
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 2 AND Jmb = 1 AND FormType = 1  
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
+				$array = array();
+				if(count($result) > 0){
+					for ($i = 0; $i < count($result); $i++)
+					{
+						$array[$i] = array('formID'=>$result[$i]->FormID,
+										   'name'=>$result[$i]->FormName,
+										   'file'=>$result[$i]->FormFile,
+										   'level'=>$result[$i]->Level,
+										   'parentID'=>$result[$i]->ParentID,
+										   'cnt'=>$result[$i]->Count);
 					}
-					return $array;
 				}
-				else{
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 2 AND Owner = 1 AND FormType = 1 
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
-					}
-					return $array;
-				}
+				return $array;
 			}
 			//Tenant
 			else {
@@ -390,58 +328,27 @@ class forms_model extends CI_Model
 			//Owner
 			if($user[0]->GROUPID == '2')
 			{
-				//check if jmb member
-				$this->cportal->from('JMB');
-				$this->cportal->where('PropertyNo', $user[0]->PROPERTYNO);
-				$query = $this->cportal->get();
-				$jmb = $query->result();
+				$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
+						(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
+						ON a.FormID = b.ParentID 
+						WHERE a.Level = 3 AND Owner = 1 AND FormType = 1 
+						ORDER BY a.ParentID, Sequence ASC";
+				$query = $this->cportal->query($sql);
+				$result = $query->result();
 				
-				if(count($jmb) > 0){
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 3 AND Jmb = 1 AND FormType = 1  
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
+				$array = array();
+				if(count($result) > 0){
+					for ($i = 0; $i < count($result); $i++)
+					{
+						$array[$i] = array('formID'=>$result[$i]->FormID,
+										   'name'=>$result[$i]->FormName,
+										   'file'=>$result[$i]->FormFile,
+										   'level'=>$result[$i]->Level,
+										   'parentID'=>$result[$i]->ParentID,
+										   'cnt'=>$result[$i]->Count);
 					}
-					return $array;
 				}
-				else{
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 3 AND Owner = 1 AND FormType = 1 
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
-					}
-					return $array;
-				}
+				return $array;
 			}
 			//Tenant
 			else {
@@ -504,58 +411,27 @@ class forms_model extends CI_Model
 			//Owner
 			if($user[0]->GROUPID == '2')
 			{
-				//check if jmb member
-				$this->cportal->from('JMB');
-				$this->cportal->where('PropertyNo', $user[0]->PROPERTYNO);
-				$query = $this->cportal->get();
-				$jmb = $query->result();
+				$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
+						(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
+						ON a.FormID = b.ParentID 
+						WHERE a.Level = 1 AND Owner = 1 AND FormType = 2 
+						ORDER BY a.ParentID, Sequence ASC";
+				$query = $this->cportal->query($sql);
+				$result = $query->result();
 				
-				if(count($jmb) > 0){
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 1 AND Jmb = 1 AND FormType = 2  
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
+				$array = array();
+				if(count($result) > 0){
+					for ($i = 0; $i < count($result); $i++)
+					{
+						$array[$i] = array('formID'=>$result[$i]->FormID,
+										   'name'=>$result[$i]->FormName,
+										   'file'=>$result[$i]->FormFile,
+										   'level'=>$result[$i]->Level,
+										   'parentID'=>$result[$i]->ParentID,
+										   'cnt'=>$result[$i]->Count);
 					}
-					return $array;
 				}
-				else{
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 1 AND Owner = 1 AND FormType = 2 
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
-					}
-					return $array;
-				}
+				return $array;
 			}
 			//Tenant
 			else {
@@ -619,58 +495,27 @@ class forms_model extends CI_Model
 			//Owner
 			if($user[0]->GROUPID == '2')
 			{
-				//check if jmb member
-				$this->cportal->from('JMB');
-				$this->cportal->where('PropertyNo', $user[0]->PROPERTYNO);
-				$query = $this->cportal->get();
-				$jmb = $query->result();
+				$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
+						(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
+						ON a.FormID = b.ParentID 
+						WHERE a.Level = 2 AND Owner = 1 AND FormType = 2 
+						ORDER BY a.ParentID, Sequence ASC";
+				$query = $this->cportal->query($sql);
+				$result = $query->result();
 				
-				if(count($jmb) > 0){
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 2 AND Jmb = 1 AND FormType = 2  
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
+				$array = array();
+				if(count($result) > 0){
+					for ($i = 0; $i < count($result); $i++)
+					{
+						$array[$i] = array('formID'=>$result[$i]->FormID,
+										   'name'=>$result[$i]->FormName,
+										   'file'=>$result[$i]->FormFile,
+										   'level'=>$result[$i]->Level,
+										   'parentID'=>$result[$i]->ParentID,
+										   'cnt'=>$result[$i]->Count);
 					}
-					return $array;
 				}
-				else{
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 2 AND Owner = 1 AND FormType = 2 
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
-					}
-					return $array;
-				}
+				return $array;
 			}
 			//Tenant
 			else {
@@ -734,60 +579,29 @@ class forms_model extends CI_Model
 			//Owner
 			if($user[0]->GROUPID == '2')
 			{
-				//check if jmb member
-				$this->cportal->from('JMB');
-				$this->cportal->where('PropertyNo', $user[0]->PROPERTYNO);
-				$query = $this->cportal->get();
-				$jmb = $query->result();
+				$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
+						(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
+						ON a.FormID = b.ParentID 
+						WHERE a.Level = 3 AND Owner = 1 AND FormType = 2  
+						ORDER BY a.ParentID, Sequence ASC";
+				$query = $this->cportal->query($sql);
+				$query = $this->cportal->query($sql);
+				$query = $this->cportal->query($sql);
+				$result = $query->result();
 				
-				if(count($jmb) > 0){
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 3 AND Jmb = 1 AND FormType = 2  
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
+				$array = array();
+				if(count($result) > 0){
+					for ($i = 0; $i < count($result); $i++)
+					{
+						$array[$i] = array('formID'=>$result[$i]->FormID,
+										   'name'=>$result[$i]->FormName,
+										   'file'=>$result[$i]->FormFile,
+										   'level'=>$result[$i]->Level,
+										   'parentID'=>$result[$i]->ParentID,
+										   'cnt'=>$result[$i]->Count);
 					}
-					return $array;
 				}
-				else{
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 3 AND Owner = 1 AND FormType = 2  
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$query = $this->cportal->query($sql);
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
-					}
-					return $array;
-				}
+				return $array;
 			}
 			//Tenant
 			else {
@@ -850,58 +664,27 @@ class forms_model extends CI_Model
 			//Owner
 			if($user[0]->GROUPID == '2')
 			{
-				//check if jmb member
-				$this->cportal->from('JMB');
-				$this->cportal->where('PropertyNo', $user[0]->PROPERTYNO);
-				$query = $this->cportal->get();
-				$jmb = $query->result();
+				$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
+						(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
+						ON a.FormID = b.ParentID 
+						WHERE a.Level = 1 AND Owner = 1 AND FormType = 3 
+						ORDER BY a.ParentID, Sequence ASC";
+				$query = $this->cportal->query($sql);
+				$result = $query->result();
 				
-				if(count($jmb) > 0){
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 1 AND Jmb = 1 AND FormType = 3  
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
+				$array = array();
+				if(count($result) > 0){
+					for ($i = 0; $i < count($result); $i++)
+					{
+						$array[$i] = array('formID'=>$result[$i]->FormID,
+										   'name'=>$result[$i]->FormName,
+										   'file'=>$result[$i]->FormFile,
+										   'level'=>$result[$i]->Level,
+										   'parentID'=>$result[$i]->ParentID,
+										   'cnt'=>$result[$i]->Count);
 					}
-					return $array;
 				}
-				else{
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 1 AND Owner = 1 AND FormType = 3 
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
-					}
-					return $array;
-				}
+				return $array;
 			}
 			//Tenant
 			else {
@@ -965,58 +748,27 @@ class forms_model extends CI_Model
 			//Owner
 			if($user[0]->GROUPID == '2')
 			{
-				//check if jmb member
-				$this->cportal->from('JMB');
-				$this->cportal->where('PropertyNo', $user[0]->PROPERTYNO);
-				$query = $this->cportal->get();
-				$jmb = $query->result();
+				$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
+						(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
+						ON a.FormID = b.ParentID 
+						WHERE a.Level = 2 AND Owner = 1 AND FormType = 3 
+						ORDER BY a.ParentID, Sequence ASC";
+				$query = $this->cportal->query($sql);
+				$result = $query->result();
 				
-				if(count($jmb) > 0){
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 2 AND Jmb = 1 AND FormType = 3  
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
+				$array = array();
+				if(count($result) > 0){
+					for ($i = 0; $i < count($result); $i++)
+					{
+						$array[$i] = array('formID'=>$result[$i]->FormID,
+										   'name'=>$result[$i]->FormName,
+										   'file'=>$result[$i]->FormFile,
+										   'level'=>$result[$i]->Level,
+										   'parentID'=>$result[$i]->ParentID,
+										   'cnt'=>$result[$i]->Count);
 					}
-					return $array;
 				}
-				else{
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 2 AND Owner = 1 AND FormType = 3 
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
-					}
-					return $array;
-				}
+				return $array;
 			}
 			//Tenant
 			else {
@@ -1080,58 +832,27 @@ class forms_model extends CI_Model
 			//Owner
 			if($user[0]->GROUPID == '2')
 			{
-				//check if jmb member
-				$this->cportal->from('JMB');
-				$this->cportal->where('PropertyNo', $user[0]->PROPERTYNO);
-				$query = $this->cportal->get();
-				$jmb = $query->result();
+				$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
+						(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
+						ON a.FormID = b.ParentID 
+						WHERE a.Level = 3 AND Owner = 1 AND FormType = 3 
+						ORDER BY a.ParentID, Sequence ASC";
+				$query = $this->cportal->query($sql);
+				$result = $query->result();
 				
-				if(count($jmb) > 0){
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 3 AND Jmb = 1 AND FormType = 3  
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
+				$array = array();
+				if(count($result) > 0){
+					for ($i = 0; $i < count($result); $i++)
+					{
+						$array[$i] = array('formID'=>$result[$i]->FormID,
+										   'name'=>$result[$i]->FormName,
+										   'file'=>$result[$i]->FormFile,
+										   'level'=>$result[$i]->Level,
+										   'parentID'=>$result[$i]->ParentID,
+										   'cnt'=>$result[$i]->Count);
 					}
-					return $array;
 				}
-				else{
-					$sql = "SELECT a.FormID, a.FormName, a.FormFile, a.Level, a.ParentID, b.Count FROM Form a LEFT JOIN 
-							(SELECT ParentID, COUNT(*) AS Count FROM Form GROUP BY ParentID) b 
-							ON a.FormID = b.ParentID 
-							WHERE a.Level = 3 AND Owner = 1 AND FormType = 3 
-							ORDER BY a.ParentID, Sequence ASC";
-					$query = $this->cportal->query($sql);
-					$result = $query->result();
-					
-					$array = array();
-					if(count($result) > 0){
-						for ($i = 0; $i < count($result); $i++)
-						{
-							$array[$i] = array('formID'=>$result[$i]->FormID,
-											   'name'=>$result[$i]->FormName,
-											   'file'=>$result[$i]->FormFile,
-											   'level'=>$result[$i]->Level,
-											   'parentID'=>$result[$i]->ParentID,
-											   'cnt'=>$result[$i]->Count);
-						}
-					}
-					return $array;
-				}
+				return $array;
 			}
 			//Tenant
 			else {
