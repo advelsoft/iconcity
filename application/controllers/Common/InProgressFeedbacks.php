@@ -192,13 +192,13 @@ class inprogressfeedbacks extends CI_Controller {
 	
 			//get server, port
 			$this->jompay->from('Condo');
-			$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->jompay->get();
 			$condo = $query->result();
 			
 			//config
 			$this->db->from('WebCtrl');
-			$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->db->get();	
 			$webctrl = $query->result();
 
@@ -225,7 +225,7 @@ class inprogressfeedbacks extends CI_Controller {
 					'ComplaintIDParent' => $UID,
 					'CreatedBy' => $_SESSION['userid'],
 					'CreatedDate' => date('Y-m-d H:i:s'),
-					'CondoSeq' => GLOBAL_CONDOSEQ,
+					'CondoSeq' => $_SESSION['condoseq'],
 					'Role' => $_SESSION['role'],
 				);
 
@@ -238,7 +238,7 @@ class inprogressfeedbacks extends CI_Controller {
 							   "<br>Priority: Medium".
 							   "<br>Status: InProgress".
 							   "<br><br>--".
-							   "<br>".GLOBAL_FORMAL_NAME." Management Office";
+							   "<br>".$_SESSION['formalname']." Management Office";
 					$this->load->library('email', $configEmail);
 					$this->email->set_newline("\r\n");
 					$this->email->from($webctrl[0]->EMAILSENDER);
@@ -268,7 +268,7 @@ class inprogressfeedbacks extends CI_Controller {
 					}
 				}
 				else{
-					$jsonData = array('UserTokenNo' => 'PIS7040S', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UnitSeqNo' => trim($users[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 
+					$jsonData = array('UserTokenNo' => 'PIS7040S', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($users[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 
 									  'RequestId' => $UID, 'Content' => $this->input->post('Description'));
 
 					$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/RequestMessageAdd';
@@ -367,7 +367,7 @@ class inprogressfeedbacks extends CI_Controller {
 					'ComplaintIDParent' => $UID,
 					'CreatedBy' => $_SESSION['userid'],
 					'CreatedDate' => date('Y-m-d H:i:s'),
-					'CondoSeq' => GLOBAL_CONDOSEQ,
+					'CondoSeq' => $_SESSION['condoseq'],
 					'Role' => $_SESSION['role'],
 				);
 
@@ -380,7 +380,7 @@ class inprogressfeedbacks extends CI_Controller {
 							   "<br>Priority: Medium".
 							   "<br>Status: InProgress".
 							   "<br><br>--".
-							   "<br>".GLOBAL_FORMAL_NAME." Management Office";
+							   "<br>".$_SESSION['formalname']." Management Office";
 					$this->load->library('email', $configEmail);
 					$this->email->set_newline("\r\n");
 					$this->email->from($webctrl[0]->EMAILSENDER);
@@ -410,7 +410,7 @@ class inprogressfeedbacks extends CI_Controller {
 					}
 				}
 				else{
-					$jsonData = array('UserTokenNo' => 'PIS7040S', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UnitSeqNo' => trim($users[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 
+					$jsonData = array('UserTokenNo' => 'PIS7040S', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($users[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 
 									  'RequestId' => $UID, 'Content' => $this->input->post('Description'));
 
 					$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/RequestMessageAdd';
@@ -520,7 +520,7 @@ class inprogressfeedbacks extends CI_Controller {
 			
 			//config
 			$this->db->from('WebCtrl');
-			$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->db->get();	
 			$webctrl = $query->result();
 
@@ -542,7 +542,7 @@ class inprogressfeedbacks extends CI_Controller {
 					   "<br>Priority: Medium".
 					   "<br>Status: Closed".
 					   "<br><br>--".
-					   "<br>".GLOBAL_FORMAL_NAME." Management Office";
+					   "<br>".$_SESSION['formalname']." Management Office";
 			$this->load->library('email', $config);
 			$this->email->set_newline("\r\n");
 			$this->email->from($webctrl[0]->EMAILSENDER);
@@ -559,7 +559,7 @@ class inprogressfeedbacks extends CI_Controller {
 				'CStatusID' => '2',
                 'ModifiedBy' => $_SESSION['userid'],
                 'ModifiedDate' => date('Y-m-d H:i:s'),
-				'CondoSeq' => GLOBAL_CONDOSEQ,
+				'CondoSeq' => $_SESSION['condoseq'],
             );
 
 			//update record
@@ -578,7 +578,7 @@ class inprogressfeedbacks extends CI_Controller {
 					'PropertyNo' => $this->input->post('propNo'),
 					'Amount' => $this->input->post('Amount'),
 					'Description' => $this->input->post('Desc'),
-					'CondoSeq' => GLOBAL_CONDOSEQ,
+					'CondoSeq' => $_SESSION['condoseq'],
 					'CreatedBy' => $_SESSION['userid'],
 					'CreatedDate' => date('Y-m-d H:i:s'),
 				);
@@ -630,7 +630,7 @@ class inprogressfeedbacks extends CI_Controller {
 				'ResponseDate' => date('Y-m-d H:i:s'),
 				'ForwardTo' => $technician[0],
 				'ForwardDate' => date('Y-m-d H:i:s'),
-				'CondoSeq' => GLOBAL_CONDOSEQ,
+				'CondoSeq' => $_SESSION['condoseq'],
 				'Role' => $_SESSION['role'],
             );
 			
@@ -642,7 +642,7 @@ class inprogressfeedbacks extends CI_Controller {
 
 			//config
 			$this->db->from('WebCtrl');
-			$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->db->get();	
 			$webctrl = $query->result();
 

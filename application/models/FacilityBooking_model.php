@@ -11,7 +11,7 @@ class facilityBooking_model extends CI_Model
 	
 	public function get_bookingType_list()
 	{
-		$sql = "SELECT BookingTypeID, Description, ImgToShown, ManageBookAdmin 
+		$sql = "SELECT BookingTypeID, Description, ImgToShown
 				,(
 					SELECT COUNT(*) FROM FacilitiesBooking
 					WHERE DateFrom >= CONVERT(date, getdate()) 
@@ -386,47 +386,35 @@ class facilityBooking_model extends CI_Model
 			
 			//get server, port
 			$this->jompay->from('Condo');
-			$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->jompay->get();
 			$condo = $query->result();
 			
-			//assign cust type
-			if($user[0]->GROUPID == '2'){
-				$custType = 'O';//owner
-			}
-			else{
-				$custType = 'T';//tenant
-			}
-			
-			$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 'CustType' => $custType);
+			$jsonData = array('UserTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq']);
 
-			$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/BlackList';
+			$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/BlackListRead';
 			$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
 			$response = Requests::post($url, $headers, json_encode($jsonData));
 			$body = json_decode($response->body, true);
-			//echo '<pre>';
-			//print_r($body);
 
 			foreach((array)$body as $key => $value)
 			{
-				if($key == 'Req'){
-					$CondoSeqNo = $value['CondoSeqNo'];
-					$UnitSeqNo = $value['UnitSeqNo'];
-					$UserIdNo = $value['UserIdNo'];
-				}
-				else if($key == 'Resp'){
+				if($key == 'Resp'){
 					$Status = $value['Status'];
 					$FailedReason = $value['FailedReason'];
 					$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
 				}
 				else if($key == 'Result'){
-					$StatusRes = $value['Status'];
+					$Enabled = $value['Enabled'];
+					$BlockMethod = $value['BlockMethod'];
 					$OverdueAmount = $value['OverdueAmount'];
 					$OverdueDays = $value['OverdueDays'];
-					$Remarks = $value['Remarks'];
 					
-					$array = array('overdueAmount'=>$OverdueAmount,
-								   'status'=>$StatusRes);
+					$array = array(
+								'enabled'=>$Enabled,
+								'blockMethod'=>$BlockMethod,
+								'overdueAmount'=>$OverdueAmount,
+								'overdueDays'=>$OverdueDays);
 				}
 			}
 
@@ -454,4 +442,19 @@ class facilityBooking_model extends CI_Model
         $query = $this->cportal->get();
         return $query->result();
     }
+
+    public function get_BookedFacility($UserID)     
+    { 
+    	$dt = new DateTime();
+		$dt = $dt->format('Y-m-d H:i:s');
+
+		$this->cportal->from('FacilitiesBooking');
+        $this->cportal->where('UserID', $UserID);
+        $this->cportal->where('TimeFrom >', $dt);
+        $query = $this->cportal->get();
+        $result = $query->result();
+        return $query->result();
+    }
+
+    
 }?>

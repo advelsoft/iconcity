@@ -81,9 +81,10 @@
 					<li>
 						<a href="#"><i class="glyphicon glyphicon-inbox"></i>&nbsp;&nbsp;Account Summary&nbsp;<span class="glyphicon arrow"></span></a>
 						<ul class="nav nav-second-level">
-							<li><a href="<?php echo base_url()."index.php/Common/Outstanding/Index";?>"><i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp;E-Payment (JomPAY)&nbsp;&nbsp;</a></li>
+							<li><a href="<?php echo base_url()."index.php/Common/Outstanding/Index";?>"><i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp;E-Payment&nbsp;&nbsp;</a></li>
 							<li><a href="<?php echo base_url()."index.php/Common/Outstanding/Statement";?>"><i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp;E-Statement&nbsp;&nbsp;</a></li>
-							<li><a href="<?php echo base_url()."index.php/Common/Outstanding/History";?>"><i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp;Payment History&nbsp;&nbsp;</a></li>
+							<li><a href="<?php echo base_url()."index.php/Common/Outstanding/History";?>"><i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp;E-Receipt&nbsp;&nbsp;</a></li>
+							<li><a href="<?php echo base_url()."index.php/Common/Outstanding/Reminder";?>"><i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp;E-Reminder&nbsp;&nbsp;</a></li>
 						</ul>
 					</li>
 				<?php } ?>
@@ -106,7 +107,7 @@
 					</li>
 				<?php } ?>
 				<?php if(isset($_SESSION['ResidentSponsor']) && $_SESSION['ResidentSponsor']){ ?>
-					<li><a href="<?php echo base_url()."index.php/Common/Promotion/Index/".GLOBAL_CONDOSEQ;?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;Sponsor&nbsp;</a></li>
+					<li><a href="<?php echo base_url()."index.php/Common/Promotion/Index/".$_SESSION['condoseq'];?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;Sponsor&nbsp;</a></li>
 				<?php } ?>
 				<li><a href="<?php echo base_url()."index.php/Login/Logout";?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;&nbsp;Logout</a></li>
 			</ul>
@@ -125,8 +126,8 @@
 										<i class="glyphicon glyphicon-list-alt gi-x"></i>
 									</div>
 									<div class="col-xs-10 text-right">
-										<div class="huge"></div>
-										<div class="panel-title">Account Summary</div></br>
+										<h1>RM <?php echo number_format((float)$totalGross, 2, '.', ''); ?></h1>
+										<div class="panel-title">Total Outstanding</div></br>
 										<span class="view-detail">View Details</span>
 									</div>
 								</div>
@@ -144,7 +145,7 @@
 								</div>
 								<div class="col-xs-10 text-right">
 									<div class="huge"></div>
-									<div class="panel-title">Account Summary</div></br>
+									<div class="panel-title">Total Outstanding</div></br>
 									<span class="view-detail">Unsubscribed</span>
 								</div>
 							</div>

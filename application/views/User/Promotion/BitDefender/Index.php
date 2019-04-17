@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<h4 class="page-top">
-				<a href="<?php echo base_url()."index.php/Common/Promotion/Deals/".GLOBAL_CONDOSEQ;?>">
+				<a href="<?php echo base_url()."index.php/Common/Promotion/Deals/".$_SESSION['condoseq'];?>">
 					<span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Back to List
 				</a>
 			</h4>

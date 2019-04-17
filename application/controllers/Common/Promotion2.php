@@ -44,9 +44,9 @@ class promotion extends CI_Controller {
 	public function Index()
 	{
 		//call the model
-		$data['condoSeq'] = GLOBAL_CONDOSEQ;
+		$data['condoSeq'] = $_SESSION['condoseq'];
 		$data['company'] = $this->header_model->get_Company();
-		$data['promoList'] = $this->promotion_model->get_promo_list(GLOBAL_CONDOSEQ);
+		$data['promoList'] = $this->promotion_model->get_promo_list($_SESSION['condoseq']);
 		$data['menuList'] = $this->menu_model->get_menu_list();
 		$data['submenuList'] = $this->menu_model->get_submenu_list();
 		$data['subsubmenuList'] = $this->menu_model->get_subsubmenu_list();

@@ -31,15 +31,15 @@
                                 <img src="<?php echo base_url()."application/uploads/facility/".$bookingTypeDesc[0]->ImgToShown;?>" alt="Facilities">
                             </div>
                         </div>
-						<!--<div class="form-group">
+						<div class="form-group">
 							<label for="Outstanding" class="create-label col-md-2">Outstanding</label>
                             <div class="col-md-10">
-								<div id="OverdueAmount"><b><?php echo 'RM '.$blackList[0]->OverdueAmount; ?></b></div>
+								<div id="OverdueAmount"><b>RM <?php if(isset($OverdueAmount) && $OverdueAmount != ''){ echo $OverdueAmount; } else { echo 0; }; ?></b></div>
 								<span class="text-danger"><?php echo form_error('Outstanding'); ?></span>
-								<input type="hidden" id="StatusB" name="StatusB" value="<?php echo $blackList[0]->Status; ?>">
-								<input type="hidden" id="Outstanding" name="Outstanding" value="<?php echo $blackList[0]->OverdueAmount; ?>">
+								<input type="hidden" id="StatusB" name="StatusB" value="<?php if(isset($blackList) && count(blackList) > 0){ echo $blackList[0]->status; } else { echo ''; }; ?>">
+								<input type="hidden" id="Outstanding" name="Outstanding" value="<?php if(isset($OverdueAmount) && $OverdueAmount != ''){ echo $OverdueAmount; } else { echo 0; }; ?>">
 							</div>
-                        </div>-->
+                        </div>
 						<div class="form-group">
 							<label for="DateFrom" class="create-label col-md-2">Date</label>
                             <div class="col-md-10">
@@ -168,8 +168,7 @@
 		onSelect: function(dateText) {
 			$(this).change();
 		}
-	})
-	.change(function() {
+	}).change(function() {
 		var href = path+'Create/'+id+'?Date='+this.value;
 		window.location.href = href;
 	});

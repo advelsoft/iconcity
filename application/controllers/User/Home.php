@@ -8,15 +8,20 @@ class Home extends CI_Controller
 		$this->load->library(array('session'));
 		$this->load->helper(array('url'));
 		$this->load->database();
+		$this->cportal = $this->load->database('cportal',TRUE);
+		$this->jompay = $this->load->database('jompay',TRUE);
 		
 		// load form helper and validation library
 		$this->load->helper('form');
 		$this->load->library('form_validation');	
+		$this->load->library('pagination');
+		$this->load->library('Curl');
+		$this->load->library('PHPRequests');
 		
 		//load the model
 		$this->load->model('index_model');
 		$this->load->model('forms_model');
-		$this->load->model('user_model');
+		$this->load->model('outstanding_model');
 		
 		//check if login
 		if (!$this->session->userdata('loginuser'))
@@ -36,7 +41,7 @@ class Home extends CI_Controller
 		$data['bookingList'] = $this->index_model->get_booking_details();
 		$data['feedbackList'] = $this->index_model->get_feedback_details();
 		$data['newsList'] = $this->index_model->get_news_details();
-		$data['oshistory'] = $this->index_model->get_oshistory_details();
+		$data['oshistory'] = $this->outstanding_model->get_os_history();
 		$data['whatsnew'] = $this->index_model->get_whatsnew_details();
 		$data['company'] = $this->index_model->get_Company();  
 		$data['formList'] = $this->forms_model->get_forms_list();
@@ -48,27 +53,26 @@ class Home extends CI_Controller
 		$data['infoList'] = $this->forms_model->get_info_list();
 		$data['subinfoList'] = $this->forms_model->get_subinfo_list();
 		$data['subsubinfoList'] = $this->forms_model->get_subsubinfo_list();
-		$UAC = $this->user_model->get_user_access_control($_SESSION['condoseq'], 'Resident');
-
-		if($UAC != NULL){
-			$sessiondata = array(
-							 'ResidentProfile'=>$UAC->ResidentProfile,
-							 'ResidentAccountSummary'=>$UAC->ResidentAccountSummary,
-							 'ResidentFeedbackRequest'=>$UAC->ResidentFeedbackRequest,
-							 'ResidentFacilityBooking'=>$UAC->ResidentFacilityBooking,
-							 'ResidentSponsor'=>$UAC->ResidentSponsor,
-							 'ResidentNewsfeed'=>$UAC->ResidentNewsfeed);
-		} else{
-			$sessiondata = array(
-							 'ResidentProfile'=>NULL,
-							 'ResidentAccountSummary'=>NULL,
-							 'ResidentFeedbackRequest'=>NULL,
-							 'ResidentFacilityBooking'=>NULL,
-							 'ResidentSponsor'=>NULL,
-							 'ResidentNewsfeed'=>NULL);
+		
+		$osList = $this->outstanding_model->get_os_list();
+		if(isset($osList)){
+			$lastEl = array_values(array_slice($osList, -1))[0];
+			$data['totalGross'] = $lastEl['totalGross'];
 		}
-		$this->session->set_userdata($sessiondata);
+		else{
+			$data['totalGross'] = '0.00';
+		}
 
+		$pending = $this->outstanding_model->get_pending_list();
+		$total_pending = 0;
+
+		if (isset($pending)) {
+            foreach ($pending as $file) {
+			   $total_pending = $total_pending + $file['amount'];
+            }
+        }
+
+        $data['totalGross'] = $data['totalGross'] + $total_pending;
 		//load the view
 		$data_view = array(
 			"tab1" => $this->load->view('User/IndexWhatsNew', $data, TRUE),

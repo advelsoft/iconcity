@@ -67,7 +67,7 @@
 					<li><a href="<?php echo base_url()."index.php/Common/News/Index";?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;News/Events&nbsp;</a></li>
 					<li><a href="<?php echo base_url()."index.php/Common/Notice/Index";?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Notice Board&nbsp;</a></li>
 					<!--<li><a href="<?php echo base_url()."index.php/Common/Notification/Index";?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Email Notification&nbsp;</a></li>-->
-					<li><a href="<?php echo base_url()."index.php/Common/Promotion/Index/".GLOBAL_CONDOSEQ;?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Sponsor&nbsp;</a></li>
+					<li><a href="<?php echo base_url()."index.php/Common/Promotion/Index/".$_SESSION['condoseq'];?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Sponsor&nbsp;</a></li>
 					<li>
 						<a href="#"><i class="glyphicon glyphicon-wrench"></i>&nbsp;Setup&nbsp;<span class="glyphicon arrow"></span></a>
 						<ul class="nav nav-second-level">
@@ -134,7 +134,7 @@
 							<li><a href="<?php echo base_url()."index.php/Common/FacilityBooking/Lists";?>"><i class="glyphicon glyphicon-tasks"></i>&nbsp;On Going Facilities Booking&nbsp;</a></li>
 						</ul>
 					</li>
-					<li><a href="<?php echo base_url()."index.php/Common/Promotion/Index/".GLOBAL_CONDOSEQ;?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Sponsor&nbsp;</a></li>
+					<li><a href="<?php echo base_url()."index.php/Common/Promotion/Index/".$_SESSION['condoseq'];?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Sponsor&nbsp;</a></li>
 					<li><a href="<?php echo base_url()."index.php/Login/Logout";?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;&nbsp;Logout</a></li>
 				<?php endif; ?>
 			</ul>

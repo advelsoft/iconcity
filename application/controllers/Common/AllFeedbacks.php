@@ -169,7 +169,7 @@ class allfeedbacks extends CI_Controller {
 					'PropertyNo' => $_SESSION['propertyno'],
 					'Priority' => 'Medium',
 					'Status' => 'Open',
-					'CondoSeq' => GLOBAL_CONDOSEQ,
+					'CondoSeq' => $_SESSION['condoseq'],
 					'CreatedBy' => $_SESSION['userid'],
 					'CreatedDate' => date('Y-m-d H:i:s'),
 				);
@@ -209,7 +209,7 @@ class allfeedbacks extends CI_Controller {
 							'Attachment4' => $fileName4,
 							'Priority' => 'Medium',
 							'Status' => 'Open',
-							'CondoSeq' => GLOBAL_CONDOSEQ,
+							'CondoSeq' => $_SESSION['condoseq'],
 							'CreatedBy' => $_SESSION['userid'],
 							'CreatedDate' => date('Y-m-d H:i:s'),
 						);
@@ -226,7 +226,7 @@ class allfeedbacks extends CI_Controller {
 
 			//config
 			$this->db->from('WebCtrl');
-			$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->db->get();	
 			$webctrl = $query->result();
 
@@ -347,7 +347,7 @@ class allfeedbacks extends CI_Controller {
 					'ComplaintIDParent' => $UID,
 					'CreatedBy' => $_SESSION['userid'],
 					'CreatedDate' => date('Y-m-d H:i:s'),
-					'CondoSeq' => GLOBAL_CONDOSEQ,
+					'CondoSeq' => $_SESSION['condoseq'],
 				);
 
 				//send email
@@ -366,7 +366,7 @@ class allfeedbacks extends CI_Controller {
 
 					//config
 					$this->db->from('WebCtrl');
-					$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+					$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 					$query = $this->db->get();	
 					$webctrl = $query->result();
 
@@ -456,7 +456,7 @@ class allfeedbacks extends CI_Controller {
 							'ComplaintIDParent' => $UID,
 							'CreatedBy' => $_SESSION['userid'],
 							'CreatedDate' => date('Y-m-d H:i:s'),
-							'CondoSeq' => GLOBAL_CONDOSEQ,
+							'CondoSeq' => $_SESSION['condoseq'],
 						);
 
 						//send email
@@ -475,7 +475,7 @@ class allfeedbacks extends CI_Controller {
 
 							//config
 							$this->db->from('WebCtrl');
-							$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+							$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 							$query = $this->db->get();	
 							$webctrl = $query->result();
 
@@ -585,7 +585,7 @@ class allfeedbacks extends CI_Controller {
 				'Status' => 'Closed',
                 'ModifiedBy' => $_SESSION['userid'],
                 'ModifiedDate' => date('Y-m-d H:i:s'),
-				'CondoSeq' => GLOBAL_CONDOSEQ,
+				'CondoSeq' => $_SESSION['condoseq'],
             );
 
 			//update record
@@ -603,7 +603,7 @@ class allfeedbacks extends CI_Controller {
 					'PropertyNo' => $this->input->post('propNo'),
 					'Amount' => $this->input->post('Amount'),
 					'Description' => $this->input->post('Desc'),
-					'CondoSeq' => GLOBAL_CONDOSEQ,
+					'CondoSeq' => $_SESSION['condoseq'],
 					'CreatedBy' => $_SESSION['userid'],
 					'CreatedDate' => date('Y-m-d H:i:s'),
 				);
@@ -660,7 +660,7 @@ class allfeedbacks extends CI_Controller {
 				'ComplaintIDParent' => $UID,
 				'CreatedBy' => $_SESSION['userid'],
 				'CreatedDate' => date('Y-m-d H:i:s'),
-				'CondoSeq' => GLOBAL_CONDOSEQ,
+				'CondoSeq' => $_SESSION['condoseq'],
             );
 
 			//complaint details
@@ -671,7 +671,7 @@ class allfeedbacks extends CI_Controller {
 			
 			//config
 			$this->db->from('WebCtrl');
-			$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->db->get();	
 			$webctrl = $query->result();
 

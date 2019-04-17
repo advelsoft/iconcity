@@ -17,7 +17,7 @@ class reporting_model extends CI_Model
 		$sql = "SELECT f.*, u.PROPERTYNO, d.Department FROM Feedback f 
 				JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Department] d ON f.IncidentType = d.UID
 				JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Users] u ON f.CreatedBy = u.UserID 
-			    WHERE f.CondoSeq = '".GLOBAL_CONDOSEQ."' AND ComplaintIDParent IS NULL AND 
+			    WHERE f.CondoSeq = '".$_SESSION['condoseq']."' AND ComplaintIDParent IS NULL AND 
 				(f.Status LIKE '%".$keyword."%' OR f.IncidentType LIKE '%".$keyword."%')";
 		$query = $this->jompay->query($sql);
 		$result = $query->result();
@@ -63,7 +63,7 @@ class reporting_model extends CI_Model
 		$sql = "SELECT f.*, u.PROPERTYNO, d.Department FROM Feedback f 
 				JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Department] d ON f.IncidentType = d.UID
 				JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Users] u ON f.CreatedBy = u.UserID 
-			    WHERE f.CondoSeq = '".GLOBAL_CONDOSEQ."' AND ComplaintIDParent IS NULL AND 
+			    WHERE f.CondoSeq = '".$_SESSION['condoseq']."' AND ComplaintIDParent IS NULL AND 
 				(f.Status LIKE '%".$keyword."%' OR IncidentType LIKE '%".$keyword."%')";
 		$query = $this->jompay->query($sql);
 		$result = $query->result();
@@ -114,7 +114,7 @@ class reporting_model extends CI_Model
 			{
 				$sql = "SELECT DISTINCT Status, count(*) AS cntTotal
 						FROM Feedback
-						WHERE CondoSeq = '".GLOBAL_CONDOSEQ."' AND Status != '' AND ComplaintIDParent IS NULL 
+						WHERE CondoSeq = '".$_SESSION['condoseq']."' AND Status != '' AND ComplaintIDParent IS NULL 
 						GROUP BY Status";
 				$query = $this->jompay->query($sql);
 				return $query->result();
@@ -137,7 +137,7 @@ class reporting_model extends CI_Model
 				$sql = "SELECT DISTINCT d.Department, count(*) AS cntTotal
 						FROM [AllPmrsLive].[dbo].[Feedback] f
 						JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Department] d ON f.IncidentType = d.UID
-						WHERE CondoSeq = '".GLOBAL_CONDOSEQ."' AND ComplaintIDParent IS NULL 
+						WHERE CondoSeq = '".$_SESSION['condoseq']."' AND ComplaintIDParent IS NULL 
 						GROUP BY d.Department";
 				$query = $this->db->query($sql);
 				return $query->result();
@@ -155,7 +155,7 @@ class reporting_model extends CI_Model
 		$sql = "SELECT * FROM Feedback f 
 				JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Department] d ON f.IncidentType = d.UID
 				JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Users] u ON f.CreatedBy = u.UserID 
-			    WHERE f.CondoSeq = '".GLOBAL_CONDOSEQ."' AND ComplaintIDParent IS NULL AND 
+			    WHERE f.CondoSeq = '".$_SESSION['condoseq']."' AND ComplaintIDParent IS NULL AND 
 				(f.Status LIKE '%".$keyword."%' OR f.IncidentType LIKE '%".$keyword."%')";
 		$query = $this->jompay->query($sql);
         return $query->num_rows();

@@ -15,7 +15,7 @@ class allfeedback_model extends CI_Model
 		{
 			$this->db->from('Feedback');
 			$this->db->where('ComplaintIDParent', NULL);
-			$this->db->where('CondoSeq', GLOBAL_CONDOSEQ);
+			$this->db->where('CondoSeq', $_SESSION['condoseq']);
 			$query = $this->db->get();
 			$result = $query->result();
 			
@@ -41,7 +41,7 @@ class allfeedback_model extends CI_Model
 			$this->db->from('Feedback');
 			$this->db->where('ComplaintIDParent', NULL);
 			$this->db->where('CreatedBy', $_SESSION['userid']);
-			$this->db->where('CondoSeq', GLOBAL_CONDOSEQ);
+			$this->db->where('CondoSeq', $_SESSION['condoseq']);
 			$query1 = $this->db->get();
 			$result1 = $query1->result();
 			

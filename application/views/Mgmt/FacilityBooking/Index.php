@@ -7,6 +7,11 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h4>On Going Facilities Booking</h4>
+					<!-- <div align="right">
+							<a href="<?php echo base_url()."index.php/Common/FacilityBooking/BookingPdf/"; ?>" target="_blank" style="text-align:center">
+								<div class="btn btn-sm btn-grey" style="text-align:center">Print to Pdf</div>
+							</a>
+					</div> -->
 				</div>
 				<div class="panel-body">
 					<table class="table table-striped table-hover">
@@ -18,17 +23,10 @@
 						</thead>
 						<tbody>
 							<?php for ($i = 0; $i < count($facilityBookingList); ++$i) { ?>
-								<?php if ($facilityBookingList[$i]->ManageBookAdmin != '1') { ?>
-									<tr data-href="<?php echo base_url()."index.php/Common/FacilityBooking/Listed/".$facilityBookingList[$i]->BookingTypeID; ?>">
-										<td><?php echo $facilityBookingList[$i]->Description; ?></td>
-										<td><?php echo $facilityBookingList[$i]->Booked; ?></td>              
-									</tr>
-								<?php } else { ?>
-									<tr onclick="alert('Online booking is not allowed, please contact management office.');">
-										<td><?php echo $facilityBookingList[$i]->Description; ?></td>
-										<td><?php echo $facilityBookingList[$i]->Booked; ?></td>              
-									</tr>
-								<?php } ?>
+							<tr data-href="<?php echo base_url()."index.php/Common/FacilityBooking/Listed/".$facilityBookingList[$i]->BookingTypeID; ?>">
+								<td><?php echo $facilityBookingList[$i]->Description; ?></td>
+								<td><?php echo $facilityBookingList[$i]->Booked; ?></td>              
+							</tr>
 							<?php } ?>
 						</tbody>
 					</table>

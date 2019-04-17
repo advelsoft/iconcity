@@ -93,4 +93,9 @@ class CI_Controller {
 		return self::$instance;
 	}
 
+	public static function ad($arrayvar)
+	{
+		echo "<pre>";
+		print_r($arrayvar); die();
+	}
 }

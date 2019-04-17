@@ -20,7 +20,7 @@ class registerapp_model extends CI_Model
 		
 		//get server, port
 		$this->jompay->from('Condo');
-		$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+		$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 		$query = $this->jompay->get();
         $condo = $query->result();
 		
@@ -32,7 +32,7 @@ class registerapp_model extends CI_Model
 			$custType = 'T';//tenant
 		}
 		
-		$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UserLoginId' => trim($user[0]->LOGINID), 'PropertyNo' => trim($user[0]->PROPERTYNO), 'CustType' => $custType);
+		$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => $_SESSION['condoseq'], 'UserLoginId' => trim($user[0]->LOGINID), 'PropertyNo' => trim($user[0]->PROPERTYNO), 'CustType' => $custType);
 
 		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/NewApps';
 		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');

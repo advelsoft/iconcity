@@ -38,14 +38,15 @@
 						<div class="form-group">
 							<label for="OldPw" class="create-label col-md-3">Old Password</label>
 							<div class="col-md-9">
-								<input id="OldPw" name="OldPw" placeholder="Old Password" type="text" class="form-control" value="<?php echo $profileSet[0]->LOGINPASSWORD; ?>" />
+								<input id="OldPw" name="OldPw" placeholder="Old Password" type="password" class="form-control" value="<?php echo $profileSet[0]->LOGINPASSWORD; ?>" />
 								<span class="text-danger"><?php echo form_error('OldPw'); ?></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="NewPw" class="create-label col-md-3">New Password</label>
 							<div class="col-md-9">
-								<input id="NewPw" name="NewPw" placeholder="New Password" type="password" class="form-control" value="" />
+								<input id="NewPw" name="NewPw" placeholder="New Password" type="password" class="form-control" value=""
+								 placeholder="Password must be atleast 8 characters long." />
 								<span class="text-danger"><?php echo form_error('NewPw'); ?></span>
 							</div>
 						</div>

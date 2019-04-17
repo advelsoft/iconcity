@@ -16,7 +16,7 @@ class technician_model extends CI_Model
 		$this->db->join('Users as C', 'Users.CreatedBy = C.UserID', 'left');
 		$this->db->join('Users as M', 'Users.ModifiedBy = M.UserID', 'left');
 		$this->db->where('Users.Role', 'Tech');
-		$this->db->where('Users.CondoSeq', GLOBAL_CONDOSEQ);
+		$this->db->where('Users.CondoSeq', $_SESSION['condoseq']);
 		$query = $this->db->get();
         $result = $query->result();
 		

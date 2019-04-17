@@ -22,39 +22,32 @@
 				<div class="panel-body">
 					<div class="form-horizontal">
 						<div class="form-group">
+							<label for="NewsfeedDate" class="create-label col-md-2">Newsfeeds Date</label>
+                            <div class="col-md-2">
+								<input id="NewsfeedDate" name="NewsfeedDate" placeholder="News/Events Date" type="text" class="form-control" value="<?php echo date("d/m/Y", strtotime($newsRecord[0]->NewsfeedDate));?>" />
+								<span class="text-danger"><?php echo form_error('NewsfeedDate'); ?></span>
+							</div>
+						</div>
+						<div class="form-group">
 							<label for="NewsType" class="create-label col-md-2">Newsfeeds Type</label>
-							<div class="col-md-10">
+							<div class="col-md-2">
 								<?php $attributes = 'class = "form-control" id = "NewsType"';
 								echo form_dropdown('NewsType',$newsType,set_value('NewsType', $newsRecord[0]->NewsfeedTypeID),$attributes);?>
 								<span class="text-danger"><?php echo form_error('NewsType'); ?></span>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="Title" class="create-label col-md-2">Title</label>
-							<div class="col-md-10">
-								<input id="Title" name="Title" placeholder="Title" type="text" class="form-control" value="<?php echo $newsRecord[0]->Title; ?>" />
+							<label for="Title" class="create-label col-md-2">Title* (Maximum 50 characters)</label>
+							<div class="col-md-4">
+								<input id="Title" name="Title" maxlength="50" placeholder="Title" type="text" class="form-control" value="<?php echo $newsRecord[0]->Title; ?>" />
 								<span class="text-danger"><?php echo form_error('Title'); ?></span>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="NewsType" class="create-label col-md-2">Summary *(Maxlength:300)</label>
-							<div class="col-md-10">
-								<textarea class="form-control" id="Summary" name="Summary" placeholder="Summary (Maxlength:300)" rows="5" maxlength="300"><?php echo $newsRecord[0]->Summary?></textarea>
+							<label for="NewsType" class="create-label col-md-2">Summary* (Maximum 300 characters)</label>
+							<div class="col-md-6">
+								<textarea class="form-control" maxlength="300" id="Summary" name="Summary" placeholder="Summary (Maxlength:300)" rows="5" maxlength="300"><?php echo $newsRecord[0]->Summary?></textarea>
 								<span class="text-danger"><?php echo form_error('Summary'); ?></span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="NewsType" class="create-label col-md-2">Description</label>
-							<div class="col-md-10">
-								<textarea class="form-control" id="Description" name="Description" rows="5"><?php echo $newsRecord[0]->Description; ?></textarea>
-								<span class="text-danger"><?php echo form_error('Description'); ?></span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="NewsfeedDate" class="create-label col-md-2">Newsfeeds Date</label>
-                            <div class="col-md-4">
-								<input id="NewsfeedDate" name="NewsfeedDate" placeholder="News/Events Date" type="text" class="form-control" value="<?php echo date("d/m/Y", strtotime($newsRecord[0]->NewsfeedDate));?>" />
-								<span class="text-danger"><?php echo form_error('NewsfeedDate'); ?></span>
 							</div>
 						</div>
 						<div class="form-group">
@@ -67,23 +60,43 @@
 						</div>
 						<div class="form-group">
 							<label for="PublishDateFrom" class="create-label col-md-2">Publish Date From</label>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
 								<input id="PublishDateFrom" name="PublishDateFrom" placeholder="Publish Date From" type="text" class="form-control" value="<?php echo date("d/m/Y", strtotime($newsRecord[0]->PublishDateFrom));?>" />
 								<span class="text-danger"><?php echo form_error('PublishDateFrom'); ?></span>
 							</div>
 							<label for="PublishDateTo" class="create-label col-md-1">Publish Date To</label>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
 								<input id="PublishDateTo" name="PublishDateTo" placeholder="Publish Date To" type="text" class="form-control" value="<?php echo date("d/m/Y", strtotime($newsRecord[0]->PublishDateTo));?>" />
 								<span class="text-danger"><?php echo form_error('PublishDateTo'); ?></span>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="Publish" class="create-label col-md-2">Publish</label>
-							<div class="col-md-1">
-								<input type="checkbox" id="Publish" name="Publish" class="form-control" value="1" <?php echo ($newsRecord[0]->Publish == '1' ? 'checked' : null); ?>>
+							<label for="Publish" class="create-label col-md-2">Publish</label>	
+                            <div>
+                            	<?php if($newsRecord[0]->Publish){ ?>
+                                	<input class="col-md-1" id="Publish" type="checkbox" class="form-control" value="1" <?php echo ($newsRecord[0]->Publish == '1' ? 'checked disabled' : null); ?> />
+                                	<input type="hidden" name="Publish" value="1">
+                                <?php } else { ?>
+                                	<input class="col-md-1" id="Publish" name="Publish" type="checkbox" class="form-control" value="1" />
+                                <?php } ?>
 								<span class="text-danger"><?php echo form_error('Publish'); ?></span>
-							</div>
-						</div>
+                            </div>
+                        </div>
+                        <div class="form-group" id="notidiv">
+							<label for="Notification" class="create-label col-md-2">Send Notification</label>	
+                            <div>
+                                <input class="col-md-1" id="Notification" name="Notification" type="checkbox" class="form-control" value="1" <?php echo set_checkbox('Notification','1'); ?> />
+								<span class="text-danger"><?php echo form_error('Notification'); ?></span>
+								<span class="col-md-6"><b>*Sending notifications may caused page to load, please wait for notifications to send.</b></span>
+                            </div>
+                        </div>
+                        <div class="form-group" id="emaildiv">
+							<label for="SentEmail" class="create-label col-md-2">Send Email <br>(for residents without mobile app)</label>	
+                            <div>
+                                <input class="col-md-1" id="SentEmail" name="SentEmail" type="checkbox" class="form-control" value="1" />
+								<span class="col-md-6"><b>*Sending email may caused page to load, please wait for email to send.</b></span>
+                            </div>
+                        </div>
 					</div>
 				</div>
 				<div class="panel-footer">
@@ -114,6 +127,18 @@
     });*/
 	
 	$(document).ready(function(){
+		$('#notidiv').hide();
+		$('#emaildiv').hide();
+		$('#Publish').change(function() {
+	        if($(this).is(":checked")) {
+	            $('#notidiv').show();
+				$('#emaildiv').show();
+	        } else {
+	        	$('#notidiv').hide();
+				$('#emaildiv').hide();
+	        }     
+	    });
+
 		$('#NewsfeedDate').datepicker({
 			firstDay: 1,
 			showOtherMonths: true,

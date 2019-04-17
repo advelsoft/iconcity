@@ -8,7 +8,6 @@ class news extends CI_Controller {
 		$this->load->helper(array('url'));
 		$this->load->database();
 		$this->jompay = $this->load->database('jompay',TRUE);
-		$this->cportal = $this->load->database('cportal',TRUE);
 		
 		// load form helper and validation library
 		$this->load->helper('form');
@@ -22,21 +21,29 @@ class news extends CI_Controller {
 		$this->load->model('header_model');
 		
 		//check if login
-		/*if (!$this->session->userdata('loginuser'))
+		if (!isset($_SESSION['role']))
         {
-            redirect(base_url().'index.php/Common/Login/Login');
-        }*/
+        	$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        	$this->session->set_userdata('JUMP_URL', $actual_link);
+        	$this->session->set_flashdata('msg', '<script language=javascript>alert("Please login before proceeding");</script>');
+            redirect(base_url());
+        }
 	}
 
 	public function Index($page=1)
 	{
 		//call the model
 		$data['company'] = $this->header_model->get_Company();
-        $newsList = $this->news_model->get_news_list();
+		if($_SESSION['role'] == 'Mgmt'){
+			$newsList = $this->news_model->get_news_list_mgmt();
+		} else {
+			$newsList = $this->news_model->get_news_list();
+		}
+        
         $data['newsList'] = array();
         $offset = ($page - 1) * 10;
         $paginatedFiles = array();
-
+		
         if (count($newsList) > 0) {
             $paginatedFiles = array_slice($newsList, $offset, 10, true);
         }
@@ -47,6 +54,7 @@ class news extends CI_Controller {
 										    'createdBy'=>$file['createdBy'],
 										    'createdDate'=>$file['createdDate'],
 										    'newsID'=>$file['newsID'],
+										    'Publish'=>$file['Publish'],
 										    'description'=>$file['description']);
             }
         }
@@ -80,6 +88,7 @@ class news extends CI_Controller {
         $this->pagination->initialize($config);
 		
         //load the view
+		//var_dump ($data['newsList'][0]['newsID']); die();
 		if($_SESSION['role'] == 'Mgmt'){
 			$this->load->view('Mgmt/header',$data);
 			$this->load->view('Mgmt/nav');
@@ -103,9 +112,6 @@ class news extends CI_Controller {
         //set validation rules
         $this->form_validation->set_rules('Title', 'Title', 'trim|required');
         $this->form_validation->set_rules('Summary', 'Summary', 'required');
-		$this->form_validation->set_rules('NewsfeedDate', 'NewsfeedDate', 'required');
-        $this->form_validation->set_rules('PublishDateFrom', 'PublishDateFrom', 'required');
-        $this->form_validation->set_rules('PublishDateTo', 'PublishDateTo', 'required');
         $this->form_validation->set_rules('NewsType', 'News Type', 'callback_combo_check|required');
 
         if ($this->form_validation->run() == FALSE)
@@ -162,7 +168,7 @@ class news extends CI_Controller {
 
 			//get server, port
 			$this->jompay->from('Condo');
-			$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->jompay->get();
 			$condo = $query->result();
 			
@@ -170,20 +176,20 @@ class news extends CI_Controller {
 			if($this->input->post('NewsType') == '1'){
 				$newsType = 'news';
 			}
+			else if($this->input->post('NewsType') == '2'){
+				$newsType = 'event';
+			}
 			else if($this->input->post('NewsType') == '3'){
 				$newsType = 'notice';
 			}
 			
 			//no file uploaded
 			if($_FILES["Attachment1"]["error"] == 4){
-				$jsonData = array('UserTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UserIdNo' => $_SESSION['userid'], 'Title' => $this->input->post('Title'), 'Summary' =>$this->input->post('Summary'), 
-								  'Type' => $newsType, 'PublishDateFrom' => $dateFrom, 'PublishTimeFrom' => date("H:i:s"), 'PublishDateTo' => $dateTo, 'NewsfeedDate' => $newsfeedDate, 'Publish' => $this->input->post('Publish'));
+				$jsonData = array('UserTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'UserIdNo' => $_SESSION['userid'], 'Title' => $this->input->post('Title'), 'Summary' =>$this->input->post('Summary'), 'Type' => $newsType, 'PublishDateFrom' => $dateFrom, 'PublishTimeFrom' => date("his"), 'PublishDateTo' => $dateTo, 'NewsfeedDate' => $newsfeedDate, 'Publish' => $this->input->post('Publish'));
 				$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/NoticeAddCondo';
 				$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
 				$response = Requests::post($url, $headers, json_encode($jsonData));
 				$body = json_decode($response->body, true);
-				//echo '<pre>';
-				//print_r($body);
 				
 				foreach($body as $key => $value)
 				{
@@ -194,6 +200,20 @@ class news extends CI_Controller {
 						$Status = $value['Status'];
 						$FailedReason = $value['FailedReason'];
 						$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
+					} else if($key == 'Result'){
+						$NoticeId = $value['NoticeId'];
+					}
+				}
+
+				$publish = $this->input->post('Publish');
+				if($publish){
+					$email = $this->input->post('SentEmail');
+					if($email){
+						$jsonData = array('SuperTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'NoticeId' => $NoticeId, 'CustType' => 'O', 'SendTo' =>'1', 'UserIdNo' => '1');
+						$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/NoticeCondoEmail';
+						$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
+						$response = Requests::post($url, $headers, json_encode($jsonData));
+						$body1 = json_decode($response->body, true);
 					}
 				}
 				
@@ -232,8 +252,7 @@ class news extends CI_Controller {
 					}
 				}
 				
-				$jsonData = array('UserTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UserIdNo' => $_SESSION['userid'], 'Title' => $this->input->post('Title'), 'Summary' =>$this->input->post('Summary'), 
-								  'Type' => $newsType, 'PublishDateFrom' => $dateFrom, 'PublishTimeFrom' => date("H:i:s"), 'PublishDateTo' => $dateTo, 'NewsfeedDate' => $newsfeedDate, 'Publish' => $this->input->post('Publish'),
+				$jsonData = array('UserTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'UserIdNo' => $_SESSION['userid'], 'Title' => $this->input->post('Title'), 'Summary' =>$this->input->post('Summary'), 'Type' => $newsType, 'PublishDateFrom' => $dateFrom, 'PublishTimeFrom' => date("his"), 'PublishDateTo' => $dateTo, 'NewsfeedDate' => $newsfeedDate, 'Publish' => $this->input->post('Publish'),
 								  'Attachment1' => $fileName1, 'Attachment2' => $fileName2, 'Attachment3' => $fileName3, 'Attachment4' => $fileName4);
 				$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/NoticeAddCondo';
 				$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
@@ -249,6 +268,20 @@ class news extends CI_Controller {
 						$Status = $value['Status'];
 						$FailedReason = $value['FailedReason'];
 						$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
+					} else if($key == 'Result'){
+						$NoticeId = $value['NoticeId'];
+					}
+				}
+
+				$publish = $this->input->post('Publish');
+				if($publish){
+					$email = $this->input->post('SentEmail');
+					if($email){
+						$jsonData = array('SuperTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'NoticeId' => $NoticeId, 'CustType' => 'O', 'SendTo' =>'1', 'UserIdNo' => '1');
+						$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/NoticeCondoEmail';
+						$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
+						$response = Requests::post($url, $headers, json_encode($jsonData));
+						$body1 = json_decode($response->body, true);
 					}
 				}
 				
@@ -269,8 +302,13 @@ class news extends CI_Controller {
 	{
 		//call the model
 		$data['company'] = $this->header_model->get_Company();
-		$data['newsRecord'] = $this->news_model->get_news_record($NewsID);
+		$data['newsRecord'] = $this->news_model->get_news_record2($NewsID);
 		
+		if(empty($data['newsRecord'])){
+			$this->session->set_flashdata('msg', '<script language=javascript>alert("This news/article is unavailable");</script>');
+			redirect('index.php/Common/News/Index');
+		}
+
 		//load the view
 		if($_SESSION['role'] == 'Mgmt'){
 			$this->load->view('Mgmt/header',$data);
@@ -297,9 +335,6 @@ class news extends CI_Controller {
         //set validation rules
 		$this->form_validation->set_rules('Title', 'Title', 'trim|required');
         $this->form_validation->set_rules('Summary', 'Summary', 'required');
-		$this->form_validation->set_rules('NewsfeedDate', 'NewsfeedDate', 'required');
-        $this->form_validation->set_rules('PublishDateFrom', 'PublishDateFrom', 'required');
-        $this->form_validation->set_rules('PublishDateTo', 'PublishDateTo', 'required');
         $this->form_validation->set_rules('NewsType', 'News Type', 'callback_combo_check|required');
 
         if ($this->form_validation->run() == FALSE)
@@ -355,7 +390,7 @@ class news extends CI_Controller {
 
 			//get server, port
 			$this->jompay->from('Condo');
-			$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->jompay->get();
 			$condo = $query->result();
 			
@@ -363,31 +398,44 @@ class news extends CI_Controller {
 			if($this->input->post('NewsType') == '1'){
 				$newsType = 'news';
 			}
+			else if($this->input->post('NewsType') == '2'){
+				$newsType = 'event';
+			}
 			else if($this->input->post('NewsType') == '3'){
 				$newsType = 'notice';
 			}
-			
+
 			//no file uploaded
 			if($_FILES["Attachment1"]["error"] == 4){
-				$jsonData = array('UserTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UserIdNo' => $_SESSION['userid'], 'NoticeId' => $NewsID, 'Title' => $this->input->post('Title'), 'Summary' =>$this->input->post('Summary'), 
-								  'Type' => $newsType, 'PublishDateFrom' => $dateFrom, 'PublishTimeFrom' => date("H:i:s"), 'PublishDateTo' => $dateTo, 'NewsfeedDate' => $newsfeedDate, 'Publish' => $this->input->post('Publish'));
+				$jsonData = array('UserTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'UserIdNo' => $_SESSION['userid'], 'NoticeId' => $NewsID, 'Title' => $this->input->post('Title'), 'Summary' =>$this->input->post('Summary'), 'Type' => $newsType, 'PublishDateFrom' => $dateFrom, 'PublishTimeFrom' => date("his"), 'PublishDateTo' => $dateTo, 'NewsfeedDate' => $newsfeedDate, 'Publish' => $this->input->post('Publish'));
 				$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/NoticeEditCondo';
 				$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
 				$response = Requests::post($url, $headers, json_encode($jsonData));
 				$body = json_decode($response->body, true);
-				//echo '<pre>';
-				//print_r($body);
+				
 				foreach($body as $key => $value)
 				{
 					if($key == 'Req'){
 						$CondoSeqNo = $value['CondoSeqNo'];
-						$UnitSeqNo = $value['UnitSeqNo'];
-						$UserIdNo = $value['UserIdNo'];
 					}
 					else if($key == 'Resp'){
 						$Status = $value['Status'];
 						$FailedReason = $value['FailedReason'];
 						$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
+					} else if($key == 'Result'){
+						$NoticeId = $value['NoticeId'];
+					}
+				}
+
+				$publish = $this->input->post('Publish');
+				if($publish){
+					$email = $this->input->post('SentEmail');
+					if($email){
+						$jsonData = array('SuperTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'NoticeId' => $NoticeId, 'CustType' => 'O', 'SendTo' =>'1', 'UserIdNo' => '1');
+						$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/NoticeCondoEmail';
+						$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
+						$response = Requests::post($url, $headers, json_encode($jsonData));
+						$body1 = json_decode($response->body, true);
 					}
 				}
 
@@ -425,10 +473,7 @@ class news extends CI_Controller {
 						}
 					}
 				}
-				
-				$jsonData = array('UserTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UserIdNo' => $_SESSION['userid'], 'NoticeId' => $NewsID, 'Title' => $this->input->post('Title'), 'Summary' =>$this->input->post('Summary'), 
-							  'Type' => $newsType, 'PublishDateFrom' => $dateFrom, 'PublishTimeFrom' => date("H:i:s"), 'PublishDateTo' => $dateTo, 'NewsfeedDate' => $newsfeedDate, 'Publish' => $this->input->post('Publish'),
-							  'Attachment1' => $fileName1, 'Attachment2' => $fileName2, 'Attachment3' => $fileName3, 'Attachment4' => $fileName4);
+				$jsonData = array('UserTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'UserIdNo' => $_SESSION['userid'], 'NoticeId' => $NewsID, 'Title' => $this->input->post('Title'), 'Summary' =>$this->input->post('Summary'), 'Type' => $newsType, 'PublishDateFrom' => $dateFrom, 'PublishTimeFrom' => date("his"), 'PublishDateTo' => $dateTo, 'NewsfeedDate' => $newsfeedDate, 'Publish' => $this->input->post('Publish'), 'Attachment1' => $fileName1, 'Attachment2' => $fileName2, 'Attachment3' => $fileName3, 'Attachment4' => $fileName4);
 				$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/NoticeEditCondo';
 				$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
 				$response = Requests::post($url, $headers, json_encode($jsonData));
@@ -438,13 +483,25 @@ class news extends CI_Controller {
 				{
 					if($key == 'Req'){
 						$CondoSeqNo = $value['CondoSeqNo'];
-						$UnitSeqNo = $value['UnitSeqNo'];
-						$UserIdNo = $value['UserIdNo'];
 					}
 					else if($key == 'Resp'){
 						$Status = $value['Status'];
 						$FailedReason = $value['FailedReason'];
 						$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
+					} else if($key == 'Result'){
+						$NoticeId = $value['NoticeId'];
+					}
+				}
+
+				$publish = $this->input->post('Publish');
+				if($publish){
+					$email = $this->input->post('SentEmail');
+					if($email){
+						$jsonData = array('SuperTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'NoticeId' => $NoticeId, 'CustType' => 'O', 'SendTo' =>'1', 'UserIdNo' => '1');
+						$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/NoticeCondoEmail';
+						$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
+						$response = Requests::post($url, $headers, json_encode($jsonData));
+						$body1 = json_decode($response->body, true);
 					}
 				}
 				
@@ -505,6 +562,21 @@ class news extends CI_Controller {
         else
         {
             return TRUE;
+		}
+	}
+
+	public function Viewers($NewsID)
+	{
+		//call the model
+		$data['company'] = $this->header_model->get_Company();
+		$data['viewers'] = $this->news_model->get_viewer_list($NewsID);
+		
+		//load the view
+		if($_SESSION['role'] == 'Mgmt'){
+			$this->load->view('Mgmt/header',$data);
+			$this->load->view('Mgmt/nav');
+			$this->load->view('Mgmt/News/Viewers',$data);
+			$this->load->view('Mgmt/footer');
 		}
 	}
 }?>
