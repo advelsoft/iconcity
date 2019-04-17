@@ -21,6 +21,7 @@
 								<tr>
 									<th data-class="expand">Newsfeeds Type</th>
 									<th data-hide="phone,tablet">Title</th>
+									<th data-hide="phone,tablet">Publish Status</th>
 									<th data-hide="phone,tablet">Created By</th>
 									<th data-hide="phone,tablet">Created Date</th>
 									<th data-hide="phone,tablet"></th>
@@ -31,6 +32,8 @@
 									<tr>
 										<td><?php echo $item['description']; ?></td>
 										<td><?php echo $item['title']; ?></td>
+										<td><?php if($item['Publish']){ echo '<span class="label label-success">PUBLISHED</span>'; }
+													else { echo '<span class="label label-danger">NOT PUBLISH</span>'; }  ?></td>
 										<td><?php echo $item['createdBy']; ?></td>
 										<td><?php echo date("d-m-Y", strtotime($item['createdDate'])) ?></td>
 										<td>
@@ -40,16 +43,23 @@
 											<a href="<?php echo base_url()."index.php/Common/News/Update/".$item['newsID']; ?>" style="text-align:center">
 												<div class="btn btn-sm btn-grey" style="text-align:center">Edit</div>
 											</a>
-											<a href="<?php echo base_url()."index.php/Common/News/Delete/".$item['newsID']; ?>" style="text-align:center">
-												<div class="btn btn-sm btn-grey" style="text-align:center">Delete</div>
-											</a>
+											<?php if(!$item['Publish']){ ?>
+												<a href="<?php echo base_url()."index.php/Common/News/Delete/".$item['newsID']; ?>" style="text-align:center">
+													<div class="btn btn-sm btn-grey" style="text-align:center">Delete</div>
+												</a>
+											<?php } ?>
+											<?php if($item['Publish']){ ?>
+												<a href="<?php echo base_url()."index.php/Common/News/Viewers/".$item['newsID']; ?>" style="text-align:center">
+													<div class="btn btn-sm btn-grey" style="text-align:center">List of Viewers</div>
+												</a>
+											<?php } ?>
 										</td>
 									</tr>
 								<?php } ?>
 							</tbody>
 							<tfoot class="footable-pagination">
 								<tr>
-									<td colspan="5">
+									<td colspan="6">
 										<div><?php echo $this->pagination->create_links();?></div>
 									</td>
 								</tr>

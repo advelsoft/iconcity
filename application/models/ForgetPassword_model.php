@@ -76,11 +76,11 @@ class forgetpassword_model extends CI_Model
 	{
         //get server, port
 		$this->jompay->from('Condo');
-		$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+		$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 		$query = $this->jompay->get();
         $condo = $query->result();
 		
-		$jsonData = array('SuperTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'Email' => $this->input->post('Email'), 'UserLoginId' => $this->input->post('LoginID'));
+		$jsonData = array('SuperTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'Email' => $this->input->post('Email'), 'UserLoginId' => $this->input->post('LoginID'));
 		
 		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/PortalForgotPassword';
 		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');

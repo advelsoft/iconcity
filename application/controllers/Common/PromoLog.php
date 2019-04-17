@@ -36,7 +36,7 @@ class promoLog extends CI_Controller {
 			'PropertyNo' => $result[0]->PROPERTYNO,
 			'CreatedBy' => $_SESSION['userid'],
 			'CreatedDate' => date('Y-m-d'),
-			'CondoSeq' => GLOBAL_CONDOSEQ,
+			'CondoSeq' => $_SESSION['condoseq'],
 		);
 		
 		//insert record
@@ -56,11 +56,11 @@ class promoLog extends CI_Controller {
 			'PropertyNo' => $result[0]->PROPERTYNO,
 			'CreatedBy' => $_SESSION['userid'],
 			'CreatedDate' => date('Y-m-d'),
-			'CondoSeq' => GLOBAL_CONDOSEQ,
+			'CondoSeq' => $_SESSION['condoseq'],
 		);
 		
 		//insert record
 		$this->db->insert('PromotionLog', $data);
-		redirect('index.php/Common/Promotion/Deals/'.GLOBAL_CONDOSEQ);
+		redirect('index.php/Common/Promotion/Deals/'.$_SESSION['condoseq']);
     }
 }?>

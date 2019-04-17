@@ -16,25 +16,32 @@ class login extends CI_Controller
 		//load the login model
 		$this->load->model('login_model');
 		$this->load->model('user_model');
-		$this->cportal = $this->load->database('cportal',TRUE);
+
 		$this->jompay = $this->load->database('jompay',TRUE);
+		$this->cportal = $this->load->database('cportal',TRUE);
 	}
 
 	public function Index()
 	{
+		//set main session
 		$condolink = substr($_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'], 0, -1);
-		$condoseq = $this->login_model->get_Condoseq_from_url($condolink);
-		$condocode = $this->login_model->get_Condocode_from_url($condolink);
+		$condo_data = $this->login_model->get_condo_data($condolink);
 
-		$sessiondata = array('condoseq'=>$condoseq, 'condocode'=>$condocode);
+		$sessiondata = array(
+						'condoseq'=>$condo_data->CONDOSEQ, 
+						'condocode'=>$condo_data->CONDOCODE,
+						'formalname'=>$condo_data->CondoName
+					);
         $this->session->set_userdata($sessiondata);
-
+		
+        $condocode = $condo_data->CONDOCODE;
 		$data['amenities'] = $this->login_model->get_Amenities();
 		$data['news'] = $this->login_model->get_News();
 		$data['company'] = $this->login_model->get_Company();
-		$data['condo'] = $this->login_model->get_Condo($condoseq);
-		$data['UACLanding'] = $this->user_model->get_user_access_control_landing($condoseq);
-		
+		$data['condo'] = $this->login_model->get_Condo($_SESSION['condoseq']);
+		$data['UACLanding'] = $this->user_model->get_user_access_control_landing($_SESSION['condoseq']);
+		$data['unitNo'] = $this->login_model->get_AllUnit();
+
 		//set validations
 		$this->form_validation->set_rules("username", "username", "required");
 		$this->form_validation->set_rules("password", "password", "required");
@@ -56,10 +63,11 @@ class login extends CI_Controller
 				$checkDB = $this->login_model->user_loginDB($username, $password, '0');//check if exist
 			}
 			else{
-				$checkDB = $this->login_model->user_loginDB($username, $password, $condoseq);//check if exist
+				$checkDB = $this->login_model->user_loginDB($username, $password, $_SESSION['condoseq']);//check if exist
 			}
 
 			if ($checkDB > 0){ //CRM
+
 				$userid = $this->login_model->get_useridDB($username, $password);//get userid
 				$user = $this->login_model->get_userDB($userid);//get user details
 
@@ -67,7 +75,6 @@ class login extends CI_Controller
 									 'username'=>$user->LoginID,
 									 'fullname'=>$user->Name,
 									 'role'=>$user->Role,
-									 'condoseq'=>$user->CondoSeq,
 									 'loginuser'=>TRUE);
                 $this->session->set_userdata($sessiondata);
 				//var_dump($sessiondata); die();
@@ -123,37 +130,34 @@ class login extends CI_Controller
 				}
 			}
 			else {
-				//get server, port
-				$this->jompay->from('Condo');
-				$this->jompay->where('CONDOSEQ',$condoseq);
-				$query = $this->jompay->get();
-				$condo = $query->result();
-				
-				$jsonData = array('SuperTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $condoseq, 'LoginId' => $username, 'LoginPassword' => $password);
-				
-				$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/apiAuthenUser';
-				$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
-				$response = Requests::post($url, $headers, json_encode($jsonData));
-				$body = json_decode($response->body, true);
-				
-				foreach($body as $key => $value)
-				{
-					if($key == 'Req'){
-						$CondoSeqNo = $value['CondoSeqNo'];
-						$UserTokenNo = $value['SuperTokenNo'];
-					}
-					else if($key == 'Resp'){
-						$Status = $value['Status'];
-						$FailedReason = $value['FailedReason'];
-						$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
-					}
-				}
 
-				if($Status == 'F'){
-					$this->session->set_flashdata('msg', '<script language=javascript>alert("'.$FailedReason.'");</script>');
-					redirect(base_url());
-				}
-				else{
+				$checkCportalStatusOld = $this->login_model->user_loginPortalOldPW($username, $password);//check with old password
+				$checkCportalStatusNew = $this->login_model->user_loginPortalNewPW($username, $password);//check with old password
+
+				if($checkCportalStatusOld > 0 || $checkCportalStatusNew == "S"){
+					//Get User Access Control
+					$UAC = $this->user_model->get_user_access_control($_SESSION['condoseq'], 'Resident');
+
+					if($UAC != NULL){
+						$sessiondata = array(
+										 'ResidentProfile'=>$UAC->ResidentProfile,
+										 'ResidentAccountSummary'=>$UAC->ResidentAccountSummary,
+										 'ResidentFeedbackRequest'=>$UAC->ResidentFeedbackRequest,
+										 'ResidentFacilityBooking'=>$UAC->ResidentFacilityBooking,
+										 'ResidentSponsor'=>$UAC->ResidentSponsor,
+										 'ResidentNewsfeed'=>$UAC->ResidentNewsfeed);
+					} else{
+						$sessiondata = array(
+										 'ResidentProfile'=>NULL,
+										 'ResidentAccountSummary'=>NULL,
+										 'ResidentFeedbackRequest'=>NULL,
+										 'ResidentFacilityBooking'=>NULL,
+										 'ResidentSponsor'=>NULL,
+										 'ResidentNewsfeed'=>NULL);
+					}
+					
+	                $this->session->set_userdata($sessiondata);
+
 					$userid = $this->login_model->get_useridPortal($username, $password);//get userid
 					$user = $this->login_model->get_userPortal($userid);//get user details
 
@@ -163,9 +167,10 @@ class login extends CI_Controller
 										 'propertyno'=>$user->PROPERTYNO,
 										 'role'=>'User',
 										 'condoseq'=>$user->CONDOSEQ,
-										 'loginuser'=>TRUE);
+										 'loginuser'=>TRUE,
+									 	 'condocode' => $condocode);
 					$this->session->set_userdata($sessiondata);
-
+					
 					$users = array(
 						'LASTLOGINDATE' => date('Y-m-d H:i:s'),
 					);
@@ -179,22 +184,62 @@ class login extends CI_Controller
 							'LoginSource' => '1' //from web
 					);
 					
-					//update Users record
-					$this->cportal->where('LOGINID', $username);
-					$this->cportal->where('LOGINPASSWORD', $password);
-					$this->cportal->update('Users', $users);
+					if($checkCportalStatusOld > 0){
+						//update Users record
+						$this->cportal->where('LOGINID', $username);
+						$this->cportal->where('LOGINPASSWORD', $password);
+						$this->cportal->update('Users', $users);
+					} else {
+						//update Users record
+						$this->cportal->where('LOGINID', $username);
+						$this->cportal->update('Users', $users);
+					}
 					
 					//insert UsersLog record
 					$this->cportal->insert('UsersLog', $userlog);
-					//redirect('index.php/User/Home/Index');
 					
-					if(($user->LOGINPASSWORD) != NULL){
+					if($checkCportalStatusOld > 0){
 						//echo  "test"; die();
 						$this->session->set_flashdata('msg', '<script language=javascript>alert("Please change your password.");</script>');
 						redirect('index.php/Common/ProfileSet/Index');
 					}
 					else{
-						redirect('index.php/User/Home/Index');
+						if (isset($_SESSION['JUMP_URL'])){
+							$url = $_SESSION['JUMP_URL'];
+							$this->session->unset_userdata('JUMP_URL');
+							redirect($url, 'refresh');
+						} else {
+							redirect('index.php/User/Home/Index');
+						}
+					}
+				}
+				else
+				{
+					//login failed
+					$this->cportal->where('AttemptDate <', date('Y-m-d'));
+					$this->cportal->delete('UserAttempt');
+					
+					$data = array(
+						'LoginID'=>$username,
+						'IPAddress'=>$_SERVER['REMOTE_ADDR'],
+						'AttemptDate'=>date('Y-m-d H:i:s'),
+					);
+					$this->cportal->insert('UserAttempt', $data);
+					
+					$checkAttempt = $this->login_model->get_attempt_count($_SERVER['REMOTE_ADDR'], $username);
+					
+					if($checkAttempt >= 5){
+						//locked loginid
+						$this->cportal->set('USABLEID', '0');
+						$this->cportal->where('LOGINID', $username);
+						$this->cportal->update('Users');
+						
+						$this->session->set_flashdata('msg', '<script language=javascript>alert("Your ID has been locked because tried to log in too many times. Please contact management office for an assistance.");</script>');
+						redirect(base_url());
+					}
+					else{
+						$this->session->set_flashdata('msg', '<script language=javascript>alert("Login or Password is incorrect");</script>');
+						redirect(base_url());
 					}
 				}
 			}

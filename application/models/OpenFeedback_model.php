@@ -17,7 +17,7 @@ class openfeedback_model extends CI_Model
 			$sql = "SELECT f.*, d.Department AS IncidentType, u.PropertyNo, u.OwnerName 
 					FROM Feedback f JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Department] d ON f.IncidentType = d.UID
 					JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Users] u ON f.CreatedBy = u.UserID
-					WHERE ComplaintIDParent IS NULL AND Status = 'Open' AND f.CondoSeq = '".GLOBAL_CONDOSEQ."' ORDER BY f.FeedbackID DESC";
+					WHERE ComplaintIDParent IS NULL AND Status = 'Open' AND f.CondoSeq = '".$_SESSION['condoseq']."' ORDER BY f.FeedbackID DESC";
 			$query = $this->jompay->query($sql);
 			$result = $query->result();
 			
@@ -59,10 +59,10 @@ class openfeedback_model extends CI_Model
 			$users = $query->result();
 
 			$sql = "SELECT ComplaintIDParent FROM FeedbackResponse 
-					WHERE ForwardTo = '".$users[0]->Name."' AND CondoSeq = ".GLOBAL_CONDOSEQ."
+					WHERE ForwardTo = '".$users[0]->Name."' AND CondoSeq = ".$_SESSION['condoseq']."
 					UNION
 					SELECT ComplaintIDParent FROM FeedbackResponse 
-					WHERE ForwardTo = '".$users[0]->Name."' AND CondoSeq = ".GLOBAL_CONDOSEQ."
+					WHERE ForwardTo = '".$users[0]->Name."' AND CondoSeq = ".$_SESSION['condoseq']."
 					GROUP BY FeedbackResponse.ComplaintIDParent
 					HAVING COUNT(*) > 1";
 			$query = $this->db->query($sql);
@@ -103,7 +103,7 @@ class openfeedback_model extends CI_Model
 		{
 			$sql = "SELECT f.*, d.Department AS IncidentType
 					FROM Feedback f JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Department] d ON f.IncidentType = d.UID
-					WHERE ComplaintIDParent IS NULL AND Status != 'Closed' AND f.CreatedBy = ".$_SESSION['userid']." AND CondoSeq = '".GLOBAL_CONDOSEQ."' ORDER BY f.FeedbackID DESC";
+					WHERE ComplaintIDParent IS NULL AND Status != 'Closed' AND f.CreatedBy = ".$_SESSION['userid']." AND CondoSeq = '".$_SESSION['condoseq']."' ORDER BY f.FeedbackID DESC";
 			$query1 = $this->jompay->query($sql);
 			$result1 = $query1->result();
 			
@@ -337,6 +337,7 @@ class openfeedback_model extends CI_Model
 	public function get_Department()
 	{
 		$this->cportal->from('Department');
+		$this->cportal->order_by('Department ASC');
 		$query = $this->cportal->get();
         $result = $query->result();
 		

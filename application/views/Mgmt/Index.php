@@ -72,7 +72,7 @@
 					<li><a href="<?php echo base_url()."index.php/Common/News/Index";?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Newsfeed&nbsp;</a></li>
 				<?php } ?>
 				<?php if($_SESSION['MgmtSponsor']){ ?>
-					<li><a href="<?php echo base_url()."index.php/Common/Promotion/Index/".GLOBAL_CONDOSEQ;?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Services On-Demand&nbsp;</a></li>
+					<li><a href="<?php echo base_url()."index.php/Common/Promotion/Index/".$_SESSION['condoseq'];?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Services On-Demand&nbsp;</a></li>
 				<?php } ?>
 				<li>
 					<a href="#"><i class="glyphicon glyphicon-wrench"></i>&nbsp;Setup&nbsp;<span class="glyphicon arrow"></span></a>

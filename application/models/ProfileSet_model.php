@@ -41,12 +41,12 @@ class profileset_model extends CI_Model
 		
 		$jsonData = array('SuperTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'Email' => trim($user[0]->EMAIL), 'UserLoginId' => trim($user[0]->LOGINID), 
 		'OldPassword' => $this->input->post('OldPw'), 'NewPassword'=> $this->input->post('NewPw'));
-		 
+		 // echo "<pre>"; print_r($jsonData);
 		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/PortalChangePassword';
 		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
 		$response = Requests::post($url, $headers, json_encode($jsonData));
 		$body = json_decode($response->body, true);
-		
+		// echo "<pre>"; print_r($body); die();
 		foreach($body as $key => $value)
 		{
 			if($key == 'Req'){

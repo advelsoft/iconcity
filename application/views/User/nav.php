@@ -38,9 +38,10 @@
 					<li>
 						<a href="#"><i class="glyphicon glyphicon-inbox"></i>&nbsp;&nbsp;Account Summary&nbsp;<span class="glyphicon arrow"></span></a>
 						<ul class="nav nav-second-level">
-							<li><a href="<?php echo base_url()."index.php/Common/Outstanding/Index";?>"><i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp;E-Payment (JomPAY)&nbsp;&nbsp;</a></li>
+							<li><a href="<?php echo base_url()."index.php/Common/Outstanding/Index";?>"><i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp;E-Payment&nbsp;&nbsp;</a></li>
 							<li><a href="<?php echo base_url()."index.php/Common/Outstanding/Statement";?>"><i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp;E-Statement&nbsp;&nbsp;</a></li>
-							<li><a href="<?php echo base_url()."index.php/Common/Outstanding/History";?>"><i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp;Payment History&nbsp;&nbsp;</a></li>
+							<li><a href="<?php echo base_url()."index.php/Common/Outstanding/History";?>"><i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp;E-Receipt&nbsp;&nbsp;</a></li>
+							<li><a href="<?php echo base_url()."index.php/Common/Outstanding/Reminder";?>"><i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp;E-Reminder&nbsp;&nbsp;</a></li>
 						</ul>
 					</li>
 				<?php } ?>
@@ -63,7 +64,7 @@
 					</li>
 				<?php } ?>
 				<?php if(isset($_SESSION['ResidentSponsor']) && $_SESSION['ResidentSponsor']){ ?>
-					<li><a href="<?php echo base_url()."index.php/Common/Promotion/Index/".GLOBAL_CONDOSEQ;?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;Sponsor&nbsp;</a></li>
+					<li><a href="<?php echo base_url()."index.php/Common/Promotion/Index/".$_SESSION['condoseq'];?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;Sponsor&nbsp;</a></li>
 				<?php } ?>
 				<li><a href="<?php echo base_url()."index.php/Login/Logout";?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;&nbsp;Logout</a></li>
 			</ul>

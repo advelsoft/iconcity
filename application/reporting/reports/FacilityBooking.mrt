@@ -1,11 +1,11 @@
 {
-  "ReportVersion": "2018.3.3",
+  "ReportVersion": "2019.1.1",
   "ReportGuid": "b97b29e40534b4d7f5c260b976b8034c",
   "ReportName": "Report",
   "ReportAlias": "Report",
-  "ReportFile": "Report.mrt",
-  "ReportCreated": "/Date(1551786258000+0800)/",
-  "ReportChanged": "/Date(1551786258000+0800)/",
+  "ReportFile": "FacilityBooking.mrt",
+  "ReportCreated": "/Date(1551843858000+0800)/",
+  "ReportChanged": "/Date(1551843858000+0800)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "ReportUnit": "Centimeters",
@@ -16,8 +16,8 @@
         "DialogInfo": {
           "DateTimeType": "DateAndTime",
           "ItemsInitializationType": "Columns",
-          "KeysColumn": "FacilitiesBooking.Facility.Description",
-          "ValuesColumn": "FacilitiesBooking.Facility.Description"
+          "KeysColumn": "bookingtype.Description",
+          "ValuesColumn": "bookingtype.Description"
         },
         "Alias": "Facility Type",
         "Type": "System.String",
@@ -102,7 +102,7 @@
             "Type": "System.String"
           }
         },
-        "NameInSource": "armanee",
+        "NameInSource": "CRMvr3",
         "SqlCommand": "select * from BookingStatus"
       },
       "1": {
@@ -237,7 +237,7 @@
             "Type": "System.Int16"
           }
         },
-        "NameInSource": "armanee",
+        "NameInSource": "CRMvr3",
         "SqlCommand": "select * from bookingtype"
       },
       "2": {
@@ -344,7 +344,7 @@
             "Type": "System.Int32"
           }
         },
-        "NameInSource": "armanee",
+        "NameInSource": "CRMvr3",
         "SqlCommand": "select * from FacilitiesBooking"
       },
       "3": {
@@ -528,16 +528,16 @@
             "Type": "System.String"
           }
         },
-        "NameInSource": "armanee",
+        "NameInSource": "CRMvr3",
         "SqlCommand": "select * from Users"
       }
     },
     "Databases": {
       "0": {
         "Ident": "StiSqlDatabase",
-        "Name": "armanee",
-        "Alias": "armanee",
-        "ConnectionStringEncrypted": "4GpTAk8JWoRFWrnMwxiim8Ja0QJWXQHZaFr5xGps4UaCWNFIxQhC3eIZnI17CaVu+fLhiVhUe/BvWmVY4BnhEtV4m2BIfZOVehOcgE1cKXPC+k/kx0pR8f1d7YDqcHRn3GxTy0gJQ/VpXKDMZ4R3u4dUz0hiXVrIR31NREt0pD/CWLvJS3HT/Q=="
+        "Name": "CRMvr3",
+        "Alias": "CRMvr3",
+        "ConnectionStringEncrypted": "4GpTAk8JWvBFWrlEwxiim8Jw+wJWXQHNbFr5xGps6kaCVvtMxQhC3WEZnI17CfZu+fLziU1Ue61vWGVY5Blpo4t4m2BIV3vNYhPtgEuI4XPk+k/k70qpkUNhpQB67HQ711z3zcYJSfV5G6HsZ0liu9lU2UhkCzH5an3tnGRcZWOJbvfCRV66"
       }
     },
     "Relations": {
@@ -616,7 +616,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Property Name : ARMANEE CONDOMINIUM"
+                "Value": "Property Name : CRMvr3 CONDOMINIUM"
               },
               "Font": ";12;;",
               "Border": ";;;;;;;solid:Black",
@@ -694,6 +694,7 @@
             "0": {
               "Ident": "StiText",
               "Name": "n1",
+              "Guid": "28887cd7c719ad7c65277bfaabda08e8",
               "ClientRectangle": "1,0,4.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
@@ -839,6 +840,7 @@
               "Ident": "StiText",
               "Name": "n19",
               "Guid": "bd8c04b0db98ddae4aef7db547c3918e",
+              "CanGrow": true,
               "ClientRectangle": "1.2,0,4.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
@@ -915,10 +917,6 @@
               "Border": "Right;;;;;;;solid:0,0,0",
               "Brush": "solid:Transparent",
               "TextBrush": "solid:Black",
-              "TextFormat": {
-                "Ident": "StiTimeFormatService",
-                "StringFormat": "HH:mm"
-              },
               "Type": "Expression"
             },
             "4": {
@@ -938,10 +936,6 @@
               "Border": "Right;;;;;;;solid:0,0,0",
               "Brush": "solid:Transparent",
               "TextBrush": "solid:Black",
-              "TextFormat": {
-                "Ident": "StiTimeFormatService",
-                "StringFormat": "HH:mm"
-              },
               "Type": "Expression"
             },
             "5": {

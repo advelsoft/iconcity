@@ -17,7 +17,7 @@ class inprogressfeedback_model extends CI_Model
 			$sql = "SELECT f.*, d.Department AS IncidentType, u.PropertyNo, u.OwnerName
 					FROM Feedback f JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Department] d ON f.IncidentType = d.UID
 					JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Users] u ON f.CreatedBy = u.UserID 
-					WHERE f.ComplaintIDParent IS NULL AND f.Status = 'InProgress' AND f.CondoSeq = '".GLOBAL_CONDOSEQ."' ORDER BY f.FeedbackID DESC";
+					WHERE f.ComplaintIDParent IS NULL AND f.Status = 'InProgress' AND f.CondoSeq = '".$_SESSION['condoseq']."' ORDER BY f.FeedbackID DESC";
 			$query = $this->jompay->query($sql);
 			$result = $query->result();
 			
@@ -55,7 +55,7 @@ class inprogressfeedback_model extends CI_Model
 		{
 			$sql = "SELECT f.*, d.Department AS IncidentType
 					FROM Feedback f JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Department] d ON f.IncidentType = d.UID
-					WHERE ComplaintIDParent IS NULL AND Status = 'InProgress' AND f.CreatedBy = ".$_SESSION['userid']." AND CondoSeq = '".GLOBAL_CONDOSEQ."'";
+					WHERE ComplaintIDParent IS NULL AND Status = 'InProgress' AND f.CreatedBy = ".$_SESSION['userid']." AND CondoSeq = '".$_SESSION['condoseq']."'";
 			$query1 = $this->jompay->query($sql);
 			$result1 = $query1->result();
 

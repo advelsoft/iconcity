@@ -11,9 +11,49 @@ class booking_model extends CI_Model
 
 	public function get_blockUser_list()
 	{
-		$this->cportal->from('BookingBlockUsers');
-		$query = $this->cportal->get();
-		return $query->result();
+		//get server, port
+		$this->jompay->from('Condo');
+		$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
+		$query = $this->jompay->get();
+		$condo = $query->result();
+
+		$jsonData = array('UserTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq']);
+
+		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/BlackListRead';
+		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
+		$response = Requests::post($url, $headers, json_encode($jsonData));
+		$body = json_decode($response->body, true);
+
+		foreach((array)$body as $key => $value)
+		{
+			if($key == 'Resp'){
+				$Status = $value['Status'];
+				$FailedReason = $value['FailedReason'];
+				$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
+			}
+			else if($key == 'Result'){
+				$Enabled = $value['Enabled'];
+				$BlockMethod = $value['BlockMethod'];
+				$OverdueAmount = $value['OverdueAmount'];
+				$OverdueDays = $value['OverdueDays'];
+				
+				$array = array(
+							'enabled'=>$Enabled,
+							'blockMethod'=>$BlockMethod,
+							'overdueAmount'=>$OverdueAmount,
+							'overdueDays'=>$OverdueDays);
+			}
+		}
+
+		if($Status == 'F'){
+			$this->session->set_flashdata('msg', '<script language=javascript>alert("'.$FailedReason.'");</script>');
+			redirect('index.php/Common/FacilityBooking/Index');
+		}
+		else{
+			if(isset($array)){
+				return $array;
+			}
+		}
 	}
 	
 	public function get_bookingType_list()

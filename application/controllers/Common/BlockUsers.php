@@ -12,10 +12,13 @@ class blockusers extends CI_Controller {
 		// load form helper and validation library
 		$this->load->helper('form');
 		$this->load->library('form_validation');	
+		$this->load->library('PHPRequests');
 		
 		//load the model
 		$this->load->model('booking_model');
 		$this->load->model('header_model');
+
+		$this->jompay = $this->load->database('jompay',TRUE);
 		
 		//check if login
 		if (!$this->session->userdata('loginuser'))
@@ -47,13 +50,13 @@ class blockusers extends CI_Controller {
         $this->form_validation->set_rules('BlockMethod', 'BlockMethod', 'trim');
         $this->form_validation->set_rules('OverDueAmount', 'OverDueAmount', 'trim');
         $this->form_validation->set_rules('OverDueDays', 'OverDueDays', 'trim');
-        $this->form_validation->set_rules('DefaulterMsg', 'DefaulterMsg', 'trim');
+        // $this->form_validation->set_rules('DefaulterMsg', 'DefaulterMsg', 'trim');
 		
 		if ($this->form_validation->run() == FALSE)
         {
             //validation fail
 			if($_SESSION['role'] == 'Admin'){
-				redirect('index.php/Common/Setup/ServerSetup/'.GLOBAL_CONDOSEQ);
+				redirect('index.php/Common/Setup/ServerSetup/'.$_SESSION['condoseq']);
 			}
 		}
 		else
@@ -61,10 +64,10 @@ class blockusers extends CI_Controller {
 			//validation succeed
 			$enable = $this->input->post('EnableBlockUser');
 			if($enable == 'on'){
-				$enable = '1';
+				$enable = 'Y';
 			}
 			else{
-				$enable = '0';
+				$enable = 'N';
 			}
 			
 			$block = $this->input->post('BlockMethod');
@@ -81,45 +84,21 @@ class blockusers extends CI_Controller {
 				$block = '4';
 			}
 			
-			$this->cportal->from('BookingBlockUsers');
-			$result = $this->cportal->count_all_results();
-	
-			if($result == 0) //not exist
-			{
-				$data = array(
-					'EnableBlockUser' => $enable,
-					'BlockMethod' => $block,
-					'OverDueAmount' => $this->input->post('OverDueAmount'),
-					'OverDueDays' => $this->input->post('OverDueDays'),
-					'DefaulterMsg' => $this->input->post('DefaulterMsg'),
-					'CreatedBy' => $_SESSION['userid'],
-					'CreatedDate' => date('Y-m-d H:i:s'),
-				);
-				
-				//insert record
-				$this->cportal->insert('BookingBlockUsers', $data);
-				//display success message
-				$this->session->set_flashdata('msg', '<script language=javascript>alert("Added");</script>');
-				redirect('index.php/Common/BlockUsers/Index');
-			}
-			else //exist
-			{
-				$data = array(
-					'EnableBlockUser' => $enable,
-					'BlockMethod' => $block,
-					'OverDueAmount' => $this->input->post('OverDueAmount'),
-					'OverDueDays' => $this->input->post('OverDueDays'),
-					'DefaulterMsg' => $this->input->post('DefaulterMsg'),
-					'ModifiedBy' => $_SESSION['userid'],
-					'ModifiedDate' => date('Y-m-d H:i:s'),
-				);
-				
-				//update record
-				$this->cportal->update('BookingBlockUsers', $data);
-				//display success message
-				$this->session->set_flashdata('msg', '<script language=javascript>alert("Updated");</script>');
-				redirect('index.php/Common/BlockUsers/Index');
-			}
+			//get server, port
+			$this->jompay->from('Condo');
+			$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
+			$query = $this->jompay->get();
+			$condo = $query->result();
+
+			$jsonData = array('SuperTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'Enabled' => $enable, 'BlockMethod' => $block, 'OverdueAmount' => $this->input->post('OverDueAmount'), 'OverdueDays' => $this->input->post('OverDueDays'));
+			$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/BlackListSet';
+			$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
+			$response = Requests::post($url, $headers, json_encode($jsonData));
+			$body = json_decode($response->body, true);
+
+			//display success message
+			$this->session->set_flashdata('msg', '<script language=javascript>alert("Updated");</script>');
+			redirect('index.php/Common/BlockUsers/Index');
 		}
 	}
 	

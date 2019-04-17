@@ -141,11 +141,10 @@ class facilityBooking extends CI_Controller {
 		$data['bookingStatus'] = $this->facilityBooking_model->get_Status();
 		$data['schedule'] = $this->facilityBooking_model->get_ScheduleList($BookingTypeID);
 		$bookingTypeGroup = $this->facilityBooking_model->get_BookingTypeGroup($BookingTypeID);
-		/*$blackList = $this->facilityBooking_model->get_Blacklist();
-		
-		if(count($blackList) > 0){
+		$blackList = $this->facilityBooking_model->get_Blacklist();
+		if(isset($blackList['overdueAmount']) && count($blackList['overdueAmount']) > 0){
 			$data['OverdueAmount'] = $blackList['overdueAmount'];
-		}*/
+		}
 		
 		//set validation rules
         $this->form_validation->set_rules('BookingTypeID', 'Description', 'callback_combo_check');
@@ -176,36 +175,48 @@ class facilityBooking extends CI_Controller {
         }
         else
         {
-			//validation succeed
-			//check status of blacklist
-			/*if(count($blackList) > 0){
-				$status = $blackList['status'];
-			}
-			else{ //allow when service error
-				$status = "A";
-			}*/
-			
 			//get server, port
 			$this->jompay->from('Condo');
-			$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->jompay->get();
 			$condo = $query->result();
-
+			
 			if($_SESSION['role'] == 'Mgmt'){
+				$data = array(
+					'BookingTypeID' => $BookingTypeID,
+					'UserID' => $this->input->post('PropertyNo'),   
+					'BStatusID' => $this->input->post('Status'),
+					'DateFrom' => $this->input->post('DateFrom'),
+					'DateTo' => $this->input->post('DateFrom'),
+					'TimeFrom' => $this->input->post('TimeFrom'),
+					'TimeTo' => $this->input->post('TimeTo'),
+					'Remarks' => $this->input->post('Remarks'),
+					'CreatedBy' => $_SESSION['userid'],
+					'CreatedDate' => date('Y-m-d H:i:s'),
+				);
+				
+				//insert record
+				$this->cportal->insert('FacilitiesBooking', $data);
+			
+				//display success message
+				$this->session->set_flashdata('msg', '<script language=javascript>alert("Booking Success");</script>');
+				redirect('index.php/Common/FacilityBooking/Index');
+			}
+			else if($_SESSION['role'] == 'User'){
 				//get propertyNo
 				$this->cportal->from('Users');
-				$this->cportal->where('USERID', $this->input->post('PropertyNo'));
+				$this->cportal->where('USERID', $_SESSION['userid']);
 				$query = $this->cportal->get();
 				$user = $query->result();
 				
-				$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => trim($user[0]->CONDOSEQ), 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => trim($user[0]->USERID), 
-								  'FacilityId' => $BookingTypeID, 'Date' =>$this->input->post('DateFrom'), 'TimeFrom' => $this->input->post('TimeFrom'), 'TimeTo' => $this->input->post('TimeTo'), 'Feed' => 'Y');
+				$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => trim($user[0]->CONDOSEQ), 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => trim($user[0]->USERID), 'FacilityId' => $BookingTypeID, 'Date' =>$this->input->post('DateFrom'), 'TimeFrom' => $this->input->post('TimeFrom'), 'TimeTo' => $this->input->post('TimeTo'), 'Feed' => 'Y');
+				
 				$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/FacilityBooking';
 				$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
 				$response = Requests::post($url, $headers, json_encode($jsonData));
 				$body = json_decode($response->body, true);
-				//echo '<pre>';
-				//print_r($body);
+				// echo '<pre>';
+				// print_r($body); die();
 				
 				foreach($body as $key => $value)
 				{
@@ -227,96 +238,9 @@ class facilityBooking extends CI_Controller {
 					redirect('index.php/Common/FacilityBooking/Index');
 				}
 				else{
-					//get the currentDate
-					$currentDate = date("Y-m-d");
-
-					//get the selected date
-					$selectedDate = $this->input->post('DateFrom');
-
-					//compare the diff of days
-					$date1 = date_create($currentDate);
-					$date2 = date_create($selectedDate);
-					$timeDiff = date_diff($date1, $date2);
-					$diffDays = $timeDiff->format('%a').'</br>';
-					$advancedDay = $bookingTypeGroup[0]->ADVANCEBOOKINGDAYS;
-
-					//do checking
-					if($diffDays > $advancedDay){
-						$this->session->set_flashdata('msg', '<script language=javascript>alert("You are not allow to book more than '.$advancedDay.' days in advanced.");</script>');
-						redirect('index.php/Common/FacilityBooking/Index');
-					}
-					else{
-						$this->session->set_flashdata('msg', '<script language=javascript>alert("Booking Success");</script>');
-						redirect('index.php/Common/FacilityBooking/Index');
-					}
+					$this->session->set_flashdata('msg', '<script language=javascript>alert("Booking Success");</script>');
+					redirect('index.php/Common/FacilityBooking/Index');
 				}
-			}
-			else if($_SESSION['role'] == 'User'){
-				//get propertyNo
-				$this->cportal->from('Users');
-				$this->cportal->where('USERID', $_SESSION['userid']);
-				$query = $this->cportal->get();
-				$user = $query->result();
-				
-				//if($status == 'A' || $status == ''){
-					$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => trim($user[0]->CONDOSEQ), 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => trim($user[0]->USERID), 
-									  'FacilityId' => $BookingTypeID, 'Date' =>$this->input->post('DateFrom'), 'TimeFrom' => $this->input->post('TimeFrom'), 'TimeTo' => $this->input->post('TimeTo'), 'Feed' => 'Y');
-					$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/FacilityBooking';
-					$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
-					$response = Requests::post($url, $headers, json_encode($jsonData));
-					$body = json_decode($response->body, true);
-					//echo '<pre>';
-					//print_r($body);
-					
-					foreach($body as $key => $value)
-					{
-						if($key == 'Req'){
-							$CondoSeqNo = $value['CondoSeqNo'];
-							$UnitSeqNo = $value['UnitSeqNo'];
-							$UserIdNo = $value['UserIdNo'];
-						}
-						else if($key == 'Resp'){
-							$Status = $value['Status'];
-							$FailedReason = $value['FailedReason'];
-							$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
-						}
-					}
-
-					//display message
-					if($Status == 'F'){
-						$this->session->set_flashdata('msg', '<script language=javascript>alert("'.$FailedReason.'");</script>');
-						redirect('index.php/Common/FacilityBooking/Index');
-					}
-					else{
-						//get the currentDate
-						$currentDate = date("Y-m-d");
-
-						//get the selected date
-						$selectedDate = $this->input->post('DateFrom');
-
-						//compare the diff of days
-						$date1 = date_create($currentDate);
-						$date2 = date_create($selectedDate);
-						$timeDiff = date_diff($date1, $date2);
-						$diffDays = $timeDiff->format('%a').'</br>';
-						$advancedDay = $bookingTypeGroup[0]->ADVANCEBOOKINGDAYS;
-
-						//do checking
-						if($diffDays > $advancedDay){
-							$this->session->set_flashdata('msg', '<script language=javascript>alert("You are not allow to book more than '.$advancedDay.' days in advanced.");</script>');
-							redirect('index.php/Common/FacilityBooking/Index');
-						}
-						else{
-							$this->session->set_flashdata('msg', '<script language=javascript>alert("Booking Success");</script>');
-							redirect('index.php/Common/FacilityBooking/Index');
-						}
-					}
-				/*}
-				else{
-					//display message
-					$this->session->set_flashdata('msg', '<script language=javascript>alert("Your account is defaulted. Please settle your outstanding with management office.");</script>');
-					redirect('index.php/Common/FacilityBooking/Create/'.$BookingTypeID.'?Date='.$this->input->post('DateFrom'));
-				}*/
 			}
 		}
 	}
@@ -600,7 +524,7 @@ class facilityBooking extends CI_Controller {
 			
 			//get server, port
 			$this->jompay->from('Condo');
-			$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->jompay->get();
 			$condo = $query->result();
 			
@@ -689,7 +613,7 @@ class facilityBooking extends CI_Controller {
 					'Remarks' => $this->input->post('Remarks'),
 					'CreatedBy' => $_SESSION['userid'],
 					'CreatedDate' => date('Y-m-d H:i:s'),
-					'CondoSeq'=> GLOBAL_CONDOSEQ,
+					'CondoSeq'=> $_SESSION['condoseq'],
 			);
 			
 			//insert record
@@ -736,5 +660,24 @@ class facilityBooking extends CI_Controller {
 			$this->form_validation->set_message('accept_terms', $error);
 			return FALSE;
 		}
+	}
+
+	public function BookingPdf()
+	{
+		$datefrom = $this->input->post('datefrom');
+		$datefrom = str_replace('/', '-', $datefrom);
+		$datefrom = date("Y-m-d", strtotime($datefrom));
+		$dateto = $this->input->post('dateto');
+		$dateto = str_replace('/', '-', $dateto);
+		$dateto = date("Y-m-d", strtotime($dateto));
+
+		$sessiondata = array(
+						'datefrom'=>$datefrom, 
+						'dateto'=>$dateto
+					);
+        $this->session->set_userdata($sessiondata);
+        
+		//load the view
+		$this->load->view('../Reporting/facilitiesBooking');
 	}
 }?>

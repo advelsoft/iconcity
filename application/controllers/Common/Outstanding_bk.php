@@ -217,7 +217,7 @@ class outstanding extends CI_Controller {
 				
 				//update record
 				$this->jompay->where('DocNo', $docNo);
-				$this->jompay->where('CondoSeq', GLOBAL_CONDOSEQ);
+				$this->jompay->where('CondoSeq', $_SESSION['condoseq']);
 				$this->jompay->update('OsToPay', $data);
 			}
             //redirect to Ref1 page
@@ -240,7 +240,7 @@ class outstanding extends CI_Controller {
 			//update record
 			$this->jompay->set('REF1', nULL);
 			$this->jompay->where('REF1', $ref1);
-			$this->jompay->where('CondoSeq', GLOBAL_CONDOSEQ);
+			$this->jompay->where('CondoSeq', $_SESSION['condoseq']);
 			$this->jompay->update('OsToPay');
 		}
 		//redirect to Outstanding page

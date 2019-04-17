@@ -41,7 +41,7 @@ class login extends CI_Controller
 			//get the posted values
 			$username = $this->input->post("Username");
 			$password = $this->input->post("Password");
-			$condoseq = GLOBAL_CONDOSEQ;
+			$condoseq = $_SESSION['condoseq'];
 
 			//check if username & password exist
 			if($username == "Admin" || $username == "admin" || $username == "ADMIN"){
@@ -131,9 +131,10 @@ class login extends CI_Controller
 				}
 			}
 			else{ //Cportal
-				$checkCportal = $this->login_model->user_loginPortal($username, $password);//check if exist
+				$checkCportalStatusOld = $this->login_model->user_loginPortalOldPW($username, $password);//check with old password
+				$checkCportalStatusNew = $this->login_model->user_loginPortalNewPW($username, $password);//check with old password
 				
-				if($checkCportal > 0){
+				if($checkCportalStatusOld > 0 || $checkCportalStatusNew == "S"){
 					//Get User Access Control
 					$UAC = $this->user_model->get_user_access_control($condoseq, 'Resident');
 
@@ -157,7 +158,6 @@ class login extends CI_Controller
 					
 	                $this->session->set_userdata($sessiondata);
 
-					$checkFirstLog = $this->login_model->check_firstlogin($username);//check first time login
 					$userid = $this->login_model->get_useridPortal($username, $password);//get userid
 					$user = $this->login_model->get_userPortal($userid);//get user details
 
@@ -183,15 +183,21 @@ class login extends CI_Controller
 							'LoginSource' => '1' //from web
 					);
 					
-					//update Users record
-					$this->cportal->where('LOGINID', $username);
-					$this->cportal->where('LOGINPASSWORD', $password);
-					$this->cportal->update('Users', $users);
+					if($checkCportalStatusOld > 0){
+						//update Users record
+						$this->cportal->where('LOGINID', $username);
+						$this->cportal->where('LOGINPASSWORD', $password);
+						$this->cportal->update('Users', $users);
+					} else {
+						//update Users record
+						$this->cportal->where('LOGINID', $username);
+						$this->cportal->update('Users', $users);
+					}
 					
 					//insert UsersLog record
 					$this->cportal->insert('UsersLog', $userlog);
 					
-					if(($user->LOGINPASSWORD) != NULL){
+					if($checkCportalStatusOld > 0){
 						//echo  "test"; die();
 						$this->session->set_flashdata('msg', '<script language=javascript>alert("Please change your password.");</script>');
 						redirect('index.php/Common/ProfileSet/Index');
@@ -231,6 +237,11 @@ class login extends CI_Controller
 				}
 			}
 		}
+	}
+
+	public function ForgetAccount()
+	{
+		$result = $this->login_model->user_ForgetAccount($this->input->post("email"), $this->input->post("propertyNo"));
 	}
 	
 	function Logout()

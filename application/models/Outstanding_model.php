@@ -20,7 +20,7 @@ class outstanding_model extends CI_Model
 		
 		//get server, port
 		$this->jompay->from('Condo');
-		$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+		$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 		$query = $this->jompay->get();
         $condo = $query->result();
 		
@@ -32,14 +32,12 @@ class outstanding_model extends CI_Model
 			$custType = 'T';//tenant
 		}
 		
-		$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 'CustType' => $custType);
+		$jsonData = array('UserTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 'CustType' => $custType);
 
-		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/PaymentUnpaidList';
+		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/PaymentUnPaidBrowse';
 		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
 		$response = Requests::post($url, $headers, json_encode($jsonData));
 		$body = json_decode($response->body, true);
-		//echo '<pre>';
-		//print_r($body);
 		$totalGross = "";
 		$totalOpen = "";
 
@@ -64,7 +62,6 @@ class outstanding_model extends CI_Model
 					$DueDate = $v['DueDate'];
 					$Description = $v['Description'];
 					$Amount = $v['Amount'];
-					$Ref1 = $v['Ref1'];
 					
 					if($Amount > 0){
 						$totalGross += $Amount;
@@ -77,13 +74,6 @@ class outstanding_model extends CI_Model
 					$query2 = $this->jompay->query($sql1);
 					$result2 = $query2->result();
 
-					if(count($result2) > 0){
-						$floatAmt = number_format(floatval($result2[0]->FLOATAMOUNTPAID), 2, '.', '');
-					}
-					else {
-						$floatAmt = "";
-					}
-					
 					$array[] = array('billerCode'=>$CondoSeqNo,
 									 'custType'=>$CustType,
 									 'docNo'=>$DocNo,
@@ -91,8 +81,6 @@ class outstanding_model extends CI_Model
 									 'desc'=>$Description,
 									 'dueDate'=>$DueDate,
 									 'amt'=>$Amount,
-									 'floatAmt'=>$floatAmt,
-									 'ref1'=>$Ref1,
 									 'totalGross'=>$totalGross,
 									 'totalOpen'=>$totalOpen);
 				}
@@ -100,7 +88,7 @@ class outstanding_model extends CI_Model
 		}
 
 		if($Status == 'F'){
-			$this->session->set_flashdata('msg', '<script language=javascript>alert("'.$FailedReason.'");</script>');
+			$this->session->set_flashdata('jompay', '<script language=javascript>alert("'.$FailedReason.'");</script>');
 			redirect('index.php/User/Home/Index');
 		}
 		else{
@@ -114,28 +102,84 @@ class outstanding_model extends CI_Model
 		}
 	}
 	
-	public function get_jompay_ref($ref1)
+	public function get_jompay_ref($bundleRef)
 	{
-		$this->jompay->from('OsToPay');
-		$this->jompay->where('REF1', $ref1);
-		$query = $this->jompay->get();
-        $result = $query->result();
+		//get propertyNo
+		$this->cportal->from('Users');
+		$this->cportal->where('USERID', $_SESSION['userid']);
+		$query = $this->cportal->get();
+		$user = $query->result();
 		
+		//get server, port
 		$this->jompay->from('Condo');
-		$this->jompay->where('CondoSeq', $result[0]->CONDOSEQ);
-		$query1 = $this->jompay->get();
-        $result1 = $query1->result();
+		$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
+		$query = $this->jompay->get();
+		$condo = $query->result();
 		
-		$totalAmt = '';
-		
-		for ($i = 0; $i < count($result); $i++)
-        {
-			$totalAmt += $result[$i]->AMOUNT;
-			
+		//assign cust type
+		if($user[0]->GROUPID == '2'){
+			$custType = 'O';//owner
 		}
-		$array = array('BillerCode'=>$result1[0]->BillerCode,
-					   'TotalAmt'=>$totalAmt);
-		return $array;
+		else{
+			$custType = 'T';//tenant
+		}
+		
+		$jsonData = array('UserTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'],
+						  'CustType' => $custType, 'BundleReference' => $bundleRef);
+
+		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/PaymentBundleJompayRead';
+		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
+		$response = Requests::post($url, $headers, json_encode($jsonData));
+		$body = json_decode($response->body, true);
+		
+		foreach($body as $key => $value)
+		{
+			if($key == 'Req'){
+				$CondoSeqNo = $value['CondoSeqNo'];
+				$UnitSeqNo = $value['UnitSeqNo'];
+				$UserIdNo = $value['UserIdNo'];
+				$UserTokenNo = $value['UserTokenNo'];
+				$CustType = $value['CustType'];
+			}
+			else if($key == 'Bills'){
+				foreach($value as $k => $v)
+				{
+					$DocNo = $v['DocNo'];
+				}
+			}
+			else if($key == 'Resp'){
+				$Status = $value['Status'];
+				$FailedReason = $value['FailedReason'];
+				$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
+			}
+			else if($key == 'Result'){
+				$Date = $value['Date'];
+				$BillerCode = $value['BillerCode'];
+				$Ref1 = $value['Ref1'];
+				$Amount = $value['Amount'];
+				$TotalBills = $value['TotalBills'];
+
+				$array = array('date'=>$Date,
+							   'billerCode'=>$BillerCode,
+							   'ref1'=>$Ref1,
+							   'amount'=>$Amount,
+							   'totalBills'=>$TotalBills,
+							   'bundleRef'=>$bundleRef);
+			}
+		}
+		
+		if($Status == 'F'){
+			$this->session->set_flashdata('jompay', '<script language=javascript>alert("'.$FailedReason.'");</script>');
+			//redirect('index.php/Common/Outstanding/Index');	
+		}
+		else{
+			if(isset($array)){
+				return $array;
+			}
+			else{
+				return;
+			}
+		}
 	}
 	
 	public function get_jompay_bank()
@@ -164,7 +208,7 @@ class outstanding_model extends CI_Model
 		
 		//get server, port
 		$this->jompay->from('Condo');
-		$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+		$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 		$query = $this->jompay->get();
         $condo = $query->result();
 		
@@ -176,14 +220,12 @@ class outstanding_model extends CI_Model
 			$custType = 'T';//tenant
 		}
 		
-		$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 'CustType' => $custType, 'Type' => 'A');
-
-		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/JompayPaidList';
+		$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 'CustType' => $custType);
+// $this->ad($jsonData);
+		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/PaymentBundlePaidBrowseV2';
 		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
 		$response = Requests::post($url, $headers, json_encode($jsonData));
 		$body = json_decode($response->body, true);
-		//echo '<pre>';
-		//print_r($body);
 		$totalGross = "";
 		$totalOpen = "";
 
@@ -205,12 +247,14 @@ class outstanding_model extends CI_Model
 					$ReceiptNo = $v['ReceiptNo'];
 					$Date = $v['Date'];
 					$Amount = $v['Amount'];
-					$Ref1 = $v['Ref1'];
+					$PaymentReference = $v['PaymentReference'];
+					$Method = $v['Method'];
 					
-					$array[] = array('desc'=>$Ref1,
+					$array[] = array('desc'=>$PaymentReference,
 									 'amt'=>$Amount,
 									 'datepaid'=>$Date,
-									 'receiptno'=>$ReceiptNo);
+									 'receiptno'=>$ReceiptNo,
+									 'method'=>$Method);
 				}
 			}
 		}
@@ -230,64 +274,6 @@ class outstanding_model extends CI_Model
 		}
 	}
 	
-	public function get_totalGross()
-	{
-		//get propertyNo
-		$this->cportal->from('Users');
-		$this->cportal->where('USERID', $_SESSION['userid']);
-		$query = $this->cportal->get();
-        $user = $query->result();
-		
-		//assign cust type
-		if($user[0]->GROUPID == '2'){
-			$custType = 'O';//owner
-		}
-		else{
-			$custType = 'T';//tenant
-		}
-		
-		$sql = "SELECT SUM(Amount) AS totalGross FROM OsToPay WHERE Amount > 0 AND PROPERTYNO = '".$user[0]->PROPERTYNO."' AND CONDOSEQ = '".GLOBAL_CONDOSEQ."' AND CUSTTYPE = '".$custType."'";
-		$query = $this->jompay->query($sql);
-		$result = $query->result();
-		
-		if(count($result) > 0){
-			$totalGross = $result[0]->totalGross;
-		}
-		else{
-			$totalGross = "";
-		}
-		return $totalGross;
-	}
-	
-	public function get_totalOpen()
-	{
-		//get propertyNo
-		$this->cportal->from('Users');
-		$this->cportal->where('USERID', $_SESSION['userid']);
-		$query = $this->cportal->get();
-        $user = $query->result();
-		
-		//assign cust type
-		if($user[0]->GROUPID == '2'){
-			$custType = 'O';//owner
-		}
-		else{
-			$custType = 'T';//tenant
-		}
-		
-		$sql = "SELECT SUM(Amount) AS totalOpen FROM OsToPay WHERE Amount < 0 AND PROPERTYNO = '".$user[0]->PROPERTYNO."' AND CONDOSEQ = '".GLOBAL_CONDOSEQ."' AND CUSTTYPE = '".$custType."'";
-		$query = $this->jompay->query($sql);
-		$result = $query->result();
-		
-		if(count($result) > 0){
-			$totalOpen = $result[0]->totalOpen;
-		}
-		else{
-			$totalOpen = "";
-		}
-		return $totalOpen;
-	}
-	
 	public function get_stmt_detail()
 	{
 		//get propertyNo
@@ -298,7 +284,7 @@ class outstanding_model extends CI_Model
 		
 		//get server, port
 		$this->jompay->from('Condo');
-		$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+		$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 		$query = $this->jompay->get();
         $condo = $query->result();
 		
@@ -309,11 +295,11 @@ class outstanding_model extends CI_Model
 		else{
 			$custType = 'T';//tenant
 		}
-		
-		$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UnitSeqNo' => trim($user[0]->UNITSEQ), 
-						  'UserIdNo' => $_SESSION['userid'], 'DateTo' => $this->input->post('DateFrom'), 'CustType' => $custType);
+		// echo $this->input->post('DateFrom'); die();
+		$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($user[0]->UNITSEQ), 
+						  'UserIdNo' => $_SESSION['userid'], 'Month' => $this->input->post('month'), 'Year' => $this->input->post('year'), 'CustType' => $custType);
 
-		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/StatementRead';
+		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/StatementReadV2';
 		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
 		$response = Requests::post($url, $headers, json_encode($jsonData));
 		$body = json_decode($response->body, true);
@@ -394,6 +380,342 @@ class outstanding_model extends CI_Model
 		}
 		else{
 			return $bank;
+		}
+	}
+	
+	public function get_bundle_ref($bills)
+	{
+		//get propertyNo
+		$this->cportal->from('Users');
+		$this->cportal->where('USERID', $_SESSION['userid']);
+		$query = $this->cportal->get();
+		$user = $query->result();
+		
+		//get server, port
+		$this->jompay->from('Condo');
+		$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
+		$query = $this->jompay->get();
+		$condo = $query->result();
+		
+		//assign cust type
+		if($user[0]->GROUPID == '2'){
+			$custType = 'O';//owner
+		}
+		else{
+			$custType = 'T';//tenant
+		}
+		
+		$temp = explode('|', $bills);
+		$j = 1;
+		for ($i = 0; $i < count($temp)-1; $i++){
+			$docNos[$i] = array('DocNo' => $temp[$i]);
+		}
+
+		$jsonData = array('UserTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'],
+						  'CustType' => $custType, 'Bills' => $docNos);
+
+		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/PaymentBundleAdd';
+		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
+		$response = Requests::post($url, $headers, json_encode($jsonData));
+		$body = json_decode($response->body, true);
+		
+		foreach($body as $key => $value)
+		{
+			if($key == 'Req'){
+				$CondoSeqNo = $value['CondoSeqNo'];
+				$UnitSeqNo = $value['UnitSeqNo'];
+				$UserIdNo = $value['UserIdNo'];
+				$UserTokenNo = $value['UserTokenNo'];
+				$CustType = $value['CustType'];
+			}
+			else if($key == 'Bills'){
+				foreach($value as $k => $v)
+				{
+					$DocNo = $v['DocNo'];
+				}
+			}
+			else if($key == 'Resp'){
+				$Status = $value['Status'];
+				$FailedReason = $value['FailedReason'];
+				$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
+			}
+			else if($key == 'Result'){
+				$BundleReference = $value['BundleReference'];
+				$Date = $value['Date'];
+				$Amount = $value['Amount'];
+				$TotalBills = $value['TotalBills'];
+
+				$array = array('bundleRef'=>$BundleReference,
+							   'date'=>$Date,
+							   'amount'=>$Amount,
+							   'totalBills'=>$TotalBills);
+			}
+		}
+		
+		if($Status == 'F'){
+			$this->session->set_flashdata('jompay', '<script language=javascript>alert("'.$FailedReason.'");</script>');
+			//redirect('index.php/Common/Outstanding/Index');	
+		}
+		else{
+			if(isset($array)){
+				return $array;
+			}
+			else{
+				return;
+			}
+		}
+	}
+	
+	public function get_user_detail()
+	{
+		$this->cportal->from('Users');
+		$this->cportal->where('USERID', $_SESSION['userid']);
+		$query = $this->cportal->get();
+		$user = $query->result();
+		
+		//assign cust type
+		if($user[0]->GROUPID == '2'){
+			$custType = 'O';//owner
+		}
+		else{
+			$custType = 'T';//tenant
+		}
+			
+		$array = array('UnitSeqNo'=>trim($user[0]->UNITSEQ),
+					   'CustType'=>$custType,
+					   'customer_name'=>trim($user[0]->OWNERNAME),
+					   'customer_email'=>trim($user[0]->EMAIL));
+		return $array;
+	}
+	
+	public function get_pending_list()
+	{
+		//get propertyNo
+		$this->cportal->from('Users');
+		$this->cportal->where('USERID', $_SESSION['userid']);
+		$query = $this->cportal->get();
+		$user = $query->result();
+		
+		//get server, port
+		$this->jompay->from('Condo');
+		$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
+		$query = $this->jompay->get();
+		$condo = $query->result();
+		
+		//assign cust type
+		if($user[0]->GROUPID == '2'){
+			$custType = 'O';//owner
+		}
+		else{
+			$custType = 'T';//tenant
+		}
+
+		$jsonData = array('UserTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'],
+						  'CustType' => $custType);
+
+		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/PaymentBundleBrowse';
+		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
+		$response = Requests::post($url, $headers, json_encode($jsonData));
+		$body = json_decode($response->body, true);
+		// echo "<pre>";
+		// print_r($jsonData); die();
+		foreach($body as $key => $value)
+		{
+			if($key == 'Req'){
+				$CondoSeqNo = $value['CondoSeqNo'];
+				$UnitSeqNo = $value['UnitSeqNo'];
+				$UserIdNo = $value['UserIdNo'];
+				$UserTokenNo = $value['UserTokenNo'];
+				$CustType = $value['CustType'];
+			}
+			else if($key == 'Resp'){
+				$Status = $value['Status'];
+				$FailedReason = $value['FailedReason'];
+				$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
+			}
+			else if($key == 'Result'){
+				foreach((array)$value as $k => $v)
+				{
+					$BundleReference = $v['BundleReference'];
+					$Date = $v['Date'];
+					$Amount = $v['Amount'];
+					$TotalBills = $v['TotalBills'];
+					$Ref1 = $v['Ref1'];
+					$BillerCode = $v['BillerCode'];
+
+					$array[] = array('bundleRef'=>$BundleReference,
+								     'date'=>$Date,
+								     'amount'=>$Amount,
+								     'totalBills'=>$TotalBills,
+								     'ref1'=>$Ref1,
+								     'billerCode'=>$BillerCode);
+				}
+			}
+		}
+		
+		if($Status == 'F'){
+			$this->session->set_flashdata('jompay', '<script language=javascript>alert("'.$FailedReason.'");</script>');
+			redirect('index.php/Common/Outstanding/Index');	
+		}
+		else{
+			if(isset($array)){
+				return $array;
+			}
+			else{
+				return;
+			}
+		}
+	}
+	
+	public function get_bills_list($bundleRef)
+	{
+		//get propertyNo
+		$this->cportal->from('Users');
+		$this->cportal->where('USERID', $_SESSION['userid']);
+		$query = $this->cportal->get();
+		$user = $query->result();
+		
+		//get server, port
+		$this->jompay->from('Condo');
+		$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
+		$query = $this->jompay->get();
+		$condo = $query->result();
+		
+		//assign cust type
+		if($user[0]->GROUPID == '2'){
+			$custType = 'O';//owner
+		}
+		else{
+			$custType = 'T';//tenant
+		}
+
+		$jsonData = array('UserTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'],
+						  'CustType' => $custType, 'BundleReference' => $bundleRef);
+
+		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/PaymentBundleRead';
+		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
+		$response = Requests::post($url, $headers, json_encode($jsonData));
+		$body = json_decode($response->body, true);
+		
+		foreach($body as $key => $value)
+		{
+			if($key == 'Req'){
+				$CondoSeqNo = $value['CondoSeqNo'];
+				$UnitSeqNo = $value['UnitSeqNo'];
+				$UserIdNo = $value['UserIdNo'];
+				$UserTokenNo = $value['UserTokenNo'];
+				$CustType = $value['CustType'];
+			}
+			else if($key == 'Resp'){
+				$Status = $value['Status'];
+				$FailedReason = $value['FailedReason'];
+				$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
+			}
+			else if($key == 'Result'){
+				foreach((array)$value as $k => $v)
+				{
+					$BundleReference = $v['BundleReference'];
+					$Date = $v['Date'];
+					$Amount = $v['Amount'];
+					$TotalBills = $v['TotalBills'];
+					$Ref1 = $v['Ref1'];
+					$BillerCode = $v['BillerCode'];
+
+					$array[] = array('bundleRef'=>$BundleReference,
+								   'date'=>$Date,
+								   'amount'=>$Amount,
+								   'totalBills'=>$TotalBills,
+								   'ref1'=>$Ref1,
+								   'billerCode'=>$BillerCode);
+				}
+			}
+		}
+		
+		if($Status == 'F'){
+			$this->session->set_flashdata('jompay', '<script language=javascript>alert("'.$FailedReason.'");</script>');
+			//redirect('index.php/Common/Outstanding/Index');	
+		}
+		else{
+			if(isset($array)){
+				return $array;
+			}
+			else{
+				return;
+			}
+		}
+	}
+	
+	public function get_os_reminder()
+	{
+		//get propertyNo
+		$this->cportal->from('Users');
+		$this->cportal->where('USERID', $_SESSION['userid']);
+		$query = $this->cportal->get();
+        $user = $query->result();
+		
+		//get server, port
+		$this->jompay->from('Condo');
+		$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
+		$query = $this->jompay->get();
+        $condo = $query->result();
+		
+		//assign cust type
+		if($user[0]->GROUPID == '2'){
+			$custType = 'O';//owner
+		}
+		else{
+			$custType = 'T';//tenant
+		}
+		
+		$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 'CustType' => $custType, 'Type' => 'A');
+		
+		$url = $condo[0]->SERVICESERVER.':8122/ReminderList';
+		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
+		$response = Requests::post($url, $headers, json_encode($jsonData));
+		$body = json_decode($response->body, true);
+		$totalGross = "";
+		$totalOpen = "";
+
+		foreach($body as $key => $value)
+		{
+			if($key == 'Req'){
+				$CondoSeqNo = $value['CondoSeqNo'];
+				$UnitSeqNo = $value['UnitSeqNo'];
+				$CustType = $value['CustType'];
+			}
+			else if($key == 'Resp'){
+				$Status = $value['Status'];
+				$FailedReason = $value['FailedReason'];
+				$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
+			}
+			else if($key == 'Result'){
+				foreach((array)$value as $k => $v)
+				{
+					$ReminderDate = $v['ReminderDate'];
+					$ReminderNo = $v['ReminderNo'];
+					$Message = $v['Message'];
+					$Outstanding = $v['Outstanding'];
+					
+					$array[] = array('reminderDate'=>$ReminderDate,
+									 'reminderNo'=>$ReminderNo,
+									 'message'=>$Message,
+									 'outstanding'=>$Outstanding);
+				}
+			}
+		}
+
+		if($Status == 'F'){
+			$this->session->set_flashdata('msg', '<script language=javascript>alert("'.$FailedReason.'");</script>');
+			redirect('index.php/User/Home/Index');
+		}
+		else{
+			if(isset($array)){
+				return $array;
+			}
+			else{
+				$this->session->set_flashdata('history', '<script language=javascript>alert("No Payment History.");</script>');
+				return;
+			}
 		}
 	}
 }?>

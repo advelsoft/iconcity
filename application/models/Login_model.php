@@ -9,6 +9,7 @@ class login_model extends CI_Model
 		$this->load->database();
 		$this->cportal = $this->load->database('cportal',TRUE);
 		$this->jompay = $this->load->database('jompay',TRUE);
+		$this->load->library('PHPRequests');
 	}
 
 	public function login($username, $password)
@@ -64,12 +65,78 @@ class login_model extends CI_Model
 	}
 
 	/*-------------------Cportal-------------------*/
-	public function user_loginPortal($username, $password) 
+	public function user_loginPortalOldPW($username, $password) 
 	{
 		$this->cportal->from('Users');
 		$this->cportal->where('LOGINID', $username);
 		$this->cportal->where('LOGINPASSWORD', $password);
 		return $this->cportal->count_all_results();
+	}
+
+	public function user_loginPortalNewPW($username, $password) 
+	{
+		//get server, port
+		$this->jompay->from('Condo');
+		$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
+		$query = $this->jompay->get();
+		$condo = $query->result();
+
+		$jsonData = array('SuperTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'LoginId' => $username, 
+		'LoginPassword' => $password);
+		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/apiAuthenUser';
+		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
+		$response = Requests::post($url, $headers, json_encode($jsonData));
+		$body = json_decode($response->body, true);
+		
+		foreach($body as $key => $value)
+		{
+			if($key == 'Resp'){
+				$Status = $value['Status'];
+				$FailedReason = $value['FailedReason'];
+				$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
+			}
+		}
+
+		if($Status == 'F'){
+			$this->session->set_flashdata('msg', '<script language=javascript>alert("'.$FailedReason.'");</script>');
+			redirect(base_url());
+		}
+		else{
+			return $Status;
+		}
+	}
+
+	public function user_ForgetAccount($email, $unitNo) 
+	{
+		//get server, port
+		$this->jompay->from('Condo');
+		$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
+		$query = $this->jompay->get();
+		$condo = $query->result();
+
+		$jsonData = array('SuperTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'Email' => $email, 
+		'UserLoginId' => $unitNo);
+		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/PortalForgotPassword';
+		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
+		$response = Requests::post($url, $headers, json_encode($jsonData));
+		$body = json_decode($response->body, true);
+		foreach($body as $key => $value)
+		{
+			if($key == 'Resp'){
+				$Status = $value['Status'];
+				$FailedReason = $value['FailedReason'];
+				$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
+			}
+		}
+
+		if($Status == 'F'){
+			$this->session->set_flashdata('msg', '<script language=javascript>alert("'.$FailedReason.'");</script>');
+			redirect(base_url());
+		}
+		else{
+			$this->session->set_flashdata('msg', '<script language=javascript>alert("Email have been sent.");</script>');
+			redirect(base_url());
+		}
 	}
 	
 	public function check_firstlogin($username)
@@ -139,23 +206,34 @@ class login_model extends CI_Model
 		return $query->result();
 	}
 
-	public function get_Condoseq_from_url($condolink)
+	public function get_AllUnit()
 	{
-		$this->jompay->select('CONDOSEQ');
-		$this->jompay->from('Condo');
-		$this->jompay->where('CondoLink', $condolink);
-		$query = $this->jompay->get();
-		$data = $query->row();
-		return $data->CONDOSEQ;
+		$this->cportal->select('PROPERTYNO');
+		$this->cportal->from('Users');
+		$query = $this->cportal->get();
+		return $query->result();
 	}
 
-	public function get_Condocode_from_url($condolink)
+	public function get_condo_data($condolink)
 	{
+		$this->jompay->select('CONDOSEQ');
 		$this->jompay->select('CONDOCODE');
+		$this->jompay->select('CondoName');
+		$this->jompay->select('CportalSqlOwner');
 		$this->jompay->from('Condo');
 		$this->jompay->where('CondoLink', $condolink);
 		$query = $this->jompay->get();
 		$data = $query->row();
-		return $data->CONDOCODE;
+		return $data;
 	}
+
+	// public function get_Condocode_from_url($condolink)
+	// {
+	// 	$this->jompay->select('CONDOCODE');
+	// 	$this->jompay->from('Condo');
+	// 	$this->jompay->where('CondoLink', $condolink);
+	// 	$query = $this->jompay->get();
+	// 	$data = $query->row();
+	// 	return $data->CONDOCODE;
+	// }
 }?>

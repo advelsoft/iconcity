@@ -15,15 +15,15 @@
 		<div class="col-md-6">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h4>Statement</h4>
+					<h4>E-Statement</h4>
 				</div>			
 				<?php $attributes = array("id" => "statementform", "name" => "statementform", "target" => "_blank");
 				echo form_open("index.php/Common/Outstanding/GenerateStatement", $attributes);?>
 				<div class="panel-body">
 					<div class="form-horizontal">
 						<div class="form-group">
-							<label for="CustType" class="create-label col-md-3">Type</label>
-                            <div class="col-md-9">
+							<label for="CustType" class="create-label col-md-2">Type</label>
+                            <div class="col-md-4">
                                 <?php $attributes = 'class = "form-control" id = "CustType"';
 								echo form_dropdown('CustType',$userType,set_value('CustType'),$attributes);?>
 								<span class="text-danger"><?php echo form_error('CustType'); ?></span>
@@ -31,11 +31,36 @@
                             </div>
                         </div>
 						<div class="form-group">
-							<label for="DateFrom" class="create-label col-md-3">As at (yyyy/mm/dd)</label>
-                            <div class="col-md-9">
-                                <input id="DateFrom" name="DateFrom" placeholder="Date" type="text" class="form-control" value="<?php echo date("Y-m-d") ?>" />
-								<span class="text-danger"><?php echo form_error('DateFrom'); ?></span>
-                            </div>
+							<label for="month" class="create-label col-md-2">Month</label>
+							<div class="col-md-4">
+                            	<select id="month" name="month" class="form-control">
+                            		<option value="1">January</option>
+                            		<option value="2">February</option>
+                            		<option value="3">March</option>
+                            		<option value="4">April</option>
+                            		<option value="5">May</option>
+                            		<option value="6">June</option>
+                            		<option value="7">July</option>
+                            		<option value="8">August</option>
+                            		<option value="9">September</option>
+                            		<option value="10">October</option>
+                            		<option value="11">November</option>
+                            		<option value="12">December</option>
+                            	</select>
+								<span class="text-danger"><?php echo form_error('month'); ?></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="year" class="create-label col-md-2">Year</label>
+                            <div class="col-md-4">
+                                <select id="year" name="year" class="form-control">
+                                	<?php $a=date("Y"); $b=$a-7;
+                                	for($c=$a; $c>$b; $c--){ ?>
+                            			<option value="<?php echo $c; ?>"><?php echo $c; ?></option>
+                            		<?php } ?>
+                            	</select>
+								<span class="text-danger"><?php echo form_error('DateTo'); ?></span>
+							</div>
                         </div>
 					</div>
 				</div>
@@ -70,7 +95,17 @@
 			firstDay: 1,
 			showOtherMonths: true,
 			dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-			dateFormat: "yy/mm/dd",
+			dateFormat: "yy-mm-dd",
+			onSelect: function(dateText) {
+				$(this).change();
+			}
+		});
+		
+		$('#DateTo').datepicker({
+			firstDay: 1,
+			showOtherMonths: true,
+			dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+			dateFormat: "yy-mm-dd",
 			onSelect: function(dateText) {
 				$(this).change();
 			}

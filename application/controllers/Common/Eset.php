@@ -342,13 +342,13 @@ class eset extends CI_Controller {
 			//send email
 			//condo
 			$this->jompay->from('Condo');
-			$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->jompay->get();	
 			$condo = $query->result();
 
 			//config
 			$this->db->from('WebCtrl');
-			$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->db->get();	
 			$webctrl = $query->result();
 			

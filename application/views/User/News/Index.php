@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
-
+<?php echo $this->session->flashdata('msg'); ?>
 <div id="page-wrapper">
 	<div class="row"></div>
 	<div class="row">

@@ -22,9 +22,12 @@ class outstanding extends CI_Controller {
 		$this->load->model('header_model');
 
 		//check if login
-		if (!$this->session->userdata('loginuser'))
+		if (!isset($_SESSION['condoseq']))
         {
-            redirect(base_url().'index.php/Common/Login/Login');
+        	$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        	$this->session->set_userdata('JUMP_URL', $actual_link);
+        	$this->session->set_flashdata('msg', '<script language=javascript>alert("Please login before proceeding");</script>');
+            redirect(base_url().'index.php');
         }
 	}
 
@@ -33,21 +36,12 @@ class outstanding extends CI_Controller {
 		//call the model
 		$data['company'] = $this->header_model->get_Company();
         $osList = $this->outstanding_model->get_os_list();
-		$data['bankLog'] = $this->outstanding_model->get_BankLog();
-
-        $data['osList'] = array();
+		$data['osList'] = array();
         $offset = ($page - 1) * 100;
         $paginatedFiles = array();
 
         if (count($osList) > 0) {
             $paginatedFiles = array_slice($osList, $offset, 100, true);
-			
-			foreach ($osList as $osL) {
-				$data['totalGross'] = $osL['totalGross'];
-				$data['totalOpen'] = $osL['totalOpen'];
-				$data['totalNet'] = $osL['totalGross']+$osL['totalOpen'];
-				$data['billerCode'] = $osL['billerCode'];
-			}
         }
 		
 		if ($paginatedFiles) {
@@ -57,54 +51,97 @@ class outstanding extends CI_Controller {
 										  'trxnDate'=>$file['trxnDate'],
 										  'desc'=>$file['desc'],
 										  'dueDate'=>$file['dueDate'],
-										  'amt'=>$file['amt'],
-										  'floatAmt'=>$file['floatAmt'],
-										  'ref1'=>$file['ref1']);
+										  'amt'=>$file['amt']);
+				$data['totalGross'] = $file['totalGross'];
+				$data['totalOpen'] = $file['totalOpen'];
             }
-			$this->array_sort_by_column($data['osList'], 'dueDate');
+        }
+// echo "<pre>";
+// print_r($data['osList']); die();
+        $data['pending'] = $this->outstanding_model->get_pending_list();
+		$pending = $this->outstanding_model->get_pending_list();
+		$data['pending'] = array();
+        $offset = ($page - 1) * 100;
+        $paginatedFiles1 = array();
+
+        if (count($pending) > 0) {
+            $paginatedFiles1 = array_slice($pending, $offset, 100, true);
+        }
+		if ($paginatedFiles1) {
+            foreach ($paginatedFiles1 as $file) {
+                $data['pending'][] = array('bundleRef'=>$file['bundleRef'],
+										   'date'=>$file['date'],
+										   'amount'=>$file['amount'],
+										   'totalBills'=>$file['totalBills'],
+										   'ref1'=>$file['ref1'],
+										   'billerCode'=>$file['billerCode']);
+            }
         }
 		
-		//pagination
-        $config['base_url'] = base_url()."index.php/Common/Outstanding/Index";
-        $config['total_rows'] = count($osList);
-        $config['per_page'] = 100;
-        $config['num_links'] = 5;
-        $config['uri_segment'] = 4;
-        $config['use_page_numbers'] = TRUE;
-        $config['full_tag_open'] = '<ul class="pagination pagination-sm">'; 
-        $config['full_tag_close'] = '</ul>'; 
-        $config['num_tag_open'] = '<li>'; 
-        $config['num_tag_close'] = '</li>'; 
-        $config['cur_tag_open'] = '<li class="active"><span>'; 
-        $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>'; 
-        $config['prev_tag_open'] = '<li>'; 
-        $config['prev_tag_close'] = '</li>'; 
-        $config['next_tag_open'] = '<li>'; 
-        $config['next_tag_close'] = '</li>'; 
-        $config['first_link'] = '&laquo;'; 
-        $config['prev_link'] = '&lsaquo;'; 
-        $config['last_link'] = '&raquo;'; 
-        $config['next_link'] = '&rsaquo;'; 
-        $config['first_tag_open'] = '<li>'; 
-        $config['first_tag_close'] = '</li>'; 
-        $config['last_tag_open'] = '<li>'; 
-        $config['last_tag_close'] = '</li>';
+		$data_view = array(
+			"tab1" => $this->load->view('User/Outstanding/Outstanding', $data, TRUE),
+			"tab2" => $this->load->view('User/Outstanding/Pending', $data, TRUE)
+		);
 
-        $this->pagination->initialize($config);
-		
         //load the view
-		if($_SESSION['role'] == 'Mgmt'){
-			$this->load->view('Mgmt/header',$data);
-			$this->load->view('Mgmt/nav');
-			$this->load->view('Mgmt/footer');
-			$this->load->view('Mgmt/Setup/Outstanding/Index',$data);
-		}
-		else{
+		$this->load->view('User/header',$data);
+		$this->load->view('User/nav');
+		$this->load->view('User/footer');
+		$this->load->view('User/Outstanding/Index',$data_view);
+	}
+	
+	public function Bills()
+	{
+		//call the model
+		$data['company'] = $this->header_model->get_Company();
+
+		//set validation rules
+        $this->form_validation->set_rules('bundleRef', 'bundleRef', 'trim|required');
+
+        if ($this->form_validation->run() == FALSE)
+        {
+            //validation fail
 			$this->load->view('User/header',$data);
 			$this->load->view('User/nav');
 			$this->load->view('User/footer');
-			$this->load->view('User/Outstanding/Index',$data);
+			$this->load->view('User/Outstanding/Pending');
+        }
+        else
+        {
+			//validation succeed
+			$bundleRef = $this->input->post('bundleRef');
+			$data['bills'] = $this->outstanding_model->get_bills_list($bundleRef);
+
+			$this->load->view('User/header',$data);
+			$this->load->view('User/nav');
+			$this->load->view('User/footer');
+			$this->load->view('User/Outstanding/Pending');
+        }
+    }
+	
+	public function PayInfo()
+	{
+		//call the model
+		$data['company'] = $this->header_model->get_Company();
+		$data['userDetail'] = $this->outstanding_model->get_user_detail();
+		
+		$bills = $this->input->post('tmpDocNo');
+		if(isset($bills)){
+			$bundleRef = $this->outstanding_model->get_bundle_ref($bills);
+			$data['bundleRef'] = $bundleRef['bundleRef'];
+			$data['amount'] = $bundleRef['amount'];
+			$data['totalBills'] = $bundleRef['totalBills'];
 		}
+		else{
+			$data['bundleRef'] = $this->input->post('bundleRef');
+			$data['amount'] = $this->input->post('amount');
+			$data['totalBills'] = $this->input->post('totalBills');
+		}
+		
+		$this->load->view('User/header',$data);
+		$this->load->view('User/nav');
+		$this->load->view('User/footer');
+		$this->load->view('User/Outstanding/PaymentInfo',$data);
 	}
 	
 	public function Create()
@@ -113,23 +150,15 @@ class outstanding extends CI_Controller {
 		$data['company'] = $this->header_model->get_Company();
 		
 		//set validation rules
-        $this->form_validation->set_rules('tmpDocNo', 'tmpDocNo', 'trim|required');
+        $this->form_validation->set_rules('bundleRef', 'bundleRef', 'trim');
 
         if ($this->form_validation->run() == FALSE)
         {
             //validation fail
-			if($_SESSION['role'] == 'Mgmt'){
-				$this->load->view('Mgmt/header',$data);
-				$this->load->view('Mgmt/nav');
-				$this->load->view('Mgmt/footer');
-				$this->load->view('Mgmt/Setup/Outstanding/Index');
-			}
-			else{
-				$this->load->view('User/header',$data);
-				$this->load->view('User/nav');
-				$this->load->view('User/footer');
-				$this->load->view('User/Outstanding/Index');
-			}
+			$this->load->view('User/header',$data);
+			$this->load->view('User/nav');
+			$this->load->view('User/footer');
+			$this->load->view('User/Outstanding/PaymentInfo');
         }
         else
         {
@@ -142,7 +171,7 @@ class outstanding extends CI_Controller {
 			
 			//get server, port
 			$this->jompay->from('Condo');
-			$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->jompay->get();
 			$condo = $query->result();
 			
@@ -153,22 +182,14 @@ class outstanding extends CI_Controller {
 			else{
 				$custType = 'T';//tenant
 			}
-			
-			$temp = explode('|', $this->input->post('tmpDocNo'));
-			$j = 1;
-			for ($i = 0; $i < count($temp)-1; $i++){
-				$docNos[$i] = array('DocNo' => $temp[$i]);
-			}
 
-			$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'],
-							  'CustType' => $custType, 'Bills' => $docNos);
+			$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'],
+							  'CustType' => $custType, 'BundleReference' => $this->input->post('BundleReference'));
 
-			$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/JompayAdd';
+			$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/PaymentBundleJompayAdd';
 			$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
 			$response = Requests::post($url, $headers, json_encode($jsonData));
 			$body = json_decode($response->body, true);
-			//echo '<pre>';
-			//print_r($body);
 			
 			foreach($body as $key => $value)
 			{
@@ -178,12 +199,6 @@ class outstanding extends CI_Controller {
 					$UserIdNo = $value['UserIdNo'];
 					$UserTokenNo = $value['UserTokenNo'];
 					$CustType = $value['CustType'];
-				}
-				else if($key == 'Bills'){
-					foreach($value as $k => $v)
-					{
-						$DocNo = $v['DocNo'];
-					}
 				}
 				else if($key == 'Resp'){
 					$Status = $value['Status'];
@@ -199,30 +214,101 @@ class outstanding extends CI_Controller {
 				}
 			}
 			
-			if($Status != ''){
-				if($Status == 'F'){
-					$this->session->set_flashdata('jompay', '<script language=javascript>alert("'.$FailedReason.'");</script>');
-					redirect('index.php/Common/Outstanding/Index');	
-				}
-				else{
-					if($Ref1 != ''){
-						//redirect to Ref1 page
-						redirect('index.php/Common/Outstanding/JomPayRef/'.$Ref1);
-					}
-					else{
-						$this->session->set_flashdata('jompay', '<script language=javascript>alert("No Ref1 has been created.");</script>');
-						redirect('index.php/Common/Outstanding/Index');	
-					}
-				}
+			if($Status == 'F'){
+				$this->session->set_flashdata('jompay', '<script language=javascript>alert("'.$FailedReason.'");</script>');
+				redirect('index.php/Common/Outstanding/PayInfo');	
 			}
 			else{
-				$this->session->set_flashdata('jompay', '<script language=javascript>alert("Sorry for inconvenience, system is under maintenance...");</script>');
-				redirect('index.php/Common/Outstanding/Index');
+				$data['billerCode'] = $BillerCode;
+				$data['ref1'] = $Ref1;
+				$data['amount'] = $Amount;
+				$data['bundleRef'] = $this->input->post('BundleReference');
+				$data['bankLog'] = $this->outstanding_model->get_BankLog();
+				
+				$this->load->view('User/header',$data);
+				$this->load->view('User/nav');
+				$this->load->view('User/footer');
+				$this->load->view('User/Outstanding/JomPayRef',$data);
 			}
         }
     }
 	
-	public function ResetRef1()
+	public function PayStatus()
+	{
+		$data['company'] = $this->header_model->get_Company();
+		
+		$data['status'] = $_POST['Status'];
+		$data['sAmt'] = $_POST['SettlementAmount'];
+		$data['payRef'] = $_POST['PaymentReference'];
+		
+		$this->load->view('User/header',$data);
+		$this->load->view('User/nav');
+		$this->load->view('User/footer');
+		$this->load->view('User/Outstanding/PayStatus',$data);
+		
+		if($_POST['Status'] == 'Success'){
+			//get propertyNo
+			$this->cportal->from('Users');
+			$this->cportal->where('USERID', $_SESSION['userid']);
+			$query = $this->cportal->get();
+			$user = $query->result();
+			
+			//get server, port
+			$this->jompay->from('Condo');
+			$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
+			$query = $this->jompay->get();
+			$condo = $query->result();
+			
+			//assign cust type
+			if($user[0]->GROUPID == '2'){
+				$custType = 'O';//owner
+			}
+			else{
+				$custType = 'T';//tenant
+			}
+
+			$jsonData = array('UserTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'],
+							  'CustType' => $custType, 'BundleReference' => $_POST['BundleReference'], 'PaymentReference' => $_POST['PaymentReference'], 'PaymentGateway' => 'revpay', 
+							  'MerchantId' => $_POST['MerchantId'], 'PaymentMethod' => $_POST['PaymentMethod'], 'SettlementAmount' => $_POST['SettlementAmount']);
+				  
+			$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/PaymentBundlePaid';
+			$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
+			$response = Requests::post($url, $headers, json_encode($jsonData));
+			$body = json_decode($response->body, true);
+			
+			foreach($body as $key => $value)
+			{
+				if($key == 'Req'){
+					$CondoSeqNo = $value['CondoSeqNo'];
+					$UnitSeqNo = $value['UnitSeqNo'];
+					$UserIdNo = $value['UserIdNo'];
+					$UserTokenNo = $value['UserTokenNo'];
+				}
+				else if($key == 'Resp'){
+					$Status = $value['Status'];
+					$FailedReason = $value['FailedReason'];
+					$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
+				}
+				else if($key == 'Result'){
+					$ReceiptNo = $value['ReceiptNo'];
+					$TrxnDate = $value['TrxnDate'];
+					$Description = $value['Description'];
+					$Amount = $value['Amount'];
+					$Ref1 = $value['Ref1'];
+				}
+			}
+			
+			if($Status == 'F'){
+				$this->session->set_flashdata('paid', '<script language=javascript>alert("'.$FailedReason.'");</script>');
+				//redirect('index.php/Common/Outstanding/Index');	
+			}
+			else{
+				return;
+			}
+		}
+	}
+	
+	public function ResetRef1($type)
 	{
 		//get propertyNo
 		$this->cportal->from('Users');
@@ -232,7 +318,7 @@ class outstanding extends CI_Controller {
 		
 		//get server, port
 		$this->jompay->from('Condo');
-		$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+		$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 		$query = $this->jompay->get();
         $condo = $query->result();
 		
@@ -244,40 +330,38 @@ class outstanding extends CI_Controller {
 			$custType = 'T';//tenant
 		}
 		
-		$temp = explode('|', $this->input->post('tmpRef1'));
-		for ($i = 0; $i < count($temp)-1; $i++){
-			$ref1 = $temp[$i];
-			
-			$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 'CustType' => $custType, 'Ref1' =>$ref1);
+		$jsonData = array('UserTokenNo' => '2YC9OMDXE0', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($user[0]->UNITSEQ), 
+							  'UserIdNo' => $_SESSION['userid'], 'CustType' => $custType, 'BundleReference' =>$this->input->post('bundleRef'));
 
-			$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/JompayCancel';
-			$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
-			$response = Requests::post($url, $headers, json_encode($jsonData));
-			$body = json_decode($response->body, true);
+		if($type == '1'){ //Jompay
+			$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/PaymentBundleJompayCancel';
+		}
+		else if($type == '2') { //others
+			$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/PaymentBundleCancel';
+		}
+		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
+		$response = Requests::post($url, $headers, json_encode($jsonData));
+		$body = json_decode($response->body, true);
 		
-			//echo '<pre>';
-			//print_r($body);
-			
-			foreach($body as $key => $value)
-			{
-				if($key == 'Req'){
-					$Ref1 = $value['Ref1'];
-				}
-				else if($key == 'Resp'){
-					$Status = $value['Status'];
-					$FailedReason = $value['FailedReason'];
-					$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
-				}
+		foreach($body as $key => $value)
+		{
+			if($key == 'Req'){
+				$BundleReference = $value['BundleReference'];
+			}
+			else if($key == 'Resp'){
+				$Status = $value['Status'];
+				$FailedReason = $value['FailedReason'];
+				$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
 			}
 		}
 		
 		if($Status == 'F'){
-			$this->session->set_flashdata('msg', '<script language=javascript>alert("'.$FailedReason.'");</script>');
-			redirect('index.php/User/Outstanding/Index');
+			$this->session->set_flashdata('jompay', '<script language=javascript>alert("'.$FailedReason.'");</script>');
+			redirect('index.php/Common/Outstanding/Index');
 		}
 		else{
 			//redirect to Outstanding page
-			$this->session->set_flashdata('msg', '<script language=javascript>alert("Ref1 has been reset.");</script>');
+			$this->session->set_flashdata('jompay', '<script language=javascript>alert("Payment has been cancelled.");</script>');
 			redirect('index.php/Common/Outstanding/Index');
 		}
 	}
@@ -526,8 +610,9 @@ class outstanding extends CI_Controller {
 		
 		//set validation rules
 		if($user[0]->GROUPID == '2'){//owner
-			//$this->form_validation->set_rules('CustType', 'CustType', 'required');
-			$this->form_validation->set_rules('DateFrom', 'DateFrom', 'required');
+			$this->form_validation->set_rules('CustType', 'CustType', 'required');
+			$this->form_validation->set_rules('month', 'month', 'required');
+			$this->form_validation->set_rules('year', 'year', 'required');
 		}
 		else{//tenant
 			$this->form_validation->set_rules('DateFrom', 'DateFrom', 'required');
@@ -572,7 +657,8 @@ class outstanding extends CI_Controller {
         $data['osHistory'] = array();
         $offset = ($page - 1) * 10;
         $paginatedFiles = array();
-
+// echo "<pre>";
+// print_r($osHistory); die();
         if (count($osHistory) > 0) {
             $paginatedFiles = array_slice($osHistory, $offset, 10, true);
         }
@@ -639,7 +725,7 @@ class outstanding extends CI_Controller {
 		
 		//get server, port
 		$this->jompay->from('Condo');
-		$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+		$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 		$query = $this->jompay->get();
         $condo = $query->result();
 		
@@ -651,15 +737,14 @@ class outstanding extends CI_Controller {
 			$custType = 'T';//tenant
 		}
 		
-		$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UnitSeqNo' => trim($user[0]->UNITSEQ), 
+		$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($user[0]->UNITSEQ), 
 						  'UserIdNo' => $_SESSION['userid'], 'ReceiptNo' => $ReceiptNo);
 
 		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/ReceiptRead';
 		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
 		$response = Requests::post($url, $headers, json_encode($jsonData));
 		$body = json_decode($response->body, true);
-		//echo '<pre>';
-		//print_r($body);
+		
 		$totalGross = "";
 		$totalOpen = "";
 
@@ -687,8 +772,131 @@ class outstanding extends CI_Controller {
 			header("location: ".$FileUrl."");
 		}
 	}
+	
+	public function Reminder($page=1)
+	{
+		//call the model
+		$data['company'] = $this->header_model->get_Company();
+        $osReminder = $this->outstanding_model->get_os_reminder();
+        $data['osReminder'] = array();
+        $offset = ($page - 1) * 10;
+        $paginatedFiles = array();
 
-   //custom validation function for dropdown input
+        if (count($osReminder) > 0) {
+            $paginatedFiles = array_slice($osReminder, $offset, 10, true);
+        }
+		
+		if ($paginatedFiles) {
+            foreach ($paginatedFiles as $file) {
+                $data['osReminder'][] = array('reminderDate'=>$file['reminderDate'],
+											  'reminderNo'=>$file['reminderNo'],
+											  'message'=>$file['message'],
+											  'outstanding'=>$file['outstanding']);
+            }
+        }
+		
+		//pagination
+        $config['base_url'] = base_url()."index.php/Common/Outstanding/Reminder";
+        $config['total_rows'] = count($osReminder);
+        $config['per_page'] = 10;
+        $config['num_links'] = 5;
+        $config['uri_segment'] = 4;
+        $config['use_page_numbers'] = TRUE;
+        $config['full_tag_open'] = '<ul class="pagination pagination-sm">'; 
+        $config['full_tag_close'] = '</ul>'; 
+        $config['num_tag_open'] = '<li>'; 
+        $config['num_tag_close'] = '</li>'; 
+        $config['cur_tag_open'] = '<li class="active"><span>'; 
+        $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>'; 
+        $config['prev_tag_open'] = '<li>'; 
+        $config['prev_tag_close'] = '</li>'; 
+        $config['next_tag_open'] = '<li>'; 
+        $config['next_tag_close'] = '</li>'; 
+        $config['first_link'] = '&laquo;'; 
+        $config['prev_link'] = '&lsaquo;'; 
+        $config['last_link'] = '&raquo;'; 
+        $config['next_link'] = '&rsaquo;'; 
+        $config['first_tag_open'] = '<li>'; 
+        $config['first_tag_close'] = '</li>'; 
+        $config['last_tag_open'] = '<li>'; 
+        $config['last_tag_close'] = '</li>';
+
+        $this->pagination->initialize($config);
+		
+        //load the view
+		if($_SESSION['role'] == 'Mgmt'){
+			$this->load->view('Mgmt/header',$data);
+			$this->load->view('Mgmt/nav');
+			$this->load->view('Mgmt/footer');
+			$this->load->view('Mgmt/Setup/Outstanding/Reminder',$data);
+		}
+		else{
+			$this->load->view('User/header',$data);
+			$this->load->view('User/nav');
+			$this->load->view('User/footer');
+			$this->load->view('User/Outstanding/Reminder',$data);
+		}
+	}
+
+	public function GenerateReminder($ReminderNo)
+	{
+		//get propertyNo
+		$this->cportal->from('Users');
+		$this->cportal->where('USERID', $_SESSION['userid']);
+		$query = $this->cportal->get();
+        $user = $query->result();
+		
+		//get server, port
+		$this->jompay->from('Condo');
+		$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
+		$query = $this->jompay->get();
+        $condo = $query->result();
+		
+		//assign cust type
+		if($user[0]->GROUPID == '2'){
+			$custType = 'O';//owner
+		}
+		else{
+			$custType = 'T';//tenant
+		}
+		
+		$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($user[0]->UNITSEQ), 
+						  'UserIdNo' => $_SESSION['userid'], 'CustType' => $custType, 'ReminderNo' => $ReminderNo);
+
+		$url = $condo[0]->SERVICESERVER.':8122/ReminderRead';
+		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
+		$response = Requests::post($url, $headers, json_encode($jsonData));
+		$body = json_decode($response->body, true);
+		
+		$totalGross = "";
+		$totalOpen = "";
+
+		foreach($body as $key => $value)
+		{
+			if($key == 'Req'){
+				$CondoSeqNo = $value['CondoSeqNo'];
+				$UnitSeqNo = $value['UnitSeqNo'];
+			}
+			else if($key == 'Resp'){
+				$Status = $value['Status'];
+				$FailedReason = $value['FailedReason'];
+				$FailedReasonDeveloper = $value['FailedReasonDeveloper'];
+			}
+			else if($key == 'Result'){
+				$FileUrl = $value['FileUrl'];
+			}
+		}
+
+		if($Status == 'F'){
+			$this->session->set_flashdata('msg', '<script language=javascript>alert("'.$FailedReason.'");</script>');
+			//redirect('index.php/User/Home/Index');
+		}
+		else{
+			header("location: ".$FileUrl."");
+		}
+	}
+	
+    //custom validation function for dropdown input
     function combo_check($str)
     {
         if ($str == '0')
@@ -700,15 +908,5 @@ class outstanding extends CI_Controller {
         {
             return TRUE;
 		}
-	}
-	
-	function array_sort_by_column(&$arr, $col, $dir = SORT_ASC)
-	{
-		$sort_col = array();
-		foreach ($arr as $key=> $row)
-		{
-			$sort_col[$key] = $row[$col];
-		}
-		array_multisort($sort_col, $dir, $arr);
 	}
 }?>

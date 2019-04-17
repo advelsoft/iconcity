@@ -202,7 +202,7 @@ class openfeedbacks extends CI_Controller {
 			
 			//email config
 			$this->db->from('WebCtrl');
-			$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->db->get();	
 			$webctrl = $query->result();
 
@@ -219,7 +219,7 @@ class openfeedbacks extends CI_Controller {
 
 			//get server, port
 			$this->jompay->from('Condo');
-			$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->jompay->get();
 			$condo = $query->result();
 			
@@ -241,7 +241,7 @@ class openfeedbacks extends CI_Controller {
 						'UserID' => $users[0]->USERID,
 						'Priority' => 'Medium',
 						'Status' => 'Open',
-						'CondoSeq' => GLOBAL_CONDOSEQ,
+						'CondoSeq' => $_SESSION['condoseq'],
 						'CreatedBy' => $this->input->post('Users'),
 						'CreatedDate' => date('Y-m-d H:i:s'),
 					);
@@ -261,7 +261,7 @@ class openfeedbacks extends CI_Controller {
 							   "<br>Status: Open".
 							   "<br><br>Please login to your condo portal ".GLOBAL_WEB_URL." to view feedback respond by management office.".
 							   "<br><br>--".
-							   "<br>".GLOBAL_FORMAL_NAME." Management Office";
+							   "<br>".$_SESSION['formalname']." Management Office";
 					$this->load->library('email', $configEmail);
 					$this->email->set_newline("\r\n");
 					$this->email->from($webctrl[0]->EMAILSENDER);
@@ -285,7 +285,7 @@ class openfeedbacks extends CI_Controller {
 					}
 				}
 				else{
-					$jsonData = array('UserTokenNo' => 'PIS7040S', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UnitSeqNo' => trim($users[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 
+					$jsonData = array('UserTokenNo' => 'PIS7040S', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($users[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 
 									  'DeptId' => $this->input->post('IncidentType'), 'Title' => $this->input->post('Subject'), 'Description' => $this->input->post('Description'), 'Feed' => 'Y');
 
 					$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/RequestAdd';
@@ -405,7 +405,7 @@ class openfeedbacks extends CI_Controller {
 						'Attachment4' => $fileName4,
 						'Priority' => 'Medium',
 						'Status' => 'Open',
-						'CondoSeq' => GLOBAL_CONDOSEQ,
+						'CondoSeq' => $_SESSION['condoseq'],
 						'CreatedBy' => $this->input->post('Users'),
 						'CreatedDate' => date('Y-m-d H:i:s'),
 					);
@@ -425,7 +425,7 @@ class openfeedbacks extends CI_Controller {
 							   "<br>Status: Open".
 							   "<br><br>Please login to your condo portal ".GLOBAL_WEB_URL." to view feedback respond by management office.".
 							   "<br><br>--".
-							   "<br>".GLOBAL_FORMAL_NAME." Management Office";
+							   "<br>".$_SESSION['formalname']." Management Office";
 					$this->load->library('email', $configEmail);
 					$this->email->set_newline("\r\n");
 					$this->email->from($webctrl[0]->EMAILSENDER);
@@ -457,14 +457,12 @@ class openfeedbacks extends CI_Controller {
 					}
 						
 
-					$jsonData = array('UserTokenNo' => 'PIS7040S', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UnitSeqNo' => trim($users[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 'DeptId' => $this->input->post('IncidentType'), 'Title' => $this->input->post('Subject'), 'Description' => $this->input->post('Description'), 'Image' => $attachment_arr, 'Feed' => 'Y');
+					$jsonData = array('UserTokenNo' => 'PIS7040S', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($users[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 'DeptId' => $this->input->post('IncidentType'), 'Title' => $this->input->post('Subject'), 'Description' => $this->input->post('Description'), 'Image' => $attachment_arr, 'Feed' => 'Y');
 
 					$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/RequestAddV2';
 					$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
 					$response = Requests::post($url, $headers, json_encode($jsonData));
 					$body = json_decode($response->body, true);
-					// echo '<pre>';
-					// print_r($body);
 					
 					foreach($body as $key => $value)
 					{
@@ -581,7 +579,7 @@ class openfeedbacks extends CI_Controller {
 					
 			//config
 			$this->db->from('WebCtrl');
-			$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->db->get();	
 			$webctrl = $query->result();
 			
@@ -593,7 +591,7 @@ class openfeedbacks extends CI_Controller {
 			
 			//get server, port
 			$this->jompay->from('Condo');
-			$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->jompay->get();
 			$condo = $query->result();
 			
@@ -620,7 +618,7 @@ class openfeedbacks extends CI_Controller {
 					'ComplaintIDParent' => $UID,
 					'CreatedBy' => $_SESSION['userid'],
 					'CreatedDate' => date('Y-m-d H:i:s'),
-					'CondoSeq' => GLOBAL_CONDOSEQ,
+					'CondoSeq' => $_SESSION['condoseq'],
 					'Role' => $_SESSION['role'],
 				);
 
@@ -633,7 +631,7 @@ class openfeedbacks extends CI_Controller {
 							   "<br>Priority: Medium".
 							   "<br>Status: InProgress".
 							   "<br><br>--".
-							   "<br>".GLOBAL_FORMAL_NAME." Management Office";
+							   "<br>".$_SESSION['formalname']." Management Office";
 					$this->load->library('email', $configEmail);
 					$this->email->set_newline("\r\n");
 					$this->email->from($webctrl[0]->EMAILSENDER);
@@ -693,20 +691,20 @@ class openfeedbacks extends CI_Controller {
 					//get email of technician
 					$this->db->from('Users');
 					$this->db->where('UserID', $_SESSION['userid']);
-					$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+					$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 					$query = $this->db->get();
 					$tech = $query->result();
 					
 					//get email of management
 					$this->db->from('Users');
 					$this->db->where('Role', 'Mgmt');
-					$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+					$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 					$query = $this->db->get();
 					$users = $query->result();
 
 					//config
 					$this->db->from('WebCtrl');
-					$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+					$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 					$query = $this->db->get();	
 					$webctrl = $query->result();
 
@@ -728,7 +726,7 @@ class openfeedbacks extends CI_Controller {
 							   "<br>Priority: Medium".
 							   "<br>Status: InProgress".
 							   "<br><br>--".
-							   "<br>".GLOBAL_FORMAL_NAME." Management Office";
+							   "<br>".$_SESSION['formalname']." Management Office";
 					$this->load->library('email', $config);
 					$this->email->set_newline("\r\n");
 					$this->email->from($webctrl[0]->EMAILSENDER);
@@ -745,7 +743,7 @@ class openfeedbacks extends CI_Controller {
 					redirect('index.php/Common/InProgressFeedbacks/Detail/'.$UID);
 				}
 				else{ //user
-					$jsonData = array('UserTokenNo' => 'PIS7040S', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UnitSeqNo' => trim($users[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 
+					$jsonData = array('UserTokenNo' => 'PIS7040S', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($users[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 
 									  'RequestId' => $UID, 'Content' => $this->input->post('Description'));
 
 					$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/RequestMessageAdd';
@@ -843,7 +841,7 @@ class openfeedbacks extends CI_Controller {
 					'Status' => 'InProgress',
 					'CStatusID' => '3',
 					'ComplaintIDParent' => $UID,
-					'CondoSeq' => GLOBAL_CONDOSEQ,
+					'CondoSeq' => $_SESSION['condoseq'],
 					'CreatedBy' => $_SESSION['userid'],
 					'CreatedDate' => date('Y-m-d H:i:s'),
 					'Role' => $_SESSION['role'],
@@ -858,7 +856,7 @@ class openfeedbacks extends CI_Controller {
 							   "<br>Priority: Medium".
 							   "<br>Status: InProgress".
 							   "<br><br>--".
-							   "<br>".GLOBAL_FORMAL_NAME." Management Office";
+							   "<br>".$_SESSION['formalname']." Management Office";
 					$this->load->library('email', $configEmail);
 					$this->email->set_newline("\r\n");
 					$this->email->from($webctrl[0]->EMAILSENDER);
@@ -895,20 +893,20 @@ class openfeedbacks extends CI_Controller {
 					//get email of technician
 					$this->db->from('Users');
 					$this->db->where('UserID', $_SESSION['userid']);
-					$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+					$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 					$query = $this->db->get();
 					$tech = $query->result();
 			
 					//get email of management
 					$this->db->from('Users');
 					$this->db->where('Role', 'Mgmt');
-					$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+					$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 					$query = $this->db->get();
 					$users = $query->result();
 
 					//config
 					$this->db->from('WebCtrl');
-					$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+					$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 					$query = $this->db->get();	
 					$webctrl = $query->result();
 
@@ -930,7 +928,7 @@ class openfeedbacks extends CI_Controller {
 							   "<br>Priority: Medium".
 							   "<br>Status: InProgress".
 							   "<br><br>--".
-							   "<br>".GLOBAL_FORMAL_NAME." Management Office";
+							   "<br>".$_SESSION['formalname']." Management Office";
 					$this->load->library('email', $config);
 					$this->email->set_newline("\r\n");
 					$this->email->from($webctrl[0]->EMAILSENDER);
@@ -947,7 +945,7 @@ class openfeedbacks extends CI_Controller {
 					redirect('index.php/Common/InProgressFeedbacks/Detail/'.$UID);
 				}
 				else{ //user
-					$jsonData = array('UserTokenNo' => 'PIS7040S', 'CondoSeqNo' => GLOBAL_CONDOSEQ, 'UnitSeqNo' => trim($users[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 'RequestId' => $UID, 'Content' => $this->input->post('Description'), 'Image' => $attachment_arr);
+					$jsonData = array('UserTokenNo' => 'PIS7040S', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($users[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 'RequestId' => $UID, 'Content' => $this->input->post('Description'), 'Image' => $attachment_arr);
 
 					$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/RequestMessageAddV2';
 					$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
@@ -1056,7 +1054,7 @@ class openfeedbacks extends CI_Controller {
 				'CStatusID' => '2',
                 'ModifiedBy' => $_SESSION['userid'],
                 'ModifiedDate' => date('Y-m-d H:i:s'),
-				'CondoSeq' => GLOBAL_CONDOSEQ,
+				'CondoSeq' => $_SESSION['condoseq'],
             );
 
 			//complaint details
@@ -1073,7 +1071,7 @@ class openfeedbacks extends CI_Controller {
 			
 			//config
 			$this->db->from('WebCtrl');
-			$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->db->get();	
 			$webctrl = $query->result();
 
@@ -1095,7 +1093,7 @@ class openfeedbacks extends CI_Controller {
 					   "<br>Priority: Medium".
 					   "<br>Status: Closed".
 					   "<br><br>--".
-					   "<br>".GLOBAL_FORMAL_NAME." Management Office";
+					   "<br>".$_SESSION['formalname']." Management Office";
 			$this->load->library('email', $config);
 			$this->email->set_newline("\r\n");
 			$this->email->from($webctrl[0]->EMAILSENDER);
@@ -1120,7 +1118,7 @@ class openfeedbacks extends CI_Controller {
 					'PropertyNo' => $this->input->post('propNo'),
 					'Amount' => $this->input->post('Amount'),
 					'Description' => $this->input->post('Desc'),
-					'CondoSeq' => GLOBAL_CONDOSEQ,
+					'CondoSeq' => $_SESSION['condoseq'],
 					'CreatedBy' => $_SESSION['userid'],
 					'CreatedDate' => date('Y-m-d H:i:s'),
 				);
@@ -1172,7 +1170,7 @@ class openfeedbacks extends CI_Controller {
 				'ResponseDate' => date('Y-m-d H:i:s'),
 				'ForwardTo' => $technician[0],
 				'ForwardDate' => date('Y-m-d H:i:s'),
-				'CondoSeq' => GLOBAL_CONDOSEQ,
+				'CondoSeq' => $_SESSION['condoseq'],
 				'Role' => $_SESSION['role'],
             );
 
@@ -1184,7 +1182,7 @@ class openfeedbacks extends CI_Controller {
 			
 			//config
 			$this->db->from('WebCtrl');
-			$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->db->get();	
 			$webctrl = $query->result();
 

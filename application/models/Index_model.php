@@ -20,7 +20,7 @@ class index_model extends CI_Model
 		}
 		else{
 			$sql = "SELECT * FROM Promotion
-					WHERE PromoDateTo >= CONVERT(date, getdate()) AND Display = '1' AND CondoSeq = '".GLOBAL_CONDOSEQ."'";
+					WHERE PromoDateTo >= CONVERT(date, getdate()) AND Display = '1' AND CondoSeq = '".$_SESSION['condoseq']."'";
 			$query = $this->db->query($sql);
 			return $query->result();
 		}
@@ -48,7 +48,7 @@ class index_model extends CI_Model
 			$this->jompay->from('Feedback');
 			$this->jompay->where('ComplaintIDParent', NULL);
 			$this->jompay->where('Status !=', 'Closed');
-			$this->jompay->where('CondoSeq', GLOBAL_CONDOSEQ);
+			$this->jompay->where('CondoSeq', $_SESSION['condoseq']);
 			$query = $this->jompay->get();
 			
 			return $query->result();
@@ -62,7 +62,7 @@ class index_model extends CI_Model
 			$this->db->from('FeedbackResponse');
 			$this->db->where('ForwardTo', $users[0]->Name);
 			$this->db->where('Status !=', 'Closed');
-			$this->db->where('CondoSeq', GLOBAL_CONDOSEQ);
+			$this->db->where('CondoSeq', $_SESSION['condoseq']);
 			$query = $this->db->get();
 			$feedback = $query->result();
 
@@ -70,7 +70,7 @@ class index_model extends CI_Model
 				$this->db->from('Feedback');
 				$this->db->where('FeedbackID', $feedback[0]->ComplaintIDParent);
 				$this->db->where('Status !=', 'Closed');
-				$this->db->where('CondoSeq', GLOBAL_CONDOSEQ);
+				$this->db->where('CondoSeq', $_SESSION['condoseq']);
 				$query = $this->db->get();
 				return $query->result();
 			}
@@ -79,7 +79,7 @@ class index_model extends CI_Model
 			$this->jompay->from('Feedback');
 			$this->jompay->where('ComplaintIDParent', NULL);
 			$this->jompay->where('Status !=', 'Closed');
-			$this->jompay->where('CondoSeq', GLOBAL_CONDOSEQ);
+			$this->jompay->where('CondoSeq', $_SESSION['condoseq']);
 			$this->jompay->where('CreatedBy', $_SESSION['userid']);
 			$query = $this->jompay->get();
 			return $query->result();
@@ -89,7 +89,7 @@ class index_model extends CI_Model
 	public function get_news()
 	{
 		$sql = "SELECT * FROM Newsfeed JOIN NewsType ON Newsfeed.NewsfeedTypeID = NewsType.NewsTypeID
-				WHERE CondoSeq = '".GLOBAL_CONDOSEQ."' AND Publish = '1' AND PublishDateTo >= CONVERT(date, getdate())";
+				WHERE CondoSeq = '".$_SESSION['condoseq']."' AND Publish = '1' AND PublishDateTo >= CONVERT(date, getdate())";
 		$query = $this->jompay->query($sql);
         return $query->result();
 	}
@@ -106,7 +106,7 @@ class index_model extends CI_Model
 		else{
 			$sql = "SELECT p.*, t.Description
 					FROM Promotion p JOIN PromoCategory t ON p.PromoCat = t.PromoCatId
-					WHERE PromoDateTo >= CONVERT(date, getdate()) AND Display = '1' AND p.CondoSeq = '".GLOBAL_CONDOSEQ."' ORDER BY NEWID()";
+					WHERE PromoDateTo >= CONVERT(date, getdate()) AND Display = '1' AND p.CondoSeq = '".$_SESSION['condoseq']."' ORDER BY NEWID()";
 			$query = $this->db->query($sql);
 			return $query->result();
 		}
@@ -144,7 +144,7 @@ class index_model extends CI_Model
 			$sql = "SELECT f.FeedbackID, f.Priority, u.PropertyNo, d.Department AS IncidentType, f.Subject, f.Status, f.CreatedDate
 					FROM Feedback f JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Users] u ON f.CreatedBy = u.UserID
 					JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Department] d ON f.IncidentType = d.UID
-					WHERE ComplaintIDParent IS NULL AND Status != 'Closed' AND f.CondoSeq = '".GLOBAL_CONDOSEQ."'  
+					WHERE ComplaintIDParent IS NULL AND Status != 'Closed' AND f.CondoSeq = '".$_SESSION['condoseq']."'  
 					ORDER BY CreatedDate DESC";
 			$query = $this->jompay->query($sql);
 			return $query->result();
@@ -158,7 +158,7 @@ class index_model extends CI_Model
 			$this->db->from('FeedbackResponse');
 			$this->db->where('ForwardTo', $users[0]->Name);
 			$this->db->where('Status !=', 'Closed');
-			$this->db->where('CondoSeq', GLOBAL_CONDOSEQ);
+			$this->db->where('CondoSeq', $_SESSION['condoseq']);
 			$query = $this->db->get();
 			$feedback = $query->result();
 
@@ -200,7 +200,7 @@ class index_model extends CI_Model
 			$sql = "SELECT f.FeedbackID, f.Priority, u.PropertyNo, d.Department AS IncidentType, f.Subject, f.Status, f.CreatedDate
 					FROM Feedback f JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Users] u ON f.CreatedBy = u.UserID
 					JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Department] d ON f.IncidentType = d.UID
-					WHERE ComplaintIDParent IS NULL AND Status != 'Closed' AND f.CondoSeq = '".GLOBAL_CONDOSEQ."' AND f.CreatedBy = '".$_SESSION['userid']."' 
+					WHERE ComplaintIDParent IS NULL AND Status != 'Closed' AND f.CondoSeq = '".$_SESSION['condoseq']."' AND f.CreatedBy = '".$_SESSION['userid']."' 
 					ORDER BY CreatedDate DESC";
 			$query = $this->jompay->query($sql);
 			return $query->result();
@@ -211,7 +211,7 @@ class index_model extends CI_Model
 	{
 		$sql = "SELECT Newsfeed.*, NewsType.Description 
 				FROM Newsfeed JOIN NewsType ON Newsfeed.NewsfeedTypeID = NewsType.NewsTypeID
-				WHERE CondoSeq = '".GLOBAL_CONDOSEQ."' AND Publish = '1' AND PublishDateTo >= CONVERT(date, getdate())
+				WHERE CondoSeq = '".$_SESSION['condoseq']."' AND Publish = '1' AND PublishDateTo >= CONVERT(date, getdate())
 				ORDER BY CreatedDate DESC";
 		$query = $this->jompay->query($sql);
         return $query->result();
@@ -241,13 +241,13 @@ class index_model extends CI_Model
 				FROM [AllPmrsLive].[dbo].[Feedback] fb
 				JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Users] u ON fb.UserID = u.UserID 
 				JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Department] d ON fb.IncidentType = d.UID 
-				WHERE ComplaintIDParent IS NULL AND Status != 'Closed' AND fb.CondoSeq = '".GLOBAL_CONDOSEQ."' AND PropertyNo = '".$_SESSION['propertyno']."'
+				WHERE ComplaintIDParent IS NULL AND Status != 'Closed' AND fb.CondoSeq = '".$_SESSION['condoseq']."' AND PropertyNo = '".$_SESSION['propertyno']."'
 				UNION
 				SELECT NULL, NULL, NULL, FORMAT(n.CreatedDate, 'yyyy-MM-dd HH:mm:ss') as CreatedDate, NULL, NULL, NULL, NULL, 
 				NULL, NULL, NULL, NULL, n.NewsfeedID, n.Title, n.Summary, t.Description  
 				FROM [AllPmrsLive].[dbo].[Newsfeed] n
 				JOIN [AllPmrsLive].[dbo].[NewsType] t ON n.NewsfeedTypeID = t.NewsTypeID
-				WHERE n.CondoSeq = '".GLOBAL_CONDOSEQ."' AND n.Publish = '1' AND n.PublishDateTo >= CONVERT(date, getdate())
+				WHERE n.CondoSeq = '".$_SESSION['condoseq']."' AND n.Publish = '1' AND n.PublishDateTo >= CONVERT(date, getdate())
 				ORDER BY CreatedDate DESC";
 		$query = $this->db->query($sql);
 		return $query->result();
@@ -268,7 +268,7 @@ class index_model extends CI_Model
 				FROM [AllPmrsLive].[dbo].[Feedback] fb
 				JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Users] u ON fb.UserID = u.UserID 
 				JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Department] d ON fb.IncidentType = d.UID 
-				WHERE ComplaintIDParent IS NULL AND Status != 'Closed' AND fb.CondoSeq = '".GLOBAL_CONDOSEQ."'
+				WHERE ComplaintIDParent IS NULL AND Status != 'Closed' AND fb.CondoSeq = '".$_SESSION['condoseq']."'
 				ORDER BY CreatedDate DESC";
 		$query = $this->db->query($sql);
 		return $query->result();

@@ -13,42 +13,46 @@
 	<script src="<?php echo base_url()."application/reporting/scripts/stimulsoft.reports.js";?>" type="text/javascript"></script>
 	<script src="<?php echo base_url()."application/reporting/scripts/stimulsoft.viewer.js";?>" type="text/javascript"></script>
 	
-	<?php StiHelper::initialize(base_url()."application/reporting/handler.php"); ?>
+	<?php
+		$options = StiHelper::createOptions();
+		$options->handler = "handler.php";
+		$options->timeout = 30;
+		StiHelper::initialize($options);
+	?>
 	<script type="text/javascript">
-		var options = new Stimulsoft.Viewer.StiViewerOptions();
-		options.appearance.fullScreenMode = true;
-		options.toolbar.showSendEmailButton = true;
-		
-		var viewer = new Stimulsoft.Viewer.StiViewer(options, "StiViewer", false);
-		
-		// Process SQL data source
-		viewer.onBeginProcessData = function (event, callback) {
+		function Start() {
+			var report = new Stimulsoft.Report.StiReport();
+			report.loadFile("<?php echo base_url()."application/reporting/reports/fbooking.mrt";?>");
+			report.dictionary.variables.getByName("condoseq").valueObject = "12253";
+			report.dictionary.variables.getByName("datefrom").valueObject = "2019-01-01";
+			report.dictionary.variables.getByName("dateto").valueObject = "2019-01-31";
+
+			var options = new Stimulsoft.Viewer.StiViewerOptions();
+			options.appearance.fullScreenMode = true;
+			options.toolbar.showSendEmailButton = true;
+			var viewer = new Stimulsoft.Viewer.StiViewer(options, "StiViewer", false);
+
+			viewer.onBeginProcessData = function (args, callback) {
+				<?php StiHelper::createHandler(); ?>
+			}
+			
+			// Send exported report to server side
+			/*viewer.onEndExportReport = function (event) {
+				event.preventDefault = true; // Prevent client default event handler (save the exported report as a file)
 			<?php StiHelper::createHandler(); ?>
+			}*/
+			
+			// Send exported report to Email
+			viewer.onEmailReport = function (event) {
+				<?php StiHelper::createHandler(); ?>
+			}
+
+			viewer.report = report;
+			viewer.renderHtml("viewerContent");
 		}
-		
-		viewer.onBeginExportReport = function (args) {
-			//args.fileName = "MyReportName";
-		}
-		
-		// Send exported report to server side
-		/*viewer.onEndExportReport = function (event) {
-			event.preventDefault = true; // Prevent client default event handler (save the exported report as a file)
-			<?php StiHelper::createHandler(); ?>
-		}*/
-		
-		// Send exported report to Email
-		viewer.onEmailReport = function (event) {
-			<?php StiHelper::createHandler(); ?>
-		}
-		
-		// Load and show report
-		var report = new Stimulsoft.Report.StiReport();
-		report.loadFile("<?php echo base_url()."application/reporting/reports/FacilityBooking.mrt";?>");
-		viewer.report = report;
-		viewer.renderHtml("viewerContent");
 	</script>
 	</head>
-<body>
+<body onload="Start()">
 	<div id="viewerContent"></div>
 </body>
 </html>

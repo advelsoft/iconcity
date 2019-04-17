@@ -119,7 +119,7 @@ class technician extends CI_Controller {
 			//validation succeed
 			//get Condo Name
 			$this->jompay->from('Condo');
-			$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->jompay->get();
 			$result = $query->result();
 			
@@ -133,7 +133,7 @@ class technician extends CI_Controller {
 				//send email
 				//config
 				$this->db->from('WebCtrl');
-				$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+				$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 				$query = $this->db->get();	
 				$webctrl = $query->result();
 
@@ -179,7 +179,7 @@ class technician extends CI_Controller {
 						'Role' => 'Tech',
 						'CreatedBy' => $_SESSION['userid'],
 						'CreatedDate' => date('Y-m-d H:i:s'),
-						'CondoSeq' => GLOBAL_CONDOSEQ,
+						'CondoSeq' => $_SESSION['condoseq'],
 						'CondoName' => $result[0]->DESCRIPTION,
 					);
 
@@ -250,7 +250,7 @@ class technician extends CI_Controller {
 			//validation succeed
 			//get Condo Name
 			$this->jompay->from('Condo');
-			$this->jompay->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->jompay->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->jompay->get();
 			$result = $query->result();
 			
@@ -264,7 +264,7 @@ class technician extends CI_Controller {
 				//send email
 				//config
 				$this->db->from('WebCtrl');
-				$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+				$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 				$query = $this->db->get();	
 				$webctrl = $query->result();
 
@@ -405,7 +405,7 @@ class technician extends CI_Controller {
 			//send email
 			//config
 			$this->db->from('WebCtrl');
-			$this->db->where('CONDOSEQ', GLOBAL_CONDOSEQ);
+			$this->db->where('CONDOSEQ', $_SESSION['condoseq']);
 			$query = $this->db->get();	
 			$webctrl = $query->result();
 
