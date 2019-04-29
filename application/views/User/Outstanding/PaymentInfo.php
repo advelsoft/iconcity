@@ -40,15 +40,19 @@
 								echo form_open("index.php/Common/Outstanding/PayInfo", $attributes);?>
 									<tr>
 										<td>
+												<?php $jompay = $_SESSION['ResidentJompay']; if(isset($jompay) && $_SESSION['ResidentJompay']){ ?>
 												<div class="col-lg-4">
 													<a href="#"><img width="80%" id="jompayimg" onclick="choosepayment('1')" src="<?php echo base_url()."content/img/payment/jompay.png";?>"></a>
 												</div>
-												<div class="col-lg-4">
-													<a href="#"><img width="80%" id="visaimg" onclick="choosepayment('2')" src="<?php echo base_url()."content/img/payment/creditdebit.png";?>"></a>
-												</div>
-												<div class="col-lg-4">
-													<a href="#"><img width="80%" id="fpximg" onclick="choosepayment('3')" src="<?php echo base_url()."content/img/payment/fpx.png";?>"></a>
-												</div>
+												<?php } ?>
+												<?php $revpay = $_SESSION['ResidentRevpay']; if(isset($revpay) && $_SESSION['ResidentRevpay']){ ?>
+													<div class="col-lg-4">
+														<a href="#"><img width="80%" id="visaimg" onclick="choosepayment('2')" src="<?php echo base_url()."content/img/payment/creditdebit.png";?>"></a>
+													</div>
+													<div class="col-lg-4">
+														<a href="#"><img width="80%" id="fpximg" onclick="choosepayment('3')" src="<?php echo base_url()."content/img/payment/fpx.png";?>"></a>
+													</div>
+												<?php } ?>
 										</td>
 									</tr>
 									<tr>

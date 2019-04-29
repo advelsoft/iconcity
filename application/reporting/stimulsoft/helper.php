@@ -343,7 +343,7 @@ class StiHandler {
 class StiHelper {
 	public static function createOptions() {
 		$options = new stdClasS();
-		$options->handler = base_url()."application/reporting/handler.php";
+		$options->handler = "handler.php";
 		$options->timeout = 30;
 		
 		return $options;
@@ -385,6 +385,9 @@ class StiHelper {
 			try {
 				var request = new XMLHttpRequest();
 				request.open("post", this.url, true);
+				request.setRequestHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+				request.setRequestHeader('Cache-Control', 'max-age=0');
+				request.setRequestHeader('Pragma', 'no-cache');
 				request.timeout = this.timeout * 1000;
 				request.onload = function () {
 					if (request.status == 200) {
@@ -420,7 +423,7 @@ class StiHelper {
 		
 		StiHelper.prototype.getLicense = function () {
 			var request = new XMLHttpRequest();
-			request.open("get", "<?php echo base_url()."application/reporting/stimulsoft/license.php";?>", true);
+			request.open("get", "<?php echo base_url(); ?>application/reporting/stimulsoft/license.php", true);
 			request.timeout = this.timeout * 1000;
 			request.onload = function () {
 				if (request.status == 200) {
@@ -444,7 +447,7 @@ class StiHelper {
 			this.getLicense();
 		}
 		
-		jsHelper = new StiHelper("<?php echo base_url()."application/reporting/handler.php"; ?>", <?php echo 30; ?>);
+		jsHelper = new StiHelper("<?php echo $options->handler; ?>", <?php echo $options->timeout; ?>);
 </script>
 <?php
 	}

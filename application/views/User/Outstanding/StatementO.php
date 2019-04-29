@@ -30,6 +30,18 @@
 								<input id="hdnCustType" name="hdnCustType" type="hidden" value="" />
                             </div>
                         </div>
+                        <div class="form-group">
+							<label for="year" class="create-label col-md-2">Year</label>
+                            <div class="col-md-4">
+                                <select id="year" name="year" class="form-control">
+                                	<?php $a=date("Y"); $b=$a-7;
+                                	for($c=$a; $c>$b; $c--){ ?>
+                            			<option value="<?php echo $c; ?>"><?php echo $c; ?></option>
+                            		<?php } ?>
+                            	</select>
+								<span class="text-danger"><?php echo form_error('DateTo'); ?></span>
+							</div>
+                        </div>
 						<div class="form-group">
 							<label for="month" class="create-label col-md-2">Month</label>
 							<div class="col-md-4">
@@ -50,18 +62,6 @@
 								<span class="text-danger"><?php echo form_error('month'); ?></span>
 							</div>
 						</div>
-						<div class="form-group">
-							<label for="year" class="create-label col-md-2">Year</label>
-                            <div class="col-md-4">
-                                <select id="year" name="year" class="form-control">
-                                	<?php $a=date("Y"); $b=$a-7;
-                                	for($c=$a; $c>$b; $c--){ ?>
-                            			<option value="<?php echo $c; ?>"><?php echo $c; ?></option>
-                            		<?php } ?>
-                            	</select>
-								<span class="text-danger"><?php echo form_error('DateTo'); ?></span>
-							</div>
-                        </div>
 					</div>
 				</div>
 				<div class="panel-footer">
@@ -90,7 +90,7 @@
 		}catch(e){alert(e)}
 	}
 	
-	$(document).ready(function(){	
+	$(document).ready(function(){
 		$('#DateFrom').datepicker({
 			firstDay: 1,
 			showOtherMonths: true,
@@ -110,5 +110,10 @@
 				$(this).change();
 			}
 		});
+
+		var d = new Date();
+		var n = d.getMonth();
+		a = n + 1;
+		$("#month option[value="+a+"]").attr('selected', 'selected');
 	});
 </script>

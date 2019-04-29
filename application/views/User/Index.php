@@ -34,6 +34,11 @@
 				<div class="navbar-brand" style="text-transform: uppercase;"><?php echo $company[0]->CompanyName; ?></div>
 			</div>
 			<ul class="nav navbar-top-links navbar-right">
+				<?php if(count($version) > 0){ ?>
+					<li>
+						<a href="" data-toggle="modal" data-target="#myUpdate"/><i class="glyphicon glyphicon-flag gi-1x"></i>&nbsp;&nbsp;New Updates</a>
+					</li>
+				<?php } ?>
 				<li>
 					<a href="" data-toggle="modal" data-target="#myModal"/><i class="glyphicon glyphicon-phone gi-1x"></i>&nbsp;&nbsp;Register for Apps</a>
 				</li>
@@ -62,7 +67,7 @@
 	          		<h4 class="modal-title">Condo Code : <?php echo $_SESSION['condocode']; ?></h4>
 	        	</div>
 	        	<div class="modal-body" style="height: 700px;">
-	        		<embed src="<?php echo base_url()."application/uploads/files/aquata_app_guide.pdf";?>" width="100%" height="100%" />
+	        		<embed src="<?php echo base_url()."application/uploads/files/crmvr3_app_guide.pdf";?>" width="100%" height="100%" />
 	        	</div>
 	        	<div class="modal-footer">
 	          		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -71,6 +76,30 @@
 	    </div>
   	</div>
   	<!-- End Modal -->
+  	<?php if(count($version) > 0){ ?>
+  	<!-- Modal -->
+  	<div class="modal fade" id="myUpdate" role="dialog" style="width: 1200px; left: 20%;">
+	    <div class="modal-dialog">
+	      	<!-- Modal content-->
+	      	<div class="modal-content">
+	        	<div class="modal-header">
+	          		<button type="button" class="close" data-dismiss="modal">&times;</button>
+	          		<h2 class="modal-title">New Updates</h2>
+	        	</div>
+	        	<div class="modal-body" style="max-height: 700px;">
+	        		<?php foreach($version as $ver){ ?>
+	        			<h4 style="font-weight: bold;"><?php echo $ver->TITLE; ?></h4>
+	        			<p><?php echo nl2br($ver->DESCRIPTION); ?></p>
+		        	<?php } ?>
+	        	</div>
+	        	<div class="modal-footer">
+	          		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        	</div>
+	      </div>
+	    </div>
+  	</div>
+  	<!-- End Modal -->
+  	<?php } ?>
 	<div class="navbar-default sidebar" role="navigation">
 		<div class="sidebar-nav navbar-collapse">
 			<div class="menu-badge"><i class="glyphicon glyphicon-user"></i></div>
@@ -110,7 +139,12 @@
 					<li><a href="<?php echo base_url()."index.php/Common/Promotion/Index/".$_SESSION['condoseq'];?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;Sponsor&nbsp;</a></li>
 				<?php } ?>
 				<li><a href="<?php echo base_url()."index.php/Login/Logout";?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;&nbsp;Logout</a></li>
+
 			</ul>
+			<?php if(count($version) > 0){ ?>
+				<br>
+				<h5 style="color: white; padding-top: 0px; padding-left: 15px;">v<?php echo $version[0]->VERSION; ?></h5>
+			<?php } ?>
 		</div>
 	</div>
 	<div id="page-wrapper">

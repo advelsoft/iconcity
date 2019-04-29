@@ -36,25 +36,36 @@ class reporting extends CI_Controller {
 		$this->load->view('Mgmt/header',$data);
 		$this->load->view('Mgmt/nav');
 		$this->load->view('Mgmt/footer');
-		$this->load->view('../Reporting/Index');
+		$this->load->view('../Reporting2/Index');
 	}
-	
-	public function FeedbackSumm()
+
+	public function Test()
 	{
 		//call the model function to get the data
 		$data['company'] = $this->header_model->get_Company();
 		
 		//load the view
-		$this->load->view('../Reporting/feedbackSumm');
+		$this->load->view('../Reporting2/Index');
 	}
 	
 	public function FeedbackDetails()
 	{
-		//call the model function to get the data
-		$data['company'] = $this->header_model->get_Company();
-		
+		$datefrom = $this->input->post('datefrom');
+		$datefrom = str_replace('/', '-', $datefrom);
+		$datefrom = date("Y-m-d", strtotime($datefrom));
+		$dateto = $this->input->post('dateto');
+		$dateto = str_replace('/', '-', $dateto);
+		$dateto = date("Y-m-d", strtotime($dateto));
+		$status = $this->input->post('status');
+
+		$sessiondata = array(
+						'datefrom' => $datefrom, 
+						'dateto' => $dateto,
+						'status' => $status
+					);
+        $this->session->set_userdata($sessiondata);
 		//load the view
-		$this->load->view('../Reporting/feedbackDetails');
+		$this->load->view('../Reporting2/feedbackDetails');
 	}
 	
 	public function FacilityBooking()
@@ -63,7 +74,7 @@ class reporting extends CI_Controller {
 		$data['company'] = $this->header_model->get_Company();
 		
 		//load the view
-		$this->load->view('../Reporting/facilitiesDetails');
+		$this->load->view('../Reporting2/facilitiesDetails');
 	}
 	
 	public function Feedbacks($page=1)

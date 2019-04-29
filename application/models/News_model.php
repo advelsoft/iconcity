@@ -163,10 +163,12 @@ class news_model extends CI_Model
 
 	public function get_viewer_list($NewsID)
 	{
-		$sql = "SELECT NewsfeedLog.dateread, U.PROPERTYNO
+		$sql = "SELECT MIN(NewsfeedLog.dateread) AS dateread, U.PROPERTYNO
 				FROM [AllPmrsLive].[dbo].[NewsfeedLog]
 				JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Users] U ON NewsfeedLog.UserId = U.USERID
-				WHERE NewsfeedLog.condoSeqNo = '".$_SESSION['condoseq']."' AND NewsfeedLog.newsfeedid = '".$NewsID."'";
+				WHERE NewsfeedLog.condoSeqNo = '".$_SESSION['condoseq']."' AND NewsfeedLog.newsfeedid = '".$NewsID."' 
+				GROUP BY U.PROPERTYNO";
+
 		$query = $this->jompay->query($sql);
 		$result = $query->result();
 

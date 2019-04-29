@@ -17,15 +17,15 @@
 									<div class="timeline-panel panel-orange">
 										<div class="timeline-heading">
 											<h4 class="timeline-title">New Payment Receipt</h4>
-											<p><small class="text-muted"><i class="glyphicon glyphicon-time"></i>&nbsp;
+											<!-- <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i>&nbsp;
 												<?php echo date("d-m-Y", strtotime($oshistory[$i]->DATEUPDATED)); ?>
-											</small></p>
+											</small></p> -->
 										</div>
 										<div class="timeline-body">
-											<p>Receipt No.: <?php echo $oshistory[$i]->RECEIPTNO; ?></p>
-											<p>Description: <?php echo $oshistory[$i]->DESCRIPTION; ?></p>
-											<p>Amount Paid: <?php echo 'RM '.$oshistory[$i]->AMOUNTJOMPAY; ?></p>
-											<p>Date of Payment: <?php echo date("d/m/Y", strtotime($oshistory[$i]->DATEPAID)); ?></p>
+											<p>Receipt No.: <?php echo $oshistory[$i]['receiptno']; ?></p>
+											<p>Description: <?php echo $oshistory[$i]['desc']; ?></p>
+											<p>Amount Paid: <?php echo 'RM '.$oshistory[$i]['amt']; ?></p>
+											<p>Date of Payment: <?php echo date("d/m/Y", strtotime($oshistory[$i]['datepaid'])); ?></p>
 											<p><a href="<?php echo base_url()."index.php/Common/Outstanding/History";?>">View Details</a></p>
 										</div>
 									</div>

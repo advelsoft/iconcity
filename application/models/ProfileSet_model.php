@@ -7,14 +7,15 @@ class profileset_model extends CI_Model
 		// Call the Model constructor
 		parent::__construct();
 		$this->cportal = $this->load->database('cportal',TRUE);
+		$this->jompay = $this->load->database('jompay',TRUE);
 	}
 
 	public function get_change_list()
 	{
 		if($_SESSION['role'] == 'Mgmt' || $_SESSION['role'] == 'Tech'){
-			$this->db->from('Users');
-			$this->db->where('UserID', $_SESSION['userid']);
-			$query = $this->db->get();
+			$this->jompay->from('Users');
+			$this->jompay->where('UserID', $_SESSION['userid']);
+			$query = $this->jompay->get();
 			return $query->result();
 		}
 		else{

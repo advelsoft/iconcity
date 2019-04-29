@@ -103,6 +103,7 @@
 						<?php if(isset($_SESSION['MgmtNewsfeed']) && $_SESSION['MgmtNewsfeed']){ ?>
 							<li><a href="<?php echo base_url()."index.php/Common/Jmb/Index";?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;JMB Setup&nbsp;&nbsp;</a></li>
 						<?php } ?>
+						<li><a href="<?php echo base_url()."index.php/Common/ResetPassword/Index";?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;Reset Password&nbsp;&nbsp;</a></i>
 					</ul>
 				</li>
 				<li>

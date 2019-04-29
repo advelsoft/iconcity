@@ -28,6 +28,11 @@
 				<div class="navbar-brand" style="text-transform: uppercase;"><?php echo $company[0]->CompanyName; ?></div>
 			</div>
 			<ul class="nav navbar-top-links navbar-right">
+				<?php if(count($version) > 0){ ?>
+					<li>
+						<a href="" data-toggle="modal" data-target="#myUpdate"/><i class="glyphicon glyphicon-flag gi-1x"></i>&nbsp;&nbsp;New Updates</a>
+					</li>
+				<?php } ?>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="glyphicon glyphicon-user gi-1x"></i> <i class="glyphicon glyphicon-triangle-bottom"></i>
@@ -43,6 +48,30 @@
             </ul>
 		</div>
 	</nav>
+	<?php if(count($version) > 0){ ?>
+  	<!-- Modal -->
+  	<div class="modal fade" id="myUpdate" role="dialog" style="width: 1200px; left: 20%;">
+	    <div class="modal-dialog">
+	      	<!-- Modal content-->
+	      	<div class="modal-content">
+	        	<div class="modal-header">
+	          		<button type="button" class="close" data-dismiss="modal">&times;</button>
+	          		<h2 class="modal-title">New Updates</h2>
+	        	</div>
+	        	<div class="modal-body" style="max-height: 700px;">
+	        		<?php foreach($version as $ver){ ?>
+	        			<h4 style="font-weight: bold;"><?php echo $ver->TITLE; ?></h4>
+	        			<p><?php echo nl2br($ver->DESCRIPTION); ?></p>
+		        	<?php } ?>
+	        	</div>
+	        	<div class="modal-footer">
+	          		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        	</div>
+	      </div>
+	    </div>
+  	</div>
+  	<!-- End Modal -->
+  	<?php } ?>
 	<div class="navbar-default sidebar" role="navigation">
 		<div class="sidebar-nav navbar-collapse">
 			<div class="menu-badge"><i class="glyphicon glyphicon-user"></i></div>
@@ -118,6 +147,7 @@
 						<?php if($_SESSION['MgmtNewsfeed']){ ?>
 							<li><a href="<?php echo base_url()."index.php/Common/Jmb/Index";?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;JMB Setup&nbsp;&nbsp;</a></li>
 						<?php } ?>
+						<li><a href="<?php echo base_url()."index.php/Common/ResetPassword/Index";?>"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;Reset Password&nbsp;&nbsp;</a></i>
 					</ul>
 				</li>
 				<li>
@@ -128,6 +158,10 @@
 				</li>
 				<li><a href="<?php echo base_url()."index.php/Login/Logout";?>"><i class="glyphicon glyphicon-log-out"></i>&nbsp;Logout</a></li>
 			</ul>
+			<?php if(count($version) > 0){ ?>
+				<br>
+				<h5 style="color: white; padding-top: 0px; padding-left: 15px;">v<?php echo $version[0]->VERSION; ?></h5>
+			<?php } ?>
 		</div>
 	</div>
 	<div id="page-wrapper">

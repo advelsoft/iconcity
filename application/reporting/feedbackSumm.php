@@ -15,7 +15,8 @@
 	
 	<?php StiHelper::initialize(base_url()."application/reporting/handler.php"); ?>
 	<script type="text/javascript">
-		var options = new Stimulsoft.Viewer.StiViewerOptions();
+
+	var options = new Stimulsoft.Viewer.StiViewerOptions();
 		options.appearance.fullScreenMode = true;
 		options.toolbar.showSendEmailButton = true;
 		

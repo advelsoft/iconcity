@@ -47,15 +47,17 @@
 										<tr>
 											<td colspan="6"></td>
 											<!--Submit-->
-											<?php $attributes = array("id" => "outstandingform", "name" => "outstandingform");
-											echo form_open("index.php/Common/Outstanding/PayInfo", $attributes);?>
+											<?php $jompay = $_SESSION['ResidentJompay']; $revpay = $_SESSION['ResidentRevpay']; if((isset($jompay) && $_SESSION['ResidentJompay']) || (isset($revpay) && $_SESSION['ResidentRevpay'])){
+												$attributes = array("id" => "outstandingform", "name" => "outstandingform");
+												echo form_open("index.php/Common/Outstanding/PayInfo", $attributes);
+											} ?>
 											<td>
 												<input type="submit" value="Submit" style="background-color: green;" class="submit" onclick="return submitConfirm();" />
 												<input id="tmpDocNo" name="tmpDocNo" type="hidden" value=""/>
 												<input id="tmpTtlSelect" name="tmpTtlSelect" type="hidden" value=""/>
 												<input id="tmpCustType" name="tmpCustType" type="hidden" value="<?php if(isset($item['custType'])){ echo $item['custType']; } ?>"/>
 												<input id="jompay" name="jompay" type="hidden" value="<?php echo $company[0]->JomPay; ?>"/>
-											<?php echo form_close(); ?>
+											<?php $jompay = $_SESSION['ResidentJompay']; $revpay = $_SESSION['ResidentRevpay']; if((isset($jompay) && $_SESSION['ResidentJompay']) || (isset($revpay) && $_SESSION['ResidentRevpay'])){ echo form_close(); } ?>
 											</td>
 										</tr>
 									</tfoot>

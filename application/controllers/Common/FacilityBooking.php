@@ -678,6 +678,6 @@ class facilityBooking extends CI_Controller {
         $this->session->set_userdata($sessiondata);
         
 		//load the view
-		$this->load->view('../Reporting/facilitiesBooking');
+		$this->load->view('../Reporting2/facilitiesBooking');
 	}
 }?>
