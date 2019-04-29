@@ -46,7 +46,7 @@ class index_model extends CI_Model
 	{
 		if($_SESSION['role'] == 'Mgmt' || $_SESSION['role'] == 'Admin'){
 			$this->jompay->from('Feedback');
-			$this->jompay->where('ComplaintIDParent', NULL);
+			$this->jompay->where('ComplaintIDParent is', NULL);
 			$this->jompay->where('Status !=', 'Closed');
 			$this->jompay->where('CondoSeq', $_SESSION['condoseq']);
 			$query = $this->jompay->get();
@@ -77,7 +77,7 @@ class index_model extends CI_Model
 		}
 		else{
 			$this->jompay->from('Feedback');
-			$this->jompay->where('ComplaintIDParent', NULL);
+			$this->jompay->where('ComplaintIDParent is', NULL);
 			$this->jompay->where('Status !=', 'Closed');
 			$this->jompay->where('CondoSeq', $_SESSION['condoseq']);
 			$this->jompay->where('CreatedBy', $_SESSION['userid']);
@@ -86,6 +86,36 @@ class index_model extends CI_Model
 		}
 	}
 	
+	public function get_Version()
+	{
+		if($_SESSION['role'] == 'Mgmt' || $_SESSION['role'] == 'Admin'){
+			$sql1 = "SELECT * FROM VersionTracker ORDER BY VERSION DESC";
+			$query1 = $this->jompay->query($sql1);
+			$result = $query1->result();
+
+			if(count($result) > 0){
+				$sql = "SELECT VersionTrackerDetails.*, VT.VERSION FROM VersionTrackerDetails JOIN VersionTracker VT ON VT.VERSIONID = VersionTrackerDetails.VERSIONID WHERE VersionTrackerDetails.VERSIONID = '".$result[0]->VERSIONID."' AND ROLE = 'Mgmt'";
+				$query = $this->jompay->query($sql);
+		        return $query->result();
+			} else {
+				return $result;
+			}
+		} else {
+			$sql1 = "SELECT * FROM VersionTracker ORDER BY VERSION DESC";
+			$query1 = $this->jompay->query($sql1);
+			$result = $query1->result();
+
+			if(count($result) > 0){
+				$sql = "SELECT VersionTrackerDetails.*, VT.VERSION FROM VersionTrackerDetails JOIN VersionTracker VT ON VT.VERSIONID = VersionTrackerDetails.VERSIONID WHERE VersionTrackerDetails.VERSIONID = '".$result[0]->VERSIONID."' AND ROLE = 'User'";
+				$query = $this->jompay->query($sql);
+		        return $query->result();
+			} else {
+				return $result;
+			}
+			
+		}
+	}
+
 	public function get_news()
 	{
 		$sql = "SELECT * FROM Newsfeed JOIN NewsType ON Newsfeed.NewsfeedTypeID = NewsType.NewsTypeID
@@ -144,7 +174,7 @@ class index_model extends CI_Model
 			$sql = "SELECT f.FeedbackID, f.Priority, u.PropertyNo, d.Department AS IncidentType, f.Subject, f.Status, f.CreatedDate
 					FROM Feedback f JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Users] u ON f.CreatedBy = u.UserID
 					JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Department] d ON f.IncidentType = d.UID
-					WHERE ComplaintIDParent IS NULL AND Status != 'Closed' AND f.CondoSeq = '".$_SESSION['condoseq']."'  
+					WHERE ComplaintIDParent is NULL AND Status != 'Closed' AND f.CondoSeq = '".$_SESSION['condoseq']."'  
 					ORDER BY CreatedDate DESC";
 			$query = $this->jompay->query($sql);
 			return $query->result();
@@ -200,7 +230,7 @@ class index_model extends CI_Model
 			$sql = "SELECT f.FeedbackID, f.Priority, u.PropertyNo, d.Department AS IncidentType, f.Subject, f.Status, f.CreatedDate
 					FROM Feedback f JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Users] u ON f.CreatedBy = u.UserID
 					JOIN [".GLOBAL_DATABASE_NAME."].[dbo].[Department] d ON f.IncidentType = d.UID
-					WHERE ComplaintIDParent IS NULL AND Status != 'Closed' AND f.CondoSeq = '".$_SESSION['condoseq']."' AND f.CreatedBy = '".$_SESSION['userid']."' 
+					WHERE ComplaintIDParent is NULL AND Status != 'Closed' AND f.CondoSeq = '".$_SESSION['condoseq']."' AND f.CreatedBy = '".$_SESSION['userid']."' 
 					ORDER BY CreatedDate DESC";
 			$query = $this->jompay->query($sql);
 			return $query->result();

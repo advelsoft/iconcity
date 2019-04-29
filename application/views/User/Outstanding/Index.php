@@ -13,71 +13,6 @@
 				<?php echo $tab1; ?>
 				<?php echo $tab2; ?>
 			</div>
-					 <!-- <h4><b>* Select Doc No for payment</b></h4>
-					<div class="table-responsive">
-						<table id="tbl" class="table table-striped table-hover table-custom footable">
-							<thead>
-								<tr>
-									<th data-class="expand">Doc No</th>
-									<th data-hide="phone">Transaction Date</th>
-									<th data-hide="phone">Description</th>
-									<th data-hide="phone">Due Date</th>
-									<th data-hide="phone">Outstanding Amount</th>
-									<th><input type="checkbox" class="selectAll" id="selectall">&nbsp;Select/Unselect All</th>
-								</tr>
-							</thead>
-							<?php if(count($osList) > 0): { ?>
-								<tbody>
-									<?php foreach($osList as $item) { ?>
-										<tr>
-											<td id="docNo"><?php echo $item['docNo']; ?></td>
-											<td><?php echo $item['trxnDate']; ?></td>
-											<td style="text-align:left;"><?php echo $item['desc']; ?></td>
-											<td><?php echo $item['dueDate']; ?></td>
-											<td id="amt"><?php echo number_format(floatval($item['amt']), 2, '.', ''); ?></td>
-											<td name="selectBox"><input type="checkbox" class="selectAll" name="selectData"><label name="selectLbl" /></td>
-										</tr>
-									<?php } ?>
-								</tbody>
-								<tfoot class="footable-pagination">
-									<tr>
-										<td colspan='4'></td>
-										<td style='text-align:left'>
-											<b>Total Gross Amount: </b><span id="totalGross"><?php echo number_format((float)$totalGross, 2, '.', ''); ?></span></br>
-											<b>Total Unapplied Amount: </b><span id="totalOpen"><?php echo number_format((float)$totalOpen, 2, '.', ''); ?></span></br>
-											<b>Net Outstanding: </b><span id="totalNet"></span>
-										</td>
-										<td colspan='2' style='text-align:left'><b>Total Selected Amount: </b><span id="ttlSelect">0.00</span></td>
-									</tr>
-									<tr>
-										<td colspan="5"></td> -->
-										<!--Submit
-										<?php $attributes = array("id" => "outstandingform", "name" => "outstandingform");
-										echo form_open("index.php/Common/Outstanding/PayInfo", $attributes);?>
-										<td>
-											<input type="submit" value="Submit" class="submit" onclick="return submitConfirm();" />
-											<input id="tmpDocNo" name="tmpDocNo" type="hidden" value=""/>
-											<input id="tmpTtlSelect" name="tmpTtlSelect" type="hidden" value=""/>
-											<input id="tmpCustType" name="tmpCustType" type="hidden" value="<?php if(isset($item['custType'])){ echo $item['custType']; } ?>"/>
-											<input id="jompay" name="jompay" type="hidden" value="<?php echo $company[0]->JomPay; ?>"/>
-										<?php echo form_close(); ?>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="7">
-											<div><?php echo $this->pagination->create_links();?></div>
-										</td>
-									</tr>
-								</tfoot>
-							<?php } ?>
-							<?php else: {  ?>
-								<tbody>
-									<tr><td colspan="9">No Records</td></tr>
-								</tbody>
-							<?php } ?>
-							<?php endif;?>
-						</table>
-					</div> -->
 		</div>
 	</div>
 </div>
@@ -156,13 +91,18 @@
 	}
 	
 	function submitConfirm(){	
-		var msg = confirm("Do you want to continue?");
-		if(msg == true){
-		  return true;
-		}
-		else{
-		  return false;
-		}
+		<?php $jompay = $_SESSION['ResidentJompay']; if(isset($jompay) && $_SESSION['ResidentJompay']){ ?>
+			var msg = confirm("Do you want to continue?");
+			if(msg == true){
+			  return true;
+			}
+			else{
+			  return false;
+			}
+		<?php } else { ?>
+			alert("No E-Payment subscription at the moment...\nPlease contact management office.");
+			return false;
+		<?php } ?>
 	}
 
 	$(document).ready(function(){

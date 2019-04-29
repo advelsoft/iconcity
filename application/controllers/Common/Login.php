@@ -145,7 +145,9 @@ class login extends CI_Controller
 										 'ResidentFeedbackRequest'=>$UAC->ResidentFeedbackRequest,
 										 'ResidentFacilityBooking'=>$UAC->ResidentFacilityBooking,
 										 'ResidentSponsor'=>$UAC->ResidentSponsor,
-										 'ResidentNewsfeed'=>$UAC->ResidentNewsfeed);
+										 'ResidentNewsfeed'=>$UAC->ResidentNewsfeed,
+										 'ResidentJompay'=>$UAC->ResidentJompay,
+										 'ResidentRevpay'=>$UAC->ResidentRevpay);
 					} else{
 						$sessiondata = array(
 										 'ResidentProfile'=>NULL,
@@ -153,7 +155,9 @@ class login extends CI_Controller
 										 'ResidentFeedbackRequest'=>NULL,
 										 'ResidentFacilityBooking'=>NULL,
 										 'ResidentSponsor'=>NULL,
-										 'ResidentNewsfeed'=>NULL);
+										 'ResidentNewsfeed'=>NULL,
+										 'ResidentJompay'=>NULL,
+										 'ResidentRevpay'=>NULL);
 					}
 					
 	                $this->session->set_userdata($sessiondata);

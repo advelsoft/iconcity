@@ -44,6 +44,7 @@ class Home extends CI_Controller
 		$data['oshistory'] = $this->outstanding_model->get_os_history();
 		$data['whatsnew'] = $this->index_model->get_whatsnew_details();
 		$data['company'] = $this->index_model->get_Company();  
+		$data['version'] = $this->index_model->get_Version(); 
 		$data['formList'] = $this->forms_model->get_forms_list();
 		$data['subformList'] = $this->forms_model->get_subform_list();
 		$data['subsubformList'] = $this->forms_model->get_subsubform_list();

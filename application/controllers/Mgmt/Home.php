@@ -39,6 +39,7 @@ class Home extends CI_Controller
 		$data['newsList'] = $this->index_model->get_news_details();
 		$data['tasktodo'] = $this->index_model->get_tasktodo_details();
 		$data['company'] = $this->index_model->get_Company();  
+		$data['version'] = $this->index_model->get_Version(); 
 		$data['formList'] = $this->forms_model->get_forms_list();
 		$data['subformList'] = $this->forms_model->get_subform_list();
 		$data['subsubformList'] = $this->forms_model->get_subsubform_list();

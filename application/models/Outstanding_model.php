@@ -96,7 +96,7 @@ class outstanding_model extends CI_Model
 				return $array;
 			}
 			else{
-				$this->session->set_flashdata('jompay', '<script language=javascript>alert("No outstanding.");</script>');
+				$this->session->set_flashdata('jompay', '<script language=javascript>alert("No Outstanding");</script>');
 				return;
 			}
 		}
@@ -268,7 +268,7 @@ class outstanding_model extends CI_Model
 				return $array;
 			}
 			else{
-				$this->session->set_flashdata('history', '<script language=javascript>alert("No Payment History.");</script>');
+				$this->session->set_flashdata('history', '<script language=javascript>alert("No Receipt Generated");</script>');
 				return;
 			}
 		}
@@ -669,7 +669,7 @@ class outstanding_model extends CI_Model
 		
 		$jsonData = array('UserTokenNo' => '1YW6BGB688', 'CondoSeqNo' => $_SESSION['condoseq'], 'UnitSeqNo' => trim($user[0]->UNITSEQ), 'UserIdNo' => $_SESSION['userid'], 'CustType' => $custType, 'Type' => 'A');
 		
-		$url = $condo[0]->SERVICESERVER.':8122/ReminderList';
+		$url = $condo[0]->SERVICESERVER.':'.$condo[0]->SERVICEPORT.'/ReminderList';
 		$headers = array('Accept' => 'application/json', 'Content-Type' => 'application/json');
 		$response = Requests::post($url, $headers, json_encode($jsonData));
 		$body = json_decode($response->body, true);
@@ -709,11 +709,11 @@ class outstanding_model extends CI_Model
 			redirect('index.php/User/Home/Index');
 		}
 		else{
-			if(isset($array)){
+			if(isset($array) && count($array) > 0){
 				return $array;
 			}
 			else{
-				$this->session->set_flashdata('history', '<script language=javascript>alert("No Payment History.");</script>');
+				$this->session->set_flashdata('history', '<script language=javascript>alert("No Reminder Generated.");</script>');
 				return;
 			}
 		}

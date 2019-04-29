@@ -60,7 +60,7 @@
 		</div>
 	</div>
 </div>
-<?php echo $this->session->flashdata('msg'); ?>
+<?php echo $this->session->flashdata('history'); $this->session->unset_userdata('history'); ?>
 <script>
 	$(document).ready(function(){
 		$('.table-custom').footable();

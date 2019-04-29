@@ -1,0 +1,1867 @@
+{
+  "ReportVersion": "2019.2.3",
+  "ReportGuid": "389cd314be58444ff022f9e8d8cbbb04",
+  "ReportName": "feedback",
+  "ReportAlias": "feedback",
+  "ReportAuthor": "Yun Fatt Yap",
+  "ReportCreated": "/Date(212400000+0730)/",
+  "ReportChanged": "/Date(1556327642000+0800)/",
+  "EngineVersion": "EngineV2",
+  "CalculationMode": "Interpretation",
+  "ReportUnit": "Centimeters",
+  "PreviewSettings": 268435455,
+  "Styles": {
+    "0": {
+      "Ident": "StiStyle",
+      "CollectionName": "Green 50%",
+      "Conditions": {
+        "0": {
+          "Ident": "StiStyleCondition",
+          "Type": "ComponentType, Placement, PlacementNestedLevel",
+          "Placement": "ReportTitle",
+          "ComponentType": "Text, Primitive, Image, CheckBox"
+        }
+      },
+      "Name": "Green 50%_Report_Title1",
+      "Font": ";14;Bold;",
+      "Border": ";107,130,62;;;;;;solid:Black",
+      "Brush": "solid:Transparent",
+      "TextBrush": "solid:7,30,0",
+      "NegativeTextBrush": "solid:Red"
+    },
+    "1": {
+      "Ident": "StiStyle",
+      "CollectionName": "Green 50%",
+      "Conditions": {
+        "0": {
+          "Ident": "StiStyleCondition",
+          "Type": "ComponentType, Placement, PlacementNestedLevel",
+          "OperationPlacementNestedLevel": "GreaterThanOrEqualTo",
+          "Placement": "ReportTitle",
+          "PlacementNestedLevel": 2,
+          "ComponentType": "Text, Primitive, Image, CheckBox"
+        }
+      },
+      "Name": "Green 50%_Report_Title2",
+      "Font": ";10;Bold;",
+      "Border": ";107,130,62;;;;;;solid:Black",
+      "Brush": "solid:Transparent",
+      "TextBrush": "solid:7,30,0",
+      "NegativeTextBrush": "solid:Red"
+    },
+    "2": {
+      "Ident": "StiStyle",
+      "CollectionName": "Green 50%",
+      "Conditions": {
+        "0": {
+          "Ident": "StiStyleCondition",
+          "Type": "ComponentType, Placement, PlacementNestedLevel",
+          "Placement": "ReportSummary",
+          "ComponentType": "Text, Primitive, Image, CheckBox"
+        }
+      },
+      "Name": "Green 50%_Report_Summary1",
+      "Font": ";12;Bold;",
+      "Border": ";107,130,62;;;;;;solid:Black",
+      "Brush": "solid:Transparent",
+      "TextBrush": "solid:7,30,0",
+      "NegativeTextBrush": "solid:Red"
+    },
+    "3": {
+      "Ident": "StiStyle",
+      "CollectionName": "Green 50%",
+      "Conditions": {
+        "0": {
+          "Ident": "StiStyleCondition",
+          "Type": "ComponentType, Placement, PlacementNestedLevel",
+          "OperationPlacementNestedLevel": "GreaterThanOrEqualTo",
+          "Placement": "ReportSummary",
+          "PlacementNestedLevel": 2,
+          "ComponentType": "Text, Primitive, Image, CheckBox"
+        }
+      },
+      "Name": "Green 50%_Report_Summary2",
+      "Font": ";10;Bold;",
+      "Border": ";107,130,62;;;;;;solid:Black",
+      "Brush": "solid:Transparent",
+      "TextBrush": "solid:7,30,0",
+      "NegativeTextBrush": "solid:Red"
+    },
+    "4": {
+      "Ident": "StiStyle",
+      "CollectionName": "Green 50%",
+      "Conditions": {
+        "0": {
+          "Ident": "StiStyleCondition",
+          "Type": "ComponentType, Placement",
+          "Placement": "PageHeader",
+          "ComponentType": "Text, Primitive, Image, CheckBox"
+        }
+      },
+      "Name": "Green 50%_Page_Header",
+      "Font": ";10;;",
+      "Border": ";107,130,62;;;;;;solid:Black",
+      "Brush": "solid:Transparent",
+      "TextBrush": "solid:7,30,0",
+      "NegativeTextBrush": "solid:Red"
+    },
+    "5": {
+      "Ident": "StiStyle",
+      "CollectionName": "Green 50%",
+      "Conditions": {
+        "0": {
+          "Ident": "StiStyleCondition",
+          "Type": "ComponentType, Placement",
+          "Placement": "PageFooter",
+          "ComponentType": "Text, Primitive, Image, CheckBox"
+        }
+      },
+      "Name": "Green 50%_Page_Footer",
+      "Font": ";10;;",
+      "Border": ";107,130,62;;;;;;solid:Black",
+      "Brush": "solid:Transparent",
+      "TextBrush": "solid:7,30,0",
+      "NegativeTextBrush": "solid:Red"
+    },
+    "6": {
+      "Ident": "StiStyle",
+      "CollectionName": "Green 50%",
+      "Conditions": {
+        "0": {
+          "Ident": "StiStyleCondition",
+          "Type": "ComponentType, Placement, PlacementNestedLevel",
+          "OperationPlacementNestedLevel": "GreaterThanOrEqualTo",
+          "Placement": "GroupHeader",
+          "ComponentType": "Text, Primitive, Image, CheckBox"
+        }
+      },
+      "Name": "Green 50%_Group_Header1",
+      "Font": ";13;Bold;",
+      "Border": ";107,130,62;;;;;;solid:Black",
+      "Brush": "solid:Transparent",
+      "TextBrush": "solid:57,80,12",
+      "NegativeTextBrush": "solid:Red",
+      "AllowUseBorderSidesFromLocation": true
+    },
+    "7": {
+      "Ident": "StiStyle",
+      "CollectionName": "Green 50%",
+      "Conditions": {
+        "0": {
+          "Ident": "StiStyleCondition",
+          "Type": "ComponentType, Placement, PlacementNestedLevel",
+          "Placement": "GroupFooter",
+          "ComponentType": "Text, Primitive, Image, CheckBox"
+        }
+      },
+      "Name": "Green 50%_Group_Footer1",
+      "Font": ";13;Bold;",
+      "Border": ";107,130,62;;;;;;solid:Black",
+      "Brush": "solid:Transparent",
+      "TextBrush": "solid:57,80,12",
+      "NegativeTextBrush": "solid:Red",
+      "AllowUseBorderSidesFromLocation": true
+    },
+    "8": {
+      "Ident": "StiStyle",
+      "CollectionName": "Green 50%",
+      "Conditions": {
+        "0": {
+          "Ident": "StiStyleCondition",
+          "Type": "ComponentType, Placement, PlacementNestedLevel",
+          "OperationPlacementNestedLevel": "GreaterThanOrEqualTo",
+          "Placement": "Header",
+          "ComponentType": "Text, Primitive, Image, CheckBox"
+        }
+      },
+      "Name": "Green 50%_Header1",
+      "Font": ";;Bold;",
+      "Border": ";107,130,62;;;;;true;solid:Black",
+      "Brush": "solid:207,230,162",
+      "TextBrush": "solid:7,30,0",
+      "NegativeTextBrush": "solid:Red",
+      "AllowUseBorderSidesFromLocation": true
+    },
+    "9": {
+      "Ident": "StiStyle",
+      "CollectionName": "Green 50%",
+      "Conditions": {
+        "0": {
+          "Ident": "StiStyleCondition",
+          "Type": "ComponentType, Placement, PlacementNestedLevel",
+          "OperationPlacementNestedLevel": "GreaterThanOrEqualTo",
+          "Placement": "Data",
+          "ComponentType": "Text, Primitive, Image, CheckBox"
+        }
+      },
+      "Name": "Green 50%_Data1",
+      "Border": ";107,130,62;;;;;true;solid:Black",
+      "Brush": "solid:Transparent",
+      "TextBrush": "solid:7,30,0",
+      "NegativeTextBrush": "solid:Red",
+      "AllowUseBorderSidesFromLocation": true
+    },
+    "10": {
+      "Ident": "StiStyle",
+      "CollectionName": "Green 50%",
+      "Conditions": {
+        "0": {
+          "Ident": "StiStyleCondition",
+          "Type": "Placement, PlacementNestedLevel",
+          "OperationPlacementNestedLevel": "GreaterThanOrEqualTo",
+          "Placement": "DataOddStyle"
+        }
+      },
+      "Name": "Green 50%_Data1_Odd Style",
+      "Border": ";107,130,62;;;;;true;solid:Black",
+      "Brush": "solid:255,255,255",
+      "TextBrush": "solid:7,30,0",
+      "NegativeTextBrush": "solid:Red",
+      "AllowUseBorderSidesFromLocation": true
+    },
+    "11": {
+      "Ident": "StiStyle",
+      "CollectionName": "Green 50%",
+      "Conditions": {
+        "0": {
+          "Ident": "StiStyleCondition",
+          "Type": "Placement, PlacementNestedLevel",
+          "OperationPlacementNestedLevel": "GreaterThanOrEqualTo",
+          "Placement": "DataEvenStyle"
+        }
+      },
+      "Name": "Green 50%_Data1_Even Style",
+      "Border": ";107,130,62;;;;;true;solid:Black",
+      "Brush": "solid:255,255,237",
+      "TextBrush": "solid:7,30,0",
+      "NegativeTextBrush": "solid:Red",
+      "AllowUseBorderSidesFromLocation": true
+    },
+    "12": {
+      "Ident": "StiStyle",
+      "CollectionName": "Green 50%",
+      "Conditions": {
+        "0": {
+          "Ident": "StiStyleCondition",
+          "Type": "ComponentType, Placement, PlacementNestedLevel",
+          "Placement": "Footer",
+          "ComponentType": "Text, Primitive, Image, CheckBox"
+        }
+      },
+      "Name": "Green 50%_Footer1",
+      "Border": ";107,130,62;;;;;true;solid:Black",
+      "Brush": "solid:227,250,182",
+      "TextBrush": "solid:7,30,0",
+      "NegativeTextBrush": "solid:Red",
+      "AllowUseBorderSidesFromLocation": true
+    }
+  },
+  "Dictionary": {
+    "Variables": {
+      "0": {
+        "Name": "condoseq",
+        "Alias": "condoseq",
+        "Type": "System.String"
+      },
+      "1": {
+        "Name": "datefrom",
+        "DialogInfo": {
+          "DateTimeType": "DateAndTime"
+        },
+        "Alias": "datefrom",
+        "Type": "System.String"
+      },
+      "2": {
+        "Name": "dateto",
+        "DialogInfo": {
+          "DateTimeType": "DateAndTime"
+        },
+        "Alias": "dateto",
+        "Type": "System.String"
+      },
+      "3": {
+        "Name": "status",
+        "DialogInfo": {
+          "DateTimeType": "DateAndTime",
+          "Keys": {
+            "0": "all",
+            "1": "open",
+            "2": "ongoing",
+            "3": "closed"
+          },
+          "Values": {
+            "0": "all",
+            "1": "open",
+            "2": "ongoing",
+            "3": "closed"
+          }
+        },
+        "Alias": "status",
+        "Type": "System.String",
+        "SelectionMode": "Nothing"
+      }
+    },
+    "DataSources": {
+      "0": {
+        "Ident": "StiSqlSource",
+        "Name": "DataSource2",
+        "Alias": "DataSource2",
+        "Columns": {
+          "0": {
+            "Name": "CStatusID",
+            "Index": -1,
+            "NameInSource": "CStatusID",
+            "Alias": "CStatusID",
+            "Type": "System.Int32"
+          },
+          "1": {
+            "Name": "FeedbackID",
+            "Index": -1,
+            "NameInSource": "FeedbackID",
+            "Alias": "FeedbackID",
+            "Type": "System.Int32"
+          },
+          "2": {
+            "Name": "UserID",
+            "Index": -1,
+            "NameInSource": "UserID",
+            "Alias": "UserID",
+            "Type": "System.Int32"
+          },
+          "3": {
+            "Name": "childid",
+            "Index": -1,
+            "NameInSource": "childid",
+            "Alias": "childid",
+            "Type": "System.Int32"
+          },
+          "4": {
+            "Name": "childparentid",
+            "Index": -1,
+            "NameInSource": "childparentid",
+            "Alias": "childparentid",
+            "Type": "System.Int32"
+          },
+          "5": {
+            "Name": "complaint",
+            "Index": -1,
+            "NameInSource": "complaint",
+            "Alias": "complaint",
+            "Type": "System.String"
+          },
+          "6": {
+            "Name": "complaintidparent",
+            "Index": -1,
+            "NameInSource": "complaintidparent",
+            "Alias": "complaintidparent",
+            "Type": "System.Int32"
+          },
+          "7": {
+            "Name": "condocode",
+            "Index": -1,
+            "NameInSource": "condocode",
+            "Alias": "condocode",
+            "Type": "System.String"
+          },
+          "8": {
+            "Name": "condoseq",
+            "Index": -1,
+            "NameInSource": "condoseq",
+            "Alias": "condoseq",
+            "Type": "System.Int32"
+          },
+          "9": {
+            "Name": "date",
+            "Index": -1,
+            "NameInSource": "date",
+            "Alias": "date",
+            "Type": "System.DateTime"
+          },
+          "10": {
+            "Name": "dateonly",
+            "Index": -1,
+            "NameInSource": "dateonly",
+            "Alias": "dateonly",
+            "Type": "System.DateTime",
+            "Ident": "Calc",
+            "Expression": "DataSource2.date.Date"
+          },
+          "11": {
+            "Name": "management_response",
+            "Index": -1,
+            "NameInSource": "management_response",
+            "Alias": "management_response",
+            "Type": "System.String"
+          },
+          "12": {
+            "Name": "propertyno",
+            "Index": -1,
+            "NameInSource": "propertyno",
+            "Alias": "propertyno",
+            "Type": "System.String"
+          },
+          "13": {
+            "Name": "residentname",
+            "Index": -1,
+            "NameInSource": "residentname",
+            "Alias": "residentname",
+            "Type": "System.String"
+          },
+          "14": {
+            "Name": "response_date",
+            "Index": -1,
+            "NameInSource": "response_date",
+            "Alias": "response_date",
+            "Type": "System.DateTime"
+          },
+          "15": {
+            "Name": "role",
+            "Index": -1,
+            "NameInSource": "role",
+            "Alias": "role",
+            "Type": "System.String"
+          },
+          "16": {
+            "Name": "status",
+            "Index": -1,
+            "NameInSource": "status",
+            "Alias": "status",
+            "Type": "System.String"
+          },
+          "17": {
+            "Name": "subject",
+            "Index": -1,
+            "NameInSource": "subject",
+            "Alias": "subject",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "AllPmrsLive",
+        "SqlCommand": "execute sp_feedback {condoseq},'{datefrom}','{dateto}','{status}'"
+      },
+      "1": {
+        "Ident": "StiSqlSource",
+        "Name": "Condo",
+        "Alias": "Condo",
+        "Columns": {
+          "0": {
+            "Name": "COMPNO",
+            "Index": -1,
+            "NameInSource": "COMPNO",
+            "Alias": "COMPNO",
+            "Type": "System.String"
+          },
+          "1": {
+            "Name": "CONDOSEQ",
+            "Index": -1,
+            "NameInSource": "CONDOSEQ",
+            "Alias": "CONDOSEQ",
+            "Type": "System.Int32"
+          },
+          "2": {
+            "Name": "SERVICEPORT",
+            "Index": -1,
+            "NameInSource": "SERVICEPORT",
+            "Alias": "SERVICEPORT",
+            "Type": "System.String"
+          },
+          "3": {
+            "Name": "CONDOCODE",
+            "Index": -1,
+            "NameInSource": "CONDOCODE",
+            "Alias": "CONDOCODE",
+            "Type": "System.String"
+          },
+          "4": {
+            "Name": "DATAUSED",
+            "Index": -1,
+            "NameInSource": "DATAUSED",
+            "Alias": "DATAUSED",
+            "Type": "System.Int16"
+          },
+          "5": {
+            "Name": "COMPANYPATH",
+            "Index": -1,
+            "NameInSource": "COMPANYPATH",
+            "Alias": "COMPANYPATH",
+            "Type": "System.String"
+          },
+          "6": {
+            "Name": "DATAPATH",
+            "Index": -1,
+            "NameInSource": "DATAPATH",
+            "Alias": "DATAPATH",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "PERTRANSACTIONCHARGE",
+            "Index": -1,
+            "NameInSource": "PERTRANSACTIONCHARGE",
+            "Alias": "PERTRANSACTIONCHARGE",
+            "Type": "System.Decimal"
+          },
+          "8": {
+            "Name": "MONTHLYCHARGE",
+            "Index": -1,
+            "NameInSource": "MONTHLYCHARGE",
+            "Alias": "MONTHLYCHARGE",
+            "Type": "System.Decimal"
+          },
+          "9": {
+            "Name": "SAVED_DSRUN",
+            "Index": -1,
+            "NameInSource": "SAVED_DSRUN",
+            "Alias": "SAVED_DSRUN",
+            "Type": "System.String"
+          },
+          "10": {
+            "Name": "SAVED_SQLOWNER",
+            "Index": -1,
+            "NameInSource": "SAVED_SQLOWNER",
+            "Alias": "SAVED_SQLOWNER",
+            "Type": "System.String"
+          },
+          "11": {
+            "Name": "SAVED_CPORTALSQLOWNER",
+            "Index": -1,
+            "NameInSource": "SAVED_CPORTALSQLOWNER",
+            "Alias": "SAVED_CPORTALSQLOWNER",
+            "Type": "System.String"
+          },
+          "12": {
+            "Name": "SERVICESERVER",
+            "Index": -1,
+            "NameInSource": "SERVICESERVER",
+            "Alias": "SERVICESERVER",
+            "Type": "System.String"
+          },
+          "13": {
+            "Name": "CONDOADDRESS",
+            "Index": -1,
+            "NameInSource": "CONDOADDRESS",
+            "Alias": "CONDOADDRESS",
+            "Type": "System.String"
+          },
+          "14": {
+            "Name": "CONDOPOSTCODE",
+            "Index": -1,
+            "NameInSource": "CONDOPOSTCODE",
+            "Alias": "CONDOPOSTCODE",
+            "Type": "System.String"
+          },
+          "15": {
+            "Name": "CONDOCOUNTRYCODE",
+            "Index": -1,
+            "NameInSource": "CONDOCOUNTRYCODE",
+            "Alias": "CONDOCOUNTRYCODE",
+            "Type": "System.String"
+          },
+          "16": {
+            "Name": "CONDOGPSLATITUDE",
+            "Index": -1,
+            "NameInSource": "CONDOGPSLATITUDE",
+            "Alias": "CONDOGPSLATITUDE",
+            "Type": "System.Decimal"
+          },
+          "17": {
+            "Name": "CONDOGPSLONGITUDE",
+            "Index": -1,
+            "NameInSource": "CONDOGPSLONGITUDE",
+            "Alias": "CONDOGPSLONGITUDE",
+            "Type": "System.Decimal"
+          },
+          "18": {
+            "Name": "EmailRecPayment",
+            "Index": -1,
+            "NameInSource": "EmailRecPayment",
+            "Alias": "EmailRecPayment",
+            "Type": "System.Byte"
+          },
+          "19": {
+            "Name": "CondoName",
+            "Index": -1,
+            "NameInSource": "CondoName",
+            "Alias": "CondoName",
+            "Type": "System.String"
+          },
+          "20": {
+            "Name": "CondoUnit",
+            "Index": -1,
+            "NameInSource": "CondoUnit",
+            "Alias": "CondoUnit",
+            "Type": "System.Int32"
+          },
+          "21": {
+            "Name": "CondoLocation",
+            "Index": -1,
+            "NameInSource": "CondoLocation",
+            "Alias": "CondoLocation",
+            "Type": "System.String"
+          },
+          "22": {
+            "Name": "CondoLink",
+            "Index": -1,
+            "NameInSource": "CondoLink",
+            "Alias": "CondoLink",
+            "Type": "System.String"
+          },
+          "23": {
+            "Name": "CondoImg",
+            "Index": -1,
+            "NameInSource": "CondoImg",
+            "Alias": "CondoImg",
+            "Type": "System.String"
+          },
+          "24": {
+            "Name": "AppsImg",
+            "Index": -1,
+            "NameInSource": "AppsImg",
+            "Alias": "AppsImg",
+            "Type": "System.String"
+          },
+          "25": {
+            "Name": "WebFolder",
+            "Index": -1,
+            "NameInSource": "WebFolder",
+            "Alias": "WebFolder",
+            "Type": "System.String"
+          },
+          "26": {
+            "Name": "AppsFolder",
+            "Index": -1,
+            "NameInSource": "AppsFolder",
+            "Alias": "AppsFolder",
+            "Type": "System.String"
+          },
+          "27": {
+            "Name": "CportalSqlOwner",
+            "Index": -1,
+            "NameInSource": "CportalSqlOwner",
+            "Alias": "CportalSqlOwner",
+            "Type": "System.String"
+          },
+          "28": {
+            "Name": "BillerCode",
+            "Index": -1,
+            "NameInSource": "BillerCode",
+            "Alias": "BillerCode",
+            "Type": "System.Int32"
+          },
+          "29": {
+            "Name": "EnableNotices",
+            "Index": -1,
+            "NameInSource": "EnableNotices",
+            "Alias": "EnableNotices",
+            "Type": "System.Int32"
+          },
+          "30": {
+            "Name": "EnableStatements",
+            "Index": -1,
+            "NameInSource": "EnableStatements",
+            "Alias": "EnableStatements",
+            "Type": "System.Int32"
+          },
+          "31": {
+            "Name": "EnablePayments",
+            "Index": -1,
+            "NameInSource": "EnablePayments",
+            "Alias": "EnablePayments",
+            "Type": "System.Int32"
+          },
+          "32": {
+            "Name": "EnableFacilities",
+            "Index": -1,
+            "NameInSource": "EnableFacilities",
+            "Alias": "EnableFacilities",
+            "Type": "System.Int32"
+          },
+          "33": {
+            "Name": "EnableVisitors",
+            "Index": -1,
+            "NameInSource": "EnableVisitors",
+            "Alias": "EnableVisitors",
+            "Type": "System.Int32"
+          },
+          "34": {
+            "Name": "EnableRequests",
+            "Index": -1,
+            "NameInSource": "EnableRequests",
+            "Alias": "EnableRequests",
+            "Type": "System.Int32"
+          },
+          "35": {
+            "Name": "EnableServices",
+            "Index": -1,
+            "NameInSource": "EnableServices",
+            "Alias": "EnableServices",
+            "Type": "System.Int32"
+          },
+          "36": {
+            "Name": "EnableOrders",
+            "Index": -1,
+            "NameInSource": "EnableOrders",
+            "Alias": "EnableOrders",
+            "Type": "System.Int32"
+          },
+          "37": {
+            "Name": "EnableTransactions",
+            "Index": -1,
+            "NameInSource": "EnableTransactions",
+            "Alias": "EnableTransactions",
+            "Type": "System.Int32"
+          },
+          "38": {
+            "Name": "UseProduct",
+            "Index": -1,
+            "NameInSource": "UseProduct",
+            "Alias": "UseProduct",
+            "Type": "System.Byte"
+          },
+          "39": {
+            "Name": "EnableRevpay",
+            "Index": -1,
+            "NameInSource": "EnableRevpay",
+            "Alias": "EnableRevpay",
+            "Type": "System.Int32"
+          },
+          "40": {
+            "Name": "EnableFifo",
+            "Index": -1,
+            "NameInSource": "EnableFifo",
+            "Alias": "EnableFifo",
+            "Type": "System.Int32"
+          },
+          "41": {
+            "Name": "HpManagement",
+            "Index": -1,
+            "NameInSource": "HpManagement",
+            "Alias": "HpManagement",
+            "Type": "System.String"
+          },
+          "42": {
+            "Name": "HpGuard",
+            "Index": -1,
+            "NameInSource": "HpGuard",
+            "Alias": "HpGuard",
+            "Type": "System.String"
+          },
+          "43": {
+            "Name": "dbname",
+            "Index": -1,
+            "NameInSource": "dbname",
+            "Alias": "dbname",
+            "Type": "System.String"
+          },
+          "44": {
+            "Name": "ENCRYPTLEN1",
+            "Index": -1,
+            "NameInSource": "ENCRYPTLEN1",
+            "Alias": "ENCRYPTLEN1",
+            "Type": "System.Int16"
+          },
+          "45": {
+            "Name": "ENCRYPTLEN2",
+            "Index": -1,
+            "NameInSource": "ENCRYPTLEN2",
+            "Alias": "ENCRYPTLEN2",
+            "Type": "System.Int16"
+          },
+          "46": {
+            "Name": "ENCRYPTLEN3",
+            "Index": -1,
+            "NameInSource": "ENCRYPTLEN3",
+            "Alias": "ENCRYPTLEN3",
+            "Type": "System.Int16"
+          },
+          "47": {
+            "Name": "ENCRYPTLEN4",
+            "Index": -1,
+            "NameInSource": "ENCRYPTLEN4",
+            "Alias": "ENCRYPTLEN4",
+            "Type": "System.Int16"
+          },
+          "48": {
+            "Name": "ENCRYPTLEN5",
+            "Index": -1,
+            "NameInSource": "ENCRYPTLEN5",
+            "Alias": "ENCRYPTLEN5",
+            "Type": "System.Int16"
+          },
+          "49": {
+            "Name": "CONDOSERVERIP",
+            "Index": -1,
+            "NameInSource": "CONDOSERVERIP",
+            "Alias": "CONDOSERVERIP",
+            "Type": "System.String"
+          },
+          "50": {
+            "Name": "SAVED_SPORTALSQLOWNER",
+            "Index": -1,
+            "NameInSource": "SAVED_SPORTALSQLOWNER",
+            "Alias": "SAVED_SPORTALSQLOWNER",
+            "Type": "System.String"
+          },
+          "51": {
+            "Name": "BANK_CODE",
+            "Index": -1,
+            "NameInSource": "BANK_CODE",
+            "Alias": "BANK_CODE",
+            "Type": "System.String"
+          },
+          "52": {
+            "Name": "MONTHLYCHARGEDESC",
+            "Index": -1,
+            "NameInSource": "MONTHLYCHARGEDESC",
+            "Alias": "MONTHLYCHARGEDESC",
+            "Type": "System.String"
+          },
+          "53": {
+            "Name": "MONTHLYBILLDAY",
+            "Index": -1,
+            "NameInSource": "MONTHLYBILLDAY",
+            "Alias": "MONTHLYBILLDAY",
+            "Type": "System.Byte"
+          },
+          "54": {
+            "Name": "QUARTERLYCHARGE",
+            "Index": -1,
+            "NameInSource": "QUARTERLYCHARGE",
+            "Alias": "QUARTERLYCHARGE",
+            "Type": "System.Decimal"
+          },
+          "55": {
+            "Name": "QUARTERLYCHARGEDESC",
+            "Index": -1,
+            "NameInSource": "QUARTERLYCHARGEDESC",
+            "Alias": "QUARTERLYCHARGEDESC",
+            "Type": "System.String"
+          },
+          "56": {
+            "Name": "QUARTERLYBILLDAY",
+            "Index": -1,
+            "NameInSource": "QUARTERLYBILLDAY",
+            "Alias": "QUARTERLYBILLDAY",
+            "Type": "System.Byte"
+          },
+          "57": {
+            "Name": "YEARLYCHARGE",
+            "Index": -1,
+            "NameInSource": "YEARLYCHARGE",
+            "Alias": "YEARLYCHARGE",
+            "Type": "System.Decimal"
+          },
+          "58": {
+            "Name": "YEARLYCHARGEDESC",
+            "Index": -1,
+            "NameInSource": "YEARLYCHARGEDESC",
+            "Alias": "YEARLYCHARGEDESC",
+            "Type": "System.String"
+          },
+          "59": {
+            "Name": "YEARLYBILLDAY",
+            "Index": -1,
+            "NameInSource": "YEARLYBILLDAY",
+            "Alias": "YEARLYBILLDAY",
+            "Type": "System.Byte"
+          },
+          "60": {
+            "Name": "JOINTDATE",
+            "Index": -1,
+            "NameInSource": "JOINTDATE",
+            "Alias": "JOINTDATE",
+            "Type": "System.DateTime"
+          },
+          "61": {
+            "Name": "NEXTMONTHBILLDATE",
+            "Index": -1,
+            "NameInSource": "NEXTMONTHBILLDATE",
+            "Alias": "NEXTMONTHBILLDATE",
+            "Type": "System.DateTime"
+          },
+          "62": {
+            "Name": "NEXTQUARTERBILLDATE",
+            "Index": -1,
+            "NameInSource": "NEXTQUARTERBILLDATE",
+            "Alias": "NEXTQUARTERBILLDATE",
+            "Type": "System.DateTime"
+          },
+          "63": {
+            "Name": "NEXTYEARBILLDATE",
+            "Index": -1,
+            "NameInSource": "NEXTYEARBILLDATE",
+            "Alias": "NEXTYEARBILLDATE",
+            "Type": "System.DateTime"
+          },
+          "64": {
+            "Name": "DISCONTINUEDATE",
+            "Index": -1,
+            "NameInSource": "DISCONTINUEDATE",
+            "Alias": "DISCONTINUEDATE",
+            "Type": "System.DateTime"
+          },
+          "65": {
+            "Name": "SUSPENDDATE",
+            "Index": -1,
+            "NameInSource": "SUSPENDDATE",
+            "Alias": "SUSPENDDATE",
+            "Type": "System.DateTime"
+          },
+          "66": {
+            "Name": "MONTLYBILLMETHOD",
+            "Index": -1,
+            "NameInSource": "MONTLYBILLMETHOD",
+            "Alias": "MONTLYBILLMETHOD",
+            "Type": "System.Byte"
+          },
+          "67": {
+            "Name": "ADVELCHARGEGLACCNO",
+            "Index": -1,
+            "NameInSource": "ADVELCHARGEGLACCNO",
+            "Alias": "ADVELCHARGEGLACCNO",
+            "Type": "System.String"
+          },
+          "68": {
+            "Name": "USEWEBPORTAL",
+            "Index": -1,
+            "NameInSource": "USEWEBPORTAL",
+            "Alias": "USEWEBPORTAL",
+            "Type": "System.Byte"
+          },
+          "69": {
+            "Name": "USEJOMPAY",
+            "Index": -1,
+            "NameInSource": "USEJOMPAY",
+            "Alias": "USEJOMPAY",
+            "Type": "System.Byte"
+          },
+          "70": {
+            "Name": "USABLEID",
+            "Index": -1,
+            "NameInSource": "USABLEID",
+            "Alias": "USABLEID",
+            "Type": "System.Byte"
+          },
+          "71": {
+            "Name": "BILLDATE",
+            "Index": -1,
+            "NameInSource": "BILLDATE",
+            "Alias": "BILLDATE",
+            "Type": "System.DateTime"
+          },
+          "72": {
+            "Name": "DCDATE",
+            "Index": -1,
+            "NameInSource": "DCDATE",
+            "Alias": "DCDATE",
+            "Type": "System.DateTime"
+          },
+          "73": {
+            "Name": "CONTRACTDATE",
+            "Index": -1,
+            "NameInSource": "CONTRACTDATE",
+            "Alias": "CONTRACTDATE",
+            "Type": "System.DateTime"
+          },
+          "74": {
+            "Name": "BILLPAYDATE",
+            "Index": -1,
+            "NameInSource": "BILLPAYDATE",
+            "Alias": "BILLPAYDATE",
+            "Type": "System.DateTime"
+          },
+          "75": {
+            "Name": "BILLPAID",
+            "Index": -1,
+            "NameInSource": "BILLPAID",
+            "Alias": "BILLPAID",
+            "Type": "System.Byte"
+          },
+          "76": {
+            "Name": "DCPAYDATE",
+            "Index": -1,
+            "NameInSource": "DCPAYDATE",
+            "Alias": "DCPAYDATE",
+            "Type": "System.DateTime"
+          },
+          "77": {
+            "Name": "DC_PAID",
+            "Index": -1,
+            "NameInSource": "DC_PAID",
+            "Alias": "DC_PAID",
+            "Type": "System.Byte"
+          },
+          "78": {
+            "Name": "CONTRACTPAYDATE",
+            "Index": -1,
+            "NameInSource": "CONTRACTPAYDATE",
+            "Alias": "CONTRACTPAYDATE",
+            "Type": "System.DateTime"
+          },
+          "79": {
+            "Name": "CONTRACTPAID",
+            "Index": -1,
+            "NameInSource": "CONTRACTPAID",
+            "Alias": "CONTRACTPAID",
+            "Type": "System.Byte"
+          },
+          "80": {
+            "Name": "PAYMODE",
+            "Index": -1,
+            "NameInSource": "PAYMODE",
+            "Alias": "PAYMODE",
+            "Type": "System.String"
+          },
+          "81": {
+            "Name": "BANKNUM",
+            "Index": -1,
+            "NameInSource": "BANKNUM",
+            "Alias": "BANKNUM",
+            "Type": "System.String"
+          },
+          "82": {
+            "Name": "PAYERBANKID",
+            "Index": -1,
+            "NameInSource": "PAYERBANKID",
+            "Alias": "PAYERBANKID",
+            "Type": "System.String"
+          },
+          "83": {
+            "Name": "CWBANKCODE",
+            "Index": -1,
+            "NameInSource": "CWBANKCODE",
+            "Alias": "CWBANKCODE",
+            "Type": "System.String"
+          },
+          "84": {
+            "Name": "BENEFICIARYACCTNO",
+            "Index": -1,
+            "NameInSource": "BENEFICIARYACCTNO",
+            "Alias": "BENEFICIARYACCTNO",
+            "Type": "System.String"
+          },
+          "85": {
+            "Name": "PAYEENAME",
+            "Index": -1,
+            "NameInSource": "PAYEENAME",
+            "Alias": "PAYEENAME",
+            "Type": "System.String"
+          },
+          "86": {
+            "Name": "IDTYPE",
+            "Index": -1,
+            "NameInSource": "IDTYPE",
+            "Alias": "IDTYPE",
+            "Type": "System.String"
+          },
+          "87": {
+            "Name": "BENEFICIARYIDNO",
+            "Index": -1,
+            "NameInSource": "BENEFICIARYIDNO",
+            "Alias": "BENEFICIARYIDNO",
+            "Type": "System.String"
+          },
+          "88": {
+            "Name": "INVEMAILNOTIFY",
+            "Index": -1,
+            "NameInSource": "INVEMAILNOTIFY",
+            "Alias": "INVEMAILNOTIFY",
+            "Type": "System.String"
+          },
+          "89": {
+            "Name": "INVNOTIFYEMAIL",
+            "Index": -1,
+            "NameInSource": "INVNOTIFYEMAIL",
+            "Alias": "INVNOTIFYEMAIL",
+            "Type": "System.String"
+          },
+          "90": {
+            "Name": "DESCRIPTION",
+            "Index": -1,
+            "NameInSource": "DESCRIPTION",
+            "Alias": "DESCRIPTION",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "AllPmrsLive",
+        "SqlCommand": "select * from Condo"
+      }
+    },
+    "Databases": {
+      "0": {
+        "Ident": "StiSqlDatabase",
+        "Name": "AllPmrsLive",
+        "Alias": "AllPmrsLive",
+        "ConnectionStringEncrypted": "9GpTC0YI061FWvmlS0zjXtFa9c3GW7vYbEfolWoN6z/g0PcJyANLmUZJ/QTDdKp/gmCB604FUR3tWP1Q6T2gbp5s9whbe0PVQBjN8eUFpHuLcPcjTVm7gOFcefDoeG3rjWz9zUt5W8hDEe3Makxge9F4T+tNVA=="
+      }
+    }
+  },
+  "Pages": {
+    "0": {
+      "Ident": "StiPage",
+      "Name": "Page1",
+      "Guid": "38b44c56095e437c963af04b15f9c6e7",
+      "Interaction": {
+        "Ident": "StiInteraction"
+      },
+      "Border": ";;2;;;;;solid:Black",
+      "Brush": "solid:Transparent",
+      "Components": {
+        "0": {
+          "Ident": "StiReportTitleBand",
+          "Name": "ReportTitle",
+          "ClientRectangle": "0,0.4,27.7,1.6",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:Transparent",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "ReportTitleText",
+              "Guid": "fd36bae8b120116569b7ec0931a9be09",
+              "GrowToHeight": true,
+              "ClientRectangle": "0.2,0,9.1,1.4",
+              "ComponentStyle": "Green 50%_Report_Title1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Residents Feedback Report"
+              },
+              "VertAlignment": "Center",
+              "Font": ";14;Bold;",
+              "Border": ";107,130,62;;;;;;solid:Black",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:7,30,0",
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text3",
+              "Guid": "bdf8d63b63c24c59ad4b9b14f564853f",
+              "ClientRectangle": "18.8,0.2,8.8,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Selection  - Date From [{datefrom}]  Date To [{dateto} ] Status [{status}]"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text5",
+              "Guid": "4a60814fa18c1c405315091c6fbf58c0",
+              "ClientRectangle": "24,1,2.6,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Today}"
+              },
+              "HorAlignment": "Right",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:Black",
+              "TextFormat": {
+                "Ident": "StiDateFormatService",
+                "StringFormat": "D"
+              },
+              "Type": "SystemVariables"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text6",
+              "Guid": "e67c9f37275907daad362c876136a830",
+              "ClientRectangle": "26.6,1,1,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Time}"
+              },
+              "HorAlignment": "Right",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "TextFormat": {
+                "Ident": "StiTimeFormatService"
+              },
+              "Type": "SystemVariables"
+            }
+          }
+        },
+        "1": {
+          "Ident": "StiHeaderBand",
+          "Name": "HeaderDataSource2",
+          "ClientRectangle": "0,2.8,27.7,0.6",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:Transparent",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "HeaderTextDataSource22",
+              "Guid": "c3081ddfabbf65a30146256c38ee0d1c",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "0,0,1.6,0.6",
+              "ComponentStyle": "Green 50%_Header1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "ID"
+              },
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Left, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:207,230,162",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "HeaderTextDataSource23",
+              "Guid": "18c8115ffd0bcb9a34fcc72b82987719",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "1.6,0,1.8,0.6",
+              "ComponentStyle": "Green 50%_Header1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Date"
+              },
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:207,230,162",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "HeaderTextDataSource24",
+              "Guid": "4119d51a45e6d923e87bfcaacdeed951",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "3.4,0,2,0.6",
+              "ComponentStyle": "Green 50%_Header1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Unit"
+              },
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:207,230,162",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "HeaderTextDataSource26",
+              "Guid": "be42193a3e71ed6a0f11a069e68e62fe",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "9,0,3.6,0.6",
+              "ComponentStyle": "Green 50%_Header1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Subject"
+              },
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:207,230,162",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "HeaderTextDataSource27",
+              "Guid": "65570b04f7c9d6f4eab676afae33a8e0",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "12.6,0,5.8,0.6",
+              "ComponentStyle": "Green 50%_Header1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Complaint"
+              },
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:207,230,162",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "HeaderTextDataSource28",
+              "Guid": "c90da1d23d2bbfa83516c0e70843095e",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "18.4,0,1.8,0.6",
+              "ComponentStyle": "Green 50%_Header1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Response Date"
+              },
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:207,230,162",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "HeaderTextDataSource29",
+              "Guid": "b26bcba7cf6ee7cd930dfeb2abe796d2",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "20.2,0,4.6,0.6",
+              "ComponentStyle": "Green 50%_Header1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "response"
+              },
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:207,230,162",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "HeaderTextDataSource211",
+              "Guid": "c130e3983ad7a70f5f6402c4a99c3be8",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "24.8,0,1.6,0.6",
+              "ComponentStyle": "Green 50%_Header1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Status"
+              },
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:207,230,162",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "8": {
+              "Ident": "StiText",
+              "Name": "HeaderTextDataSource212",
+              "Guid": "f2bcbe7529e7cb8c63b0c1955f860944",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "26.4,0,1.2,0.6",
+              "ComponentStyle": "Green 50%_Header1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "role"
+              },
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Right, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:207,230,162",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              }
+            },
+            "9": {
+              "Ident": "StiText",
+              "Name": "Text1",
+              "Guid": "593ba5ee459248b091b13f4745e05598",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "5.4,0,3.6,0.6",
+              "ComponentStyle": "Green 50%_Header1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Resident Name"
+              },
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Top, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:207,230,162",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            }
+          }
+        },
+        "2": {
+          "Ident": "StiGroupHeaderBand",
+          "Name": "GroupHeaderBand2",
+          "ClientRectangle": "0,4.2,27.7,0.8",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:0,0,0",
+          "Brush": "solid:Transparent",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text2",
+              "Guid": "2956bd7cdb994e828f19bb3371619fbb",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "0,0.2,27.6,0.6",
+              "ComponentStyle": "Green 50%_Report_Summary1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Tag": {
+                "Value": "{DataSource2.FeedbackID}"
+              },
+              "Text": {
+                "Value": "{DataSource2.condocode}"
+              },
+              "Font": ";12;Bold;",
+              "Border": ";107,130,62;;;;;;solid:Black",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextQuality": "Wysiwyg",
+              "TextFormat": {
+                "Ident": "StiDateFormatService",
+                "StringFormat": "D"
+              },
+              "Type": "DataColumn"
+            }
+          },
+          "Condition": {
+            "Value": "{DataSource2.condoseq}"
+          }
+        },
+        "3": {
+          "Ident": "StiGroupHeaderBand",
+          "Name": "GroupHeaderBand1",
+          "ClientRectangle": "0,5.8,27.7,0.8",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:0,0,0",
+          "Brush": "solid:Transparent",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text4",
+              "Guid": "333e1eca0fda4b379cd7ea705471f110",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "0,0.2,27.6,0.6",
+              "ComponentStyle": "Green 50%_Page_Header",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Tag": {
+                "Value": "{DataSource2.FeedbackID}"
+              },
+              "Text": {
+                "Value": "{DataSource2.dateonly}"
+              },
+              "Font": ";10;;",
+              "Border": ";107,130,62;;;;;;solid:Black",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextQuality": "Wysiwyg",
+              "TextFormat": {
+                "Ident": "StiDateFormatService",
+                "StringFormat": "D"
+              },
+              "Type": "DataColumn"
+            }
+          },
+          "SortDirection": "Descending",
+          "Condition": {
+            "Value": "{DataSource2.date.Date}"
+          }
+        },
+        "4": {
+          "Ident": "StiDataBand",
+          "Name": "DataDataSource2",
+          "ClientRectangle": "0,7.4,27.7,0.6",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:Transparent",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "DataTextDataSource22",
+              "Guid": "ca223c0b44c0de61b0690e77fc89b02e",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "0,0,1.6,0.6",
+              "ComponentStyle": "Green 50%_Data1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "ProcessingDuplicates": "Merge",
+              "Text": {
+                "Value": "{DataSource2.FeedbackID}"
+              },
+              "Border": "Top, Left, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextQuality": "Wysiwyg"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "DataTextDataSource23",
+              "Guid": "90055530923da01cc0708c2fb1d48527",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "1.6,0,1.8,0.6",
+              "ComponentStyle": "Green 50%_Data1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Tag": {
+                "Value": "{DataSource2.FeedbackID}"
+              },
+              "ProcessingDuplicates": "BasedOnTagMerge",
+              "Text": {
+                "Value": "{DataSource2.date}"
+              },
+              "Border": "Top, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextQuality": "Wysiwyg",
+              "TextFormat": {
+                "Ident": "StiDateFormatService",
+                "StringFormat": "g"
+              },
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "DataTextDataSource24",
+              "Guid": "9f745a429cd5ff0928295800172e6469",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "3.4,0,2,0.6",
+              "ComponentStyle": "Green 50%_Data1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Tag": {
+                "Value": "{DataSource2.FeedbackID}"
+              },
+              "ProcessingDuplicates": "BasedOnTagMerge",
+              "Text": {
+                "Value": "{DataSource2.propertyno}"
+              },
+              "Border": "Top, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextQuality": "Wysiwyg"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "DataTextDataSource25",
+              "Guid": "d8969fd656e97f1ac84b05257bcc31a1",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "5.4,0,3.6,0.6",
+              "ComponentStyle": "Green 50%_Data1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Tag": {
+                "Value": "{DataSource2.FeedbackID}"
+              },
+              "ProcessingDuplicates": "BasedOnTagMerge",
+              "Text": {
+                "Value": "{DataSource2.residentname}"
+              },
+              "Border": "Top, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextQuality": "Wysiwyg"
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "DataTextDataSource26",
+              "Guid": "1388cc96658b854b1764a7441e83572a",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "9,0,3.6,0.6",
+              "ComponentStyle": "Green 50%_Data1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Tag": {
+                "Value": "{DataSource2.FeedbackID}"
+              },
+              "ProcessingDuplicates": "BasedOnTagMerge",
+              "Text": {
+                "Value": "{DataSource2.subject}"
+              },
+              "Border": "Top, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextQuality": "Wysiwyg",
+              "AllowHtmlTags": true
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "DataTextDataSource27",
+              "Guid": "45c6c85092e0aa921a12922065f1f6e1",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "12.6,0,5.8,0.6",
+              "ComponentStyle": "Green 50%_Data1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Tag": {
+                "Value": "{DataSource2.FeedbackID}"
+              },
+              "ProcessingDuplicates": "BasedOnTagMerge",
+              "Text": {
+                "Value": "{DataSource2.complaint}"
+              },
+              "Border": "Top, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextQuality": "Wysiwyg",
+              "AllowHtmlTags": true
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "DataTextDataSource28",
+              "Guid": "ccdaa148c5d4d07c5c39c4ed569b1a92",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "18.4,0,1.8,0.6",
+              "ComponentStyle": "Green 50%_Data1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{DataSource2.response_date}"
+              },
+              "Border": "Top, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextQuality": "Wysiwyg",
+              "Margins": {
+                "Left": 5,
+                "Right": 5,
+                "Top": 0,
+                "Bottom": 0
+              },
+              "TextFormat": {
+                "Ident": "StiDateFormatService",
+                "StringFormat": "g"
+              }
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "DataTextDataSource29",
+              "Guid": "6d28f39112f01825156217dae86695e9",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "20.2,0,4.6,0.6",
+              "ComponentStyle": "Green 50%_Data1",
+              "Conditions": {
+                "0": {
+                  "Ident": "StiCondition",
+                  "Column": "DataSource2.role",
+                  "Value1": "Mgmt",
+                  "BackColor": "180,198,231",
+                  "BorderSides": "None"
+                }
+              },
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{DataSource2.management_response}"
+              },
+              "Border": "Top, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextQuality": "Wysiwyg"
+            },
+            "8": {
+              "Ident": "StiText",
+              "Name": "DataTextDataSource211",
+              "Guid": "5a38e7465626320e14dc51f5476a8c1a",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "24.8,0,1.6,0.6",
+              "ComponentStyle": "Green 50%_Data1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{DataSource2.status}"
+              },
+              "Border": "Top, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextQuality": "Wysiwyg",
+              "Type": "DataColumn"
+            },
+            "9": {
+              "Ident": "StiText",
+              "Name": "DataTextDataSource212",
+              "Guid": "77582b33eeb42f689408de534090e412",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "26.4,0,1.2,0.6",
+              "ComponentStyle": "Green 50%_Data1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{DataSource2.role}"
+              },
+              "Border": "Top, Right, Bottom;107,130,62;;;;;true;solid:Black",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:7,30,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextQuality": "Wysiwyg"
+            }
+          },
+          "DataSourceName": "DataSource2",
+          "EvenStyle": "Green 50%_Data1_Even Style",
+          "OddStyle": "Green 50%_Data1_Odd Style",
+          "Sort": {
+            "0": "DESC",
+            "1": "dateonly",
+            "2": "DESC",
+            "3": "FeedbackID",
+            "4": "ASC",
+            "5": "response_date"
+          },
+          "Filters": {
+            "0": {
+              "Ident": "StiFilter",
+              "Column": "status",
+              "Value1": "open"
+            }
+          }
+        },
+        "5": {
+          "Ident": "StiFooterBand",
+          "Name": "FooterDataSource2",
+          "ClientRectangle": "0,8.8,27.7,0.6",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:Transparent"
+        }
+      },
+      "Orientation": "Landscape",
+      "PageWidth": 29.7,
+      "PageHeight": 21,
+      "Watermark": {
+        "TextBrush": "solid:50,0,0,0"
+      },
+      "Margins": {
+        "Left": 1,
+        "Right": 1,
+        "Top": 1,
+        "Bottom": 1
+      }
+    }
+  }
+}

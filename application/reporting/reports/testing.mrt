@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <CalculationMode>Interpretation</CalculationMode>
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="1">
+      <Connection Ref="2" type="Stimulsoft.Report.Dictionary.StiSqlDatabase" isKey="true">
+        <Alias>Connection</Alias>
+        <ConnectionStringEncrypted>+VZTidcK2eFsW7Wp5RwyKt5wcUjFTPPdRXv13Ok9JY/CasHL711ygctHjETDDfUv1zr5YM0J87xtGs2NYyypu/Yg0YNhA3OF4k3RnMtEoHvEVNnCVV1b7WwT5ZhjBKJGkKbRw2RM083Me6W9TgUlL8JA</ConnectionStringEncrypted>
+        <Name>Connection</Name>
+      </Connection>
+    </Databases>
+    <DataSources isList="true" count="1">
+      <Newsfeed Ref="3" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
+        <Alias>Newsfeed</Alias>
+        <Columns isList="true" count="22">
+          <value>Attachment1,System.String</value>
+          <value>Attachment2,System.String</value>
+          <value>Attachment3,System.String</value>
+          <value>Attachment4,System.String</value>
+          <value>CONDOSEQ,System.Int32</value>
+          <value>CreatedBy,System.Int32</value>
+          <value>CreatedDate,System.DateTime</value>
+          <value>Description,System.String</value>
+          <value>ModifiedBy,System.Int32</value>
+          <value>ModifiedDate,System.DateTime</value>
+          <value>NewsfeedDate,System.DateTime</value>
+          <value>NewsfeedID,System.Int32</value>
+          <value>NewsfeedTypeID,System.Int32</value>
+          <value>Publish,System.Int32</value>
+          <value>PublishDateFrom,System.DateTime</value>
+          <value>PublishDateTo,System.DateTime</value>
+          <value>Rsvp,System.Int16</value>
+          <value>RsvpQuestion,System.String</value>
+          <value>Summary,System.String</value>
+          <value>Title,System.String</value>
+          <value>UNITSEQ,System.Int16</value>
+          <value>USERID,System.Int32</value>
+        </Columns>
+        <CommandTimeout>30</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Name>Newsfeed</Name>
+        <NameInSource>Connection</NameInSource>
+        <Parameters isList="true" count="0" />
+        <SqlCommand>select * from Newsfeed</SqlCommand>
+      </Newsfeed>
+    </DataSources>
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <Variables isList="true" count="0" />
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <Key>ca3c6903c06c4cd5a0035d84defc38f4</Key>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="4" type="Page" isKey="true">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="4">
+        <HeaderNewsfeed Ref="5" type="HeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,0.2,7.72,0.3</ClientRectangle>
+          <Components isList="true" count="3">
+            <HeaderNewsfeed_NewsfeedID Ref="6" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,1,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>e6bae7b3c3b543c79bdd5411089af92e</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>HeaderNewsfeed_NewsfeedID</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>NewsfeedID</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <VertAlignment>Center</VertAlignment>
+            </HeaderNewsfeed_NewsfeedID>
+            <HeaderNewsfeed_NewsfeedDate Ref="7" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>1,0,2.6,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>f9d6d3cb6b044c22b4145595154892e7</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>HeaderNewsfeed_NewsfeedDate</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>NewsfeedDate</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <VertAlignment>Center</VertAlignment>
+            </HeaderNewsfeed_NewsfeedDate>
+            <HeaderNewsfeed_Title Ref="8" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.6,0,4.1,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>9da354af2cea42779c9e5fbf3da57172</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>HeaderNewsfeed_Title</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Title</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <VertAlignment>Center</VertAlignment>
+            </HeaderNewsfeed_Title>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>HeaderNewsfeed</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </HeaderNewsfeed>
+        <GroupHeaderBand1 Ref="9" type="GroupHeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,0.9,7.72,0.3</ClientRectangle>
+          <Components isList="true" count="1">
+            <Text1 Ref="10" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0,0,2.6,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>61ba61506d57453ab287277df39aa700</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="4" />
+              <Parent isRef="9" />
+              <Text>{Newsfeed.NewsfeedDate}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="11" type="DateFormat" isKey="true" />
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <VertAlignment>Center</VertAlignment>
+            </Text1>
+          </Components>
+          <Condition>{Newsfeed.NewsfeedDate}</Condition>
+          <Conditions isList="true" count="0" />
+          <Name>GroupHeaderBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </GroupHeaderBand1>
+        <DataNewsfeed Ref="12" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,1.6,7.72,0.3</ClientRectangle>
+          <Components isList="true" count="3">
+            <DataNewsfeed_NewsfeedID Ref="13" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0,0,1,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>fa38de5afdc645d1bd1203bd791258f3</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>DataNewsfeed_NewsfeedID</Name>
+              <Page isRef="4" />
+              <Parent isRef="12" />
+              <Text>{Newsfeed.NewsfeedID}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <VertAlignment>Center</VertAlignment>
+            </DataNewsfeed_NewsfeedID>
+            <DataNewsfeed_NewsfeedDate Ref="14" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>1,0,2.6,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>f8f6f8e41fe241a5ac854ad6db5edb09</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>DataNewsfeed_NewsfeedDate</Name>
+              <Page isRef="4" />
+              <Parent isRef="12" />
+              <Text>{Newsfeed.NewsfeedDate}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="15" type="DateFormat" isKey="true" />
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </DataNewsfeed_NewsfeedDate>
+            <DataNewsfeed_Title Ref="16" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>3.6,0,4.1,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>3c3a36b2ca0d4a0b81ac8b314e419f67</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>DataNewsfeed_Title</Name>
+              <Page isRef="4" />
+              <Parent isRef="12" />
+              <Text>{Newsfeed.Title}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <VertAlignment>Center</VertAlignment>
+            </DataNewsfeed_Title>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataSourceName>Newsfeed</DataSourceName>
+          <Filters isList="true" count="0" />
+          <Name>DataNewsfeed</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Sort isList="true" count="0" />
+        </DataNewsfeed>
+        <FooterNewsfeed Ref="17" type="FooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,2.3,7.72,0.3</ClientRectangle>
+          <Components isList="true" count="3">
+            <FooterNewsfeed_NewsfeedID Ref="18" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,1,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>FooterNewsfeed_NewsfeedID</Name>
+              <Page isRef="4" />
+              <Parent isRef="17" />
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <VertAlignment>Center</VertAlignment>
+            </FooterNewsfeed_NewsfeedID>
+            <FooterNewsfeed_NewsfeedDate Ref="19" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>1,0,2.6,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>FooterNewsfeed_NewsfeedDate</Name>
+              <Page isRef="4" />
+              <Parent isRef="17" />
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <VertAlignment>Center</VertAlignment>
+            </FooterNewsfeed_NewsfeedDate>
+            <FooterNewsfeed_Title Ref="20" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.6,0,4.1,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>FooterNewsfeed_Title</Name>
+              <Page isRef="4" />
+              <Parent isRef="17" />
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <VertAlignment>Center</VertAlignment>
+            </FooterNewsfeed_Title>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>FooterNewsfeed</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </FooterNewsfeed>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Guid>6a1700c7545b451cbaa56ba19c7f81f9</Guid>
+      <Margins>0.39,0.39,0.39,0.39</Margins>
+      <Name>Page1</Name>
+      <PageHeight>11</PageHeight>
+      <PageWidth>8.5</PageWidth>
+      <PaperSize>Letter</PaperSize>
+      <Report isRef="0" />
+    </Page1>
+  </Pages>
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>testing</ReportAlias>
+  <ReportAuthor>Yun Fatt Yap</ReportAuthor>
+  <ReportChanged>4/23/2019 9:27:32 AM</ReportChanged>
+  <ReportCreated>4/23/2019 9:27:32 AM</ReportCreated>
+  <ReportGuid>c6dcd55f1c374021b772c8841491e675</ReportGuid>
+  <ReportName>testing</ReportName>
+  <ReportUnit>Inches</ReportUnit>
+  <ReportVersion>2019.1.1.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>
